@@ -45,6 +45,11 @@ export BLOG="/home/rqdmap/hugo-blog/content"
 
 # 为journalctl-less设置标记
 export SYSTEMD_LESS=FRXMK
+export LESSCHARSET=utf-8
+
+# 24hours format
+export LC_TIME=C.UTF-8
+
 
 # 启用Node nvm
 # source /usr/share/nvm/init-nvm.sh

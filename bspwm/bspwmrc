@@ -7,22 +7,23 @@ name="HDMI-1-0"
 both="0"
 
 if [ "$(xrandr | grep " connected " | grep $name)" ]; then
-	xrandr --output HDMI-1-0 --rate 74.99 --mode 2560x1080
-	bspc monitor HDMI-1-0 -d I II III IV V VI VII VII IX X
+	xrandr --output $name --rate 74.99 --mode 2560x1080
+	bspc monitor $name -d I II III IV V VI VII VII IX X
 
 	if [ $both == '0' ]; then
-		xrandr --output eDP-1 --off
-		bspc monitor eDP-1 -r
+		xrandr --output $m1 --off
+		bspc monitor $m1 -r
 	else	
-		xrandr --output eDP-1 --rate 60.10 --mode 1920x1080
-		bspc monitor eDP-1 -d -
-		xrandr --output HDMI-1-0 --primary --output eDP-1 --left-of HDMI-1-0
+		xrandr --output $m1 --rate 60.10 --mode 1920x1080
+		bspc monitor $m1 -d -
+		xrandr --output $name --primary --output $m1 --left-of $name
 	fi
 
 
 else
-	xrandr --output eDP-1 --rate 60.10 --mode 1920x1080
-	bspc monitor eDP-1 -d I II III IV V VI VII VII IX X
+	xrandr --output $m1 --rate 60.10 --mode 1920x1080
+	bspc monitor $name -r
+	bspc monitor $m1 -d I II III IV V VI VII VII IX X
 fi
 
 # xrandr --output eDP-1 --rate 60.10 --mode 1920x1080
@@ -46,7 +47,9 @@ xsetroot -cursor_name left_ptr
 xset dpms 1800 1800 1800
 
 # 打开词典
-goldendict &
+if [[ -e `pidof goldendict` ]]; then
+	goldendict &
+fi
 
 # 打开unclutter(隐藏非活跃鼠标)
 unclutter -b 
@@ -63,9 +66,6 @@ bspc config split_ratio          0.52
 bspc config borderless_monocle   true
 bspc config gapless_monocle      true
 
-bspc rule -a Gimp desktop='^8' state=floating follow=on
-bspc rule -a Chromium desktop='^2'
-bspc rule -a mplayer2 state=floating
-bspc rule -a Screenkey manage=off
 bspc rule -a Zathura state=tiled
+bspc rule -a explorer.exe state=pseudo_tiled
 
