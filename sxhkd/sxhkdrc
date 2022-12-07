@@ -39,7 +39,7 @@ XF86AudioLowerVolume
 	amixer set Master 5%-
 
 XF86AudioMute
-	amixer set Master toggle
+	amixer set Master on && amixer set Speaker toggle && amixer set Headphone toggle
 
 Print
 	flameshot full

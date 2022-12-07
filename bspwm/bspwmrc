@@ -47,7 +47,7 @@ xsetroot -cursor_name left_ptr
 xset dpms 1800 1800 1800
 
 # 打开词典
-if [[ -e `pidof goldendict` ]]; then
+if [[ ! -n `pidof goldendict` ]]; then
 	goldendict &
 fi
 
