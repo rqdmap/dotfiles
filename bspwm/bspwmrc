@@ -1,13 +1,22 @@
 #! /bin/bash
 
 # 多显示屏配置
-m1="eDP-1"
+m1="eDP-1-1"
 name="HDMI-1-0"
+name="HDMI-0"
+
+# Philip 带鱼屏
+mode="2560x1080"
+rate="74.99"
+
+# Home AOC
+# mode="1920x1080"
+# rate="60"
 
 both="0"
 
 if [ "$(xrandr | grep " connected " | grep $name)" ]; then
-	xrandr --output $name --rate 74.99 --mode 2560x1080
+	xrandr --output $name --rate $rate --mode $mode
 	bspc monitor $name -d I II III IV V VI VII VII IX X
 
 	if [ $both == '0' ]; then
@@ -17,9 +26,8 @@ if [ "$(xrandr | grep " connected " | grep $name)" ]; then
 		xrandr --output $m1 --rate 60.10 --mode 1920x1080
 		bspc monitor $m1 -d -
 		xrandr --output $name --primary --output $m1 --left-of $name
+		bspc wm --reorder-monitors $name $m1
 	fi
-
-
 else
 	xrandr --output $m1 --rate 60.10 --mode 1920x1080
 	bspc monitor $name -r
@@ -54,11 +62,15 @@ fi
 # 打开unclutter(隐藏非活跃鼠标)
 unclutter -b 
 
+if [[ ! -n `pidof aw-server-rust` ]]; then
+	nohup aw-server-rust >> /home/rqdmap/Log/aw-server.log &
+fi
 
 pgrep -x sxhkd > /dev/null || sxhkd &
 
 bspc config border_width         3
 bspc config focused_border_color "#3F73B6"
+# bspc config focused_border_color "#FFE060"
 
 bspc config window_gap          10
 
@@ -67,5 +79,4 @@ bspc config borderless_monocle   true
 bspc config gapless_monocle      true
 
 bspc rule -a Zathura state=tiled
-bspc rule -a explorer.exe state=pseudo_tiled
 

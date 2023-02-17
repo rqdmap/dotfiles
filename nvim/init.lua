@@ -7,6 +7,7 @@ local options = {
 
 -- UI
 	number		=	true,
+	relativenumber	=	true,
 	cursorline	=	true,
 	t_Co		=	256,
 	background	=	"dark",
@@ -68,6 +69,9 @@ vim.api.nvim_create_autocmd("BufReadPost",{
 		endif
 	]]
 })
+
+vim.o["path"] = "."
+vim.o["path"] = vim.fn.getcwd() .. "/**," .. vim.o["path"];
 
 
 

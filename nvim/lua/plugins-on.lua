@@ -86,3 +86,9 @@ require("nvim-tree").setup()
 --   },
 -- })
 
+
+require('Comment').setup()
+
+
+
+

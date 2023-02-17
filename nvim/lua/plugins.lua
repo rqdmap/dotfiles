@@ -21,6 +21,14 @@ return require('packer').startup(function(use)
 		-- tag = 'nightly' -- optional, updated every week. (see issue #1193)
 	}
 
+	use 'Valloric/MatchTagAlways'
+
+	-- 为Rofi提供语法高亮
+	use 'Fymyte/rasi.vim'
+
+	-- 直接显示源码对应的颜色
+	use 'ap/vim-css-color'
+
 
 -- Edit
 	-- 代码块补全
@@ -32,16 +40,24 @@ return require('packer').startup(function(use)
 	use 'lilydjwg/fcitx.vim'
 	vim.o.ttimeoutlen=10		-- 直接挂钩响应速度, 但调小后不知道会有什么负面作用
 
-	-- 为Rofi提供语法高亮
-	use 'Fymyte/rasi.vim'
+	-- 表格模式
+	use 'dhruvasagar/vim-table-mode'
 
-	-- 直接显示源码对应的颜色
-	use 'ap/vim-css-color'
+	-- 注释
+	use {
+		'numToStr/Comment.nvim',
+		config = function()
+			require('Comment').setup()
+		end
+	}
 
 -- MISC
-	use 'Valloric/MatchTagAlways'
+	-- AW计时器
+	use 'ActivityWatch/aw-watcher-vim'
 
 
+	-- copilot
+	use 'github/copilot.vim'
 
 -- Programming Languages Support
 	-- [C++]
@@ -96,7 +112,6 @@ return require('packer').startup(function(use)
 	)
 
 
-	use 'wakatime/vim-wakatime'
 
 end)
 

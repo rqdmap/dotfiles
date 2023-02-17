@@ -53,6 +53,29 @@ snippet tit
 \textit{${0:${VISUAL}}}
 endsnippet
 
+snippet table
+\begin{table}[htpb]
+	\centering
+	\begin{tabular}{m{2cm}<{\centering}}
+		\specialrule{0.05em}{3pt}{3pt}
+		\specialrule{0.02em}{2pt}{3pt}
+		\specialrule{0.00em}{1pt}{1pt}
+		\specialrule{0.05em}{2pt}{3pt}
+	\end{tabular}
+	\caption{$0}
+	\label{tab:$1}
+\end{table}
+endsnippet
 
+snippet ((
+\left( $0 \right)
+endsnippet
 
+snippet [[
+\left[ $0 \right]
+endsnippet
+
+snippet {{
+\left{ $0 \right}
+endsnippet
 
