@@ -1,46 +1,61 @@
 #! /bin/bash
 
 # 多显示屏配置
-m1="eDP-1-1"
-name="HDMI-1-0"
-name="HDMI-0"
+name1="eDP-1-1"
+rate1="165.01"
+mode1="1920x1080"
 
-# Philip 带鱼屏
-mode="2560x1080"
-rate="74.99"
+name2="HDMI-0"
+mode2="2560x1080"
+rate2="74.99"
+
+
+both="0"
 
 # Home AOC
 # mode="1920x1080"
 # rate="60"
 
-both="0"
+function setMonitor(){
+	xrandr --output $1 --rate $2 --mode $3
+	if [[ -n $4 ]]; then bspc monitor $1 -d -
+	else bspc monitor $1 -d I II III IV V VI VII VII IX X
+	fi
+}
 
-if [ "$(xrandr | grep " connected " | grep $name)" ]; then
-	xrandr --output $name --rate $rate --mode $mode
-	bspc monitor $name -d I II III IV V VI VII VII IX X
+function clearMonitor(){
+	xrandr --output $1 --off
+	bspc monitor $1 -r
+}
+
+
+if [ "$(xrandr | grep " connected " | grep $name2)" ]; then
+	setMonitor $name2 $rate2 $mode2
 
 	if [ $both == '0' ]; then
-		xrandr --output $m1 --off
-		bspc monitor $m1 -r
+		clearMonitor $name1
 	else	
-		xrandr --output $m1 --rate 60.10 --mode 1920x1080
-		bspc monitor $m1 -d -
-		xrandr --output $name --primary --output $m1 --left-of $name
-		bspc wm --reorder-monitors $name $m1
+		setMonitor $name1 $rate1 $mode1 'one'
+		xrandr --output $name2 --primary --output $name1 --left-of $name2
+		bspc wm --reorder-monitors $name2 $name1
 	fi
 else
-	xrandr --output $m1 --rate 60.10 --mode 1920x1080
-	bspc monitor $name -r
-	bspc monitor $m1 -d I II III IV V VI VII VII IX X
+	setMonitor $name1 $rate1 $mode1
+	clearMonitor $name2
 fi
 
-# xrandr --output eDP-1 --rate 60.10 --mode 1920x1080
+# Execute a binary executable, restart it if it is running
+function cleverStart() {
+    if pgrep $1 > /dev/null ; then pkill $1; fi
+	nohup $1 $2 >> $HOME/.log/$1.log 2>&1 &
+}
+
 
 #in/env XSECURELOCK_PASSWORD_PROMPT=time_hex xsecurelock 使用Polybar
-polybar_run &
+cleverStart polybar_run 
 
 # 打开中文输入法
-fcitx5 &
+cleverStart fcitx5
 
 # 设置键盘灵敏度
 xset r rate 300 45
@@ -55,25 +70,20 @@ xsetroot -cursor_name left_ptr
 xset dpms 1800 1800 1800
 
 # 打开词典
-if [[ ! -n `pidof goldendict` ]]; then
-	goldendict &
-fi
+cleverStart goldendict
 
 # 打开unclutter(隐藏非活跃鼠标)
-unclutter -b 
+cleverStart unclutter -b
 
-if [[ ! -n `pidof aw-server-rust` ]]; then
-	nohup aw-server-rust >> /home/rqdmap/Log/aw-server.log &
-fi
+cleverStart aw-server-rust
+cleverStart aw-watcher-afk
+cleverStart aw-watcher-window
 
-pgrep -x sxhkd > /dev/null || sxhkd &
+cleverStart sxhkd
 
 bspc config border_width         3
 bspc config focused_border_color "#3F73B6"
-# bspc config focused_border_color "#FFE060"
-
 bspc config window_gap          10
-
 bspc config split_ratio          0.52
 bspc config borderless_monocle   true
 bspc config gapless_monocle      true

@@ -11,3 +11,9 @@ rsync -ah ~/.config/polybar .
 rsync -ah ~/.config/rofi .
 rsync -ah ~/.config/ranger .
 
+pacman -Qne | sort > pkg_native
+pacman -Qm | sort > pkg_foreign
+
+git add .
+git commit -m '定时备份'
+git push

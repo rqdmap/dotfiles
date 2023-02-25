@@ -12,7 +12,6 @@ return require('packer').startup(function(use)
 		requires = { 'kyazdani42/nvim-web-devicons', opt = true }
 	}
 
-
 	use {
 		'nvim-tree/nvim-tree.lua',
 		requires = {
@@ -60,6 +59,9 @@ return require('packer').startup(function(use)
 	use 'github/copilot.vim'
 
 -- Programming Languages Support
+	-- nvim-lspconfig
+	use 'neovim/nvim-lspconfig'
+	
 	-- [C++]
 	-- 更好的高亮
 	use 'octol/vim-cpp-enhanced-highlight'
@@ -67,6 +69,12 @@ return require('packer').startup(function(use)
 	use 'xavierd/clang_complete'
 	vim.g.clang_use_library=1
 	vim.g.clang_library_path='/usr/lib/libclang.so'
+
+
+	-- [Rust]
+	use 'simrat39/rust-tools.nvim'
+
+	use 'rust-lang/rust.vim'
 
 
 	-- [LaTeX]
@@ -110,8 +118,5 @@ return require('packer').startup(function(use)
 			]]
 		}
 	)
-
-
-
 end)
 
