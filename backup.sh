@@ -1,5 +1,7 @@
 #!/bin/zsh
 
+cd ~/dotfiles/
+
 rsync ~/.vimrc .
 rsync -ah ~/.config/nvim .
 rsync -ah ~/.config/alacritty .
