@@ -33,6 +33,7 @@ alias his='history -i 0'
 alias grep='rg'
 alias h='his | rg'
 alias top='htop'
+alias ra='ranger'
 
 alias showpkg="expac --timefmt='%Y-%m-%d %T' '%l\t%n' | sort"
 
