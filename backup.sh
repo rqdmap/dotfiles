@@ -1,11 +1,12 @@
 #!/bin/zsh
 
-cd ~/dotfiles/
+WORKSPACE='/home/rqdmap/dotfiles'
+cd $WORKSPACE
 
 rsync ~/.vimrc .
+rsync -ah ~/.zsh .
 rsync -ah ~/.config/nvim .
 rsync -ah ~/.config/alacritty .
-rsync -ah ~/.zsh .
 rsync ~/.config/starship.toml .
 rsync -ah ~/.config/bspwm .
 rsync -ah ~/.config/sxhkd .
