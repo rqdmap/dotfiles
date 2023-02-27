@@ -80,6 +80,7 @@ lsof 4.98.0-1
 m4 1.4.19-2
 make 4.4-1
 man-pages 6.03-1
+mariadb 10.11.2-1
 mesa-utils 8.5.0-2
 meson 1.0.1-1
 nasm 2.15.05-1
@@ -104,6 +105,7 @@ pandoc-cli 0.1-9
 patch 2.7.6-9
 pavucontrol 1:5.0+r61+gee77d86-2
 pdfarranger 1.9.2-1
+php-fpm 8.2.3-1
 php-sqlite 8.2.3-1
 pkgconf 1.8.0-1
 polybar 3.6.3-3
@@ -159,6 +161,7 @@ which 2.21-6
 wpa_supplicant 2:2.10-8
 wqy-microhei 0.2.0_beta-11
 xclip 0.13-3
+xdebug 3.2.0-1
 xdotool 3.20211022.1-1
 xf86-video-vesa 2.6.0-1
 xorg-bdftopcf 1.1.1-1
