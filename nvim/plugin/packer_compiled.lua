@@ -95,6 +95,11 @@ _G.packer_plugins = {
     path = "/home/rqdmap/.local/share/nvim/site/pack/packer/start/clang_complete",
     url = "https://github.com/xavierd/clang_complete"
   },
+  ["copilot.vim"] = {
+    loaded = true,
+    path = "/home/rqdmap/.local/share/nvim/site/pack/packer/start/copilot.vim",
+    url = "https://github.com/github/copilot.vim"
+  },
   ["fcitx.vim"] = {
     loaded = true,
     path = "/home/rqdmap/.local/share/nvim/site/pack/packer/start/fcitx.vim",
@@ -115,6 +120,11 @@ _G.packer_plugins = {
     path = "/home/rqdmap/.local/share/nvim/site/pack/packer/start/mathjax-support-for-mkdp",
     url = "https://github.com/iamcco/mathjax-support-for-mkdp"
   },
+  ["nvim-lspconfig"] = {
+    loaded = true,
+    path = "/home/rqdmap/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
+    url = "https://github.com/neovim/nvim-lspconfig"
+  },
   ["nvim-tree.lua"] = {
     loaded = true,
     path = "/home/rqdmap/.local/share/nvim/site/pack/packer/start/nvim-tree.lua",
@@ -134,6 +144,16 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/rqdmap/.local/share/nvim/site/pack/packer/start/rasi.vim",
     url = "https://github.com/Fymyte/rasi.vim"
+  },
+  ["rust-tools.nvim"] = {
+    loaded = true,
+    path = "/home/rqdmap/.local/share/nvim/site/pack/packer/start/rust-tools.nvim",
+    url = "https://github.com/simrat39/rust-tools.nvim"
+  },
+  ["rust.vim"] = {
+    loaded = true,
+    path = "/home/rqdmap/.local/share/nvim/site/pack/packer/start/rust.vim",
+    url = "https://github.com/rust-lang/rust.vim"
   },
   ultisnips = {
     loaded = true,

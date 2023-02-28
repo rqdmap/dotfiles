@@ -56,7 +56,6 @@ export LC_TIME=C.UTF-8
 # Plugins
 source $ZSH/plugins/z-1.9/z.sh
 
-
 # Colorful less
 export LESS_TERMCAP_mb=$(tput bold; tput setaf 2) # green
 export LESS_TERMCAP_md=$(tput bold; tput setaf 6) # cyan
@@ -72,6 +71,9 @@ export LESS_TERMCAP_ZV=$(tput rsubm)
 export LESS_TERMCAP_ZO=$(tput ssupm)
 export LESS_TERMCAP_ZW=$(tput rsupm)
 export GROFF_NO_SGR=1         # For Konsole and Gnome-terminal
+
+PATH=$PATH:$HOME/.local/bin
+
 
 eval "$(starship init zsh)"
 

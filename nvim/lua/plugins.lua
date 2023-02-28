@@ -73,7 +73,6 @@ return require('packer').startup(function(use)
 
 	-- [Rust]
 	use 'simrat39/rust-tools.nvim'
-
 	use 'rust-lang/rust.vim'
 
 
