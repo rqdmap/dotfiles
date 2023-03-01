@@ -23,7 +23,7 @@ clash 1.13.0-1
 crash 8.0.2-1
 cronie 1.6.1-1
 ctags 1:6.0.0-1
-dbus-python 1.2.18-3
+dbus-python 1.2.18-4
 debugedit 5.0-4
 dhcpcd 9.4.1-1
 dhcping 1.2-3
@@ -47,7 +47,7 @@ flex 2.6.4-4
 font-manager 0.8.8-1
 gawk 5.2.1-1
 gcc 12.2.1-2
-gdb 12.1-2
+gdb 13.1-1
 gettext 0.21.1-2
 gftp 2.9.1b-3
 girara 0.3.7-1
@@ -78,7 +78,7 @@ linux-firmware 20230210.bf4115c-1
 linux-headers 6.2.1.arch1-1
 lsof 4.98.0-1
 m4 1.4.19-2
-make 4.4-1
+make 4.4.1-1
 man-pages 6.03-1
 mariadb 10.11.2-1
 mesa-utils 8.5.0-2
@@ -133,10 +133,10 @@ rxvt-unicode 9.31-1
 sddm 0.19.0-9
 sed 4.9-2
 starship 1.13.1-1
-sudo 1.9.13.p1-1
+sudo 1.9.13.p2-1
 sxhkd 0.6.2-2
 tcpdump 4.99.3-1
-telegram-desktop 4.6.5-1
+telegram-desktop 4.6.5-2
 texinfo 7.0.2-2
 texlive-bibtexextra 2022.63023-1
 texlive-core 2022.63035-1
