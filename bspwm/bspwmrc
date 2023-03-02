@@ -66,8 +66,9 @@ xset r rate 300 45
 # 配置Miku Cursor
 xsetroot -cursor_name left_ptr
 
-# 设置屏幕待机时间为30分钟(好像没用)
-xset dpms 1800 1800 1800
+# 禁止屏幕休眠
+xset dpms 0 0 0
+xset s off
 
 # 打开词典
 cleverStart goldendict
