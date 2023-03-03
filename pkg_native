@@ -101,7 +101,7 @@ nvidia-settings 525.89.02-1
 os-prober 1.81-1
 pacman 6.0.2-5
 pacman-contrib 1.8.2-1
-pandoc-cli 0.1-11
+pandoc-cli 0.1-13
 patch 2.7.6-9
 pavucontrol 1:5.0+r61+gee77d86-2
 pdfarranger 1.9.2-1
@@ -114,7 +114,7 @@ python-matplotlib 3.6.3-1
 python-numpy 1.24.2-1
 python-pandas 1.5.3-1
 python-pip 23.0.1-1
-python-poetry 1.4.0-1
+python-poetry 1.4.0-2
 python-pudb 2022.1.3-1
 python-pynvim 0.4.3-2
 python-pywal 3.3.0-7

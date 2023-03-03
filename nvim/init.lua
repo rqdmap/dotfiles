@@ -73,7 +73,20 @@ vim.api.nvim_create_autocmd("BufReadPost",{
 vim.o["path"] = "."
 vim.o["path"] = vim.fn.getcwd() .. "/**," .. vim.o["path"];
 
-
-
-
+vim.api.nvim_create_autocmd("BufWritePost", {
+	pattern = "*",
+	callback = function()
+		vim.cmd(":echo 'Hello, Markdown!'")
+		error(vim.fn.expand("%"))
+	end
+-- 	callback = function()
+--     local regex_pattern = "[^=`'/]+"
+--     if not vim.fn.expand("%:t"):match(regex_pattern) then
+--       local choice = vim.fn.confirm("Do you really want to write to file " .. vim.fn.expand("%:t") .. "?", "&Yes\n&No", 1)
+--       if choice == 2 then
+--         error("write aborted")
+--       end
+--     end
+--   end
+})
 
