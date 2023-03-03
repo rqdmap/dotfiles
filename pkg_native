@@ -13,6 +13,7 @@ base 3-1
 base-devel 1-1
 bash-completion 2.11-3
 bashtop 0.9.25-1
+bind 9.18.12-1
 binutils 2.40-4
 bison 3.8.2-4
 boost 1.81.0-3
@@ -151,6 +152,7 @@ texlive-pictures 2022.62992-1
 texlive-pstricks 2022.62977-1
 texlive-publishers 2022.63013-1
 texlive-science 2022.62977-1
+traceroute 2.1.1-1
 tree 2.1.0-1
 ttf-font-awesome 6.3.0-1
 ueberzug 18.1.9-4
