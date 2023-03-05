@@ -159,6 +159,8 @@ ueberzug 18.1.9-4
 unrar 1:6.2.6-1
 unzip 6.0-19
 v2ray 5.3.0-1
+virtualbox 7.0.6-3
+virtualbox-guest-utils 7.0.6-3
 wget 1.21.3-1
 which 2.21-6
 wpa_supplicant 2:2.10-8
