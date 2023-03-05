@@ -74,9 +74,9 @@ libjpeg-turbo 2.1.5.1-1
 libreoffice-still 7.4.5-1
 libtool 2.4.7+4+g1ec8fa28-2
 light 1.2.2-3
-linux 6.2.1.arch1-1
+linux 6.2.2.arch1-1
 linux-firmware 20230210.bf4115c-1
-linux-headers 6.2.1.arch1-1
+linux-headers 6.2.2.arch1-1
 lsof 4.98.0-1
 m4 1.4.19-2
 make 4.4.1-1
@@ -97,12 +97,12 @@ nmap 7.93-1
 notification-daemon 3.20.0-4
 noto-fonts-emoji 20220920-1
 ntfs-3g 2022.10.3-1
-nvidia 525.89.02-5
+nvidia 525.89.02-6
 nvidia-settings 525.89.02-1
 os-prober 1.81-1
 pacman 6.0.2-5
 pacman-contrib 1.8.2-1
-pandoc-cli 0.1-13
+pandoc-cli 0.1-15
 patch 2.7.6-9
 pavucontrol 1:5.0+r61+gee77d86-2
 pdfarranger 1.9.2-1
@@ -152,7 +152,7 @@ texlive-pictures 2022.62992-1
 texlive-pstricks 2022.62977-1
 texlive-publishers 2022.63013-1
 texlive-science 2022.62977-1
-traceroute 2.1.1-1
+traceroute 2.1.2-1
 tree 2.1.0-1
 ttf-font-awesome 6.3.0-1
 ueberzug 18.1.9-4

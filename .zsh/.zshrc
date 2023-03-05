@@ -38,6 +38,7 @@ alias ra='ranger'
 alias showpkg="expac --timefmt='%Y-%m-%d %T' '%l\t%n' | sort"
 # 稍微有一点硬编码的意思
 alias activate="source ./venv/bin/activate"
+alias mkvenv="python3 -m venv venv"
 
 export VISUAL="nvim"
 export EDITOR="nvim"

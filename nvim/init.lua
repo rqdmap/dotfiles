@@ -58,6 +58,10 @@ for key, value in pairs(options) do
 	vim.o[key] = value
 end
 
+
+-- 指定python3路径, 在使用虚拟环境时也能正常使用Vim
+vim.g['python3_host_prog'] = '/usr/bin/python3'
+
 for _, value in pairs(options_special) do
 	vim.cmd(value)
 end
