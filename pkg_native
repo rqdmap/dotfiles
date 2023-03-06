@@ -72,6 +72,7 @@ iperf3 3.12-2
 irssi 1.4.3-2
 jq 1.6-4
 jre-openjdk 19.0.2.u7-2
+kernel-headers-musl 4.19.88-2
 libjpeg-turbo 2.1.5.1-1
 libreoffice-still 7.4.5-1
 libtool 2.4.7+4+g1ec8fa28-2
@@ -86,6 +87,7 @@ man-pages 6.03-1
 mariadb 10.11.2-1
 mesa-utils 8.5.0-2
 meson 1.0.1-1
+musl 1.2.3-1
 nasm 2.15.05-1
 neofetch 7.1.0-2
 neomutt 20220429-3
