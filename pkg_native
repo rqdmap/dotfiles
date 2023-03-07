@@ -177,6 +177,7 @@ virtualbox-guest-iso 7.0.6-1
 virtualbox-guest-utils 7.0.6-3
 wget 1.21.3-1
 which 2.21-6
+wine-wechat-setup 1.2-1
 wpa_supplicant 2:2.10-8
 wqy-microhei 0.2.0_beta-11
 xclip 0.13-3
