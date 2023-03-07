@@ -1,7 +1,11 @@
 archlinux-themes-sddm 2.0-1
 cajviewer 1.0.3.0-2
 google-chrome 109.0.5414.119-1
-hexo-cli 4.3.0-6
+lib32-gd 2.3.3-2
+lib32-libgphoto2 2.5.30-1
+lib32-libheif 1.14.2-1
+lib32-libraqm 0.9.0-1
+lib32-libxpm 3.5.13-2
 libcgroup 2.0-1
 mininet 2.3.0-1
 ms-sys 1:2.8.0-1

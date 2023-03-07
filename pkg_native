@@ -114,6 +114,7 @@ os-prober 1.81-1
 pacman 6.0.2-5
 pacman-contrib 1.8.2-1
 pandoc-cli 0.1-19
+paru 1.11.1-1
 patch 2.7.6-9
 pavucontrol 1:5.0+r61+gee77d86-2
 pdfarranger 1.9.2-1
@@ -176,8 +177,6 @@ virtualbox-guest-iso 7.0.6-1
 virtualbox-guest-utils 7.0.6-3
 wget 1.21.3-1
 which 2.21-6
-wine-for-wechat 8.3-1
-wine-wechat-setup 1.2-1
 wpa_supplicant 2:2.10-8
 wqy-microhei 0.2.0_beta-11
 xclip 0.13-3
