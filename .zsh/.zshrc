@@ -40,6 +40,13 @@ alias showpkg="expac --timefmt='%Y-%m-%d %T' '%l\t%n' | sort"
 alias activate="source ./venv/bin/activate"
 alias mkvenv="python3 -m venv venv"
 
+# git 字数检查
+alias gitwa='git diff --word-diff=porcelain  | grep -e "^+[^+]" | wc -m | xargs'
+alias gitwd='git diff --word-diff=porcelain  | grep -e "^-[^-]" | wc -m | xargs'
+alias gitwdd='git diff --word-diff=porcelain | grep -e"^+[^+]" -e"^-[^-]"|sed -e's/.//'|sort|uniq -d|wc -m|xargs'
+alias gitw='echo $(($(gitwa) - $(gitwd)))'
+
+
 export VISUAL="nvim"
 export EDITOR="nvim"
 export {http,https,ftp,socks}_proxy="http://127.0.0.1:7890"
