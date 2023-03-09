@@ -10,6 +10,10 @@ compinit
 eval "$(dircolors)"
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
+
+# zoxide: Rust-based cd command with autojump and z features
+eval "$(zoxide init zsh)"
+
 HISTFILE=$ZSH/.zsh_history
 HISTSIZE=5000000
 SAVEHIST=5000000
@@ -62,9 +66,6 @@ export LC_TIME=C.UTF-8
 
 # 启用Node nvm
 # source /usr/share/nvm/init-nvm.sh
-
-# Plugins
-source $ZSH/plugins/z-1.9/z.sh
 
 # Colorful less
 export LESS_TERMCAP_mb=$(tput bold; tput setaf 2) # green
