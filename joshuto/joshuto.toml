@@ -8,7 +8,7 @@ xdg_open_fork = false
 
 [display]
 # default, hsplit
-mode = "default"
+mode = "hsplit"
 
 automatically_count_files = false
 collapse_preview = true
@@ -20,14 +20,14 @@ show_hidden = false
 show_icons = true
 tilde_in_titlebar = true
 # none, absolute, relative
-line_number_style = "none"
+line_number_style = "relative"
 
 [display.sort]
 # lexical, mtime, natural
-method = "natural"
+method = mtime
 case_sensitive = false
-directories_first = true
-reverse = false
+directories_first = false
+reverse = true
 
 [preview]
 max_preview_size = 2097152 # 2MB
