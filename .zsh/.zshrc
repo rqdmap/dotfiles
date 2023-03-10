@@ -38,6 +38,7 @@ alias grep='rg'
 alias h='his | rg'
 alias top='htop'
 alias ra='ranger'
+alias jo='joshuto'
 
 alias showpkg="expac --timefmt='%Y-%m-%d %T' '%l\t%n' | sort"
 # 稍微有一点硬编码的意思

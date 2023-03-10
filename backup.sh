@@ -13,6 +13,7 @@ rsync -ah ~/.config/sxhkd .
 rsync -ah ~/.config/polybar .
 rsync -ah ~/.config/rofi .
 rsync -ah ~/.config/ranger .
+rsync -ah ~/.config/joshuto .
 
 pacman -Qne | sort > pkg_native
 pacman -Qm | sort > pkg_foreign
