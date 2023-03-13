@@ -45,6 +45,8 @@ alias showpkg="expac --timefmt='%Y-%m-%d %T' '%l\t%n' | sort"
 alias activate="source ./venv/bin/activate"
 alias mkvenv="python3 -m venv venv"
 
+alias duu="du -d 1 | sort -nr | awk '{system(\"bytes_to_size \" \$1); print(\$2);}'"
+
 # git 字数检查
 alias gitwa='git diff --word-diff=porcelain  | grep -e "^+[^+]" | wc -m | xargs'
 alias gitwd='git diff --word-diff=porcelain  | grep -e "^-[^-]" | wc -m | xargs'
