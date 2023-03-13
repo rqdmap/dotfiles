@@ -127,7 +127,3 @@ colors:
 key_bindings:
   - {key: Key1, mods: Control, action: ScrollLineUp}
   - {key: Key2, mods: Control, action: ScrollLineDown}
-
-
-env:
-   LANG: "zh_CN.UTF-8"
