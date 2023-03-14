@@ -104,6 +104,5 @@ export GROFF_NO_SGR=1         # For Konsole and Gnome-terminal
 # Add local bin to PATH
 PATH=$PATH:$HOME/.local/bin
 
-
 eval "$(starship init zsh)"
 
