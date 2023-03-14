@@ -4,6 +4,7 @@ arm-linux-gnueabi-gcc75-linaro-bin 7.5.0-1
 cajviewer 1.0.3.0-2
 castxml 0.5.1-2
 cloog 0.20.0-2
+ffmpeg-compat-57 3.4.11-1
 gcc44 4.4.7-6
 goldendict-git 1:1.5.0rc2.r590.gd424f25f-1
 google-chrome 109.0.5414.119-1

@@ -37,15 +37,29 @@ alias his='history -i 0'
 alias grep='rg'
 alias h='his | rg'
 alias top='htop'
-alias ra='ranger'
 alias jo='joshuto'
 
+function ra {
+    local IFS=$'\t\n'
+    local tempfile="$(mktemp -t tmp.XXXXXX)"
+    local ranger_cmd=(
+        command
+        ranger
+        --cmd="map q chain shell echo %d > "$tempfile"; quitall"
+    )
+    
+    ${ranger_cmd[@]} "$@"
+    if [[ -f "$tempfile" ]] && [[ "$(cat -- "$tempfile")" != "$(echo -n `pwd`)" ]]; then
+        pushd -- "$(cat "$tempfile")" || return
+    fi
+    command rm -f -- "$tempfile" 2>/dev/null
+}
+
 alias showpkg="expac --timefmt='%Y-%m-%d %T' '%l\t%n' | sort"
+
 # 稍微有一点硬编码的意思
 alias activate="source ./venv/bin/activate"
 alias mkvenv="python3 -m venv venv"
-
-alias duu="du -d 1 | sort -nr | awk '{system(\"bytes_to_size \" \$1); print(\$2);}'"
 
 # git 字数检查
 alias gitwa='git diff --word-diff=porcelain  | grep -e "^+[^+]" | wc -m | xargs'
@@ -53,12 +67,10 @@ alias gitwd='git diff --word-diff=porcelain  | grep -e "^-[^-]" | wc -m | xargs'
 alias gitwdd='git diff --word-diff=porcelain | grep -e"^+[^+]" -e"^-[^-]"|sed -e's/.//'|sort|uniq -d|wc -m|xargs'
 alias gitw='echo $(($(gitwa) - $(gitwd)))'
 
-
 export VISUAL="nvim"
 export EDITOR="nvim"
 export {http,https,ftp,socks}_proxy="http://127.0.0.1:7890"
 export no_proxy="localhost,127.0.0.0/8,10.0.0.0/8"
-export BLOG="/home/rqdmap/hugo-blog/content"
 
 # 为journalctl-less设置标记
 export SYSTEMD_LESS=FRXMK
@@ -86,6 +98,8 @@ export LESS_TERMCAP_ZO=$(tput ssupm)
 export LESS_TERMCAP_ZW=$(tput rsupm)
 export GROFF_NO_SGR=1         # For Konsole and Gnome-terminal
 
+
+# Add local bin to PATH
 PATH=$PATH:$HOME/.local/bin
 
 

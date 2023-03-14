@@ -15,6 +15,9 @@ rsync -ah ~/.config/rofi .
 rsync -ah ~/.config/ranger .
 rsync -ah ~/.config/joshuto .
 
+# Many config not used.
+rsync -ah ~/.Xresources .
+
 pacman -Qne | sort > pkg_native
 pacman -Qm | sort > pkg_foreign
 

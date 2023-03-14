@@ -68,7 +68,15 @@ xsetroot -cursor_name left_ptr
 
 # 禁止屏幕休眠
 xset dpms 0 0 0
-xset s off
+
+# 启用定时锁屏
+# https://askubuntu.com/questions/509507/please-explain-the-parameters-noexpose-and-cycle-in-xset
+# xset s <timeout> <cycle>:
+#	After idle for <timeout> seconds, activate dimmer.
+#	After <cycle> seconds, activate xsecurelock.
+xset s on
+xset s 60 10
+xss-lock -n /usr/lib/xsecurelock/dimmer -l -- xsecurelock &
 
 # 打开词典
 cleverStart goldendict
