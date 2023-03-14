@@ -29,7 +29,7 @@ local options = {
 	shiftwidth	=	4,
 	softtabstop	=	4,
 	expandtab	=	false,	-- 不要使用空格代替tab
-	autochdir	=	true,	-- 自动切换目录
+	autochdir	=	false,	-- 不要切换目录, 不然ctags好像不能工作
 
 -- Matching
 	showmatch	=	true,	-- 显示成对匹配符号
