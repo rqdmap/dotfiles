@@ -75,7 +75,7 @@ xset dpms 0 0 0
 #	After idle for <timeout> seconds, activate dimmer.
 #	After <cycle> seconds, activate xsecurelock.
 xset s on
-xset s 90 10
+xset s 90 15
 xss-lock -n /usr/lib/xsecurelock/dimmer -l -- xsecurelock &
 
 # 打开词典

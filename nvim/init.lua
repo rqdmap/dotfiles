@@ -125,4 +125,11 @@ vim.cmd([[
 ]])
 vim.cmd([[cnoremap <expr> <CR> CorrectWritePath()]])
 
+vim.cmd([[nnoremap <silent> <C-T><C-T> :TagbarToggle<CR>]])
 
+vim.g['tagbar_position'] = 'leftabove vertical'
+vim.g['tagbar_autofocus'] = 1
+vim.g['tagbar_sort'] = 0
+vim.g['tagbar_compact'] = 1
+vim.g['tagbar_show_tag_linenumbers'] = 2
+vim.g['tagbar_indent'] = 1

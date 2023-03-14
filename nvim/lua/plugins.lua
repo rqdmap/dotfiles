@@ -58,6 +58,9 @@ return require('packer').startup(function(use)
 	-- copilot
 	use 'github/copilot.vim'
 
+	-- tagbar
+	use 'majutsushi/tagbar'
+
 -- Programming Languages Support
 	-- nvim-lspconfig
 	use 'neovim/nvim-lspconfig'

@@ -16,8 +16,10 @@ alt + Return
 control + alt + l
 	xsecurelock
 
-control + alt + shift + l
-	systemctl suspend
+
+# Todo... This suspend is too power consuming...
+#control + alt + shift + l
+#	systemctl suspend
 
 # make sxhkd reload its configuration files:
 super + alt + Escape
