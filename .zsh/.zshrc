@@ -39,6 +39,8 @@ alias h='his | rg'
 alias top='htop'
 alias jo='joshuto'
 
+alias duu='du -d 1 -h | sort -hr'
+
 function ra {
     local IFS=$'\t\n'
     local tempfile="$(mktemp -t tmp.XXXXXX)"
