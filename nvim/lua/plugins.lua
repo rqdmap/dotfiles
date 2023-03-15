@@ -12,6 +12,7 @@ return require('packer').startup(function(use)
 		requires = { 'kyazdani42/nvim-web-devicons', opt = true }
 	}
 
+	-- file explorer tree
 	use {
 		'nvim-tree/nvim-tree.lua',
 		requires = {
@@ -19,6 +20,10 @@ return require('packer').startup(function(use)
 		},
 		-- tag = 'nightly' -- optional, updated every week. (see issue #1193)
 	}
+
+	-- tagbar
+	use 'majutsushi/tagbar'
+
 
 	use 'Valloric/MatchTagAlways'
 
@@ -54,12 +59,8 @@ return require('packer').startup(function(use)
 	-- AW计时器
 	use 'ActivityWatch/aw-watcher-vim'
 
-
 	-- copilot
 	use 'github/copilot.vim'
-
-	-- tagbar
-	use 'majutsushi/tagbar'
 
 -- Programming Languages Support
 	-- nvim-lspconfig

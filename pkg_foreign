@@ -6,6 +6,7 @@ castxml 0.5.1-2
 cloog 0.20.0-2
 ffmpeg-compat-57 3.4.11-1
 gcc44 4.4.7-6
+gftp 2.9.1b-3
 goldendict-git 1:1.5.0rc2.r590.gd424f25f-1
 google-chrome 109.0.5414.119-1
 i386-musl 1.2.3-1

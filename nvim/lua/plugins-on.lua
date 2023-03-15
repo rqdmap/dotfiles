@@ -60,12 +60,15 @@ require('lualine').setup {
 }
 
 
-
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
 -- empty setup using defaults
-require("nvim-tree").setup()
+require("nvim-tree").setup{
+	open_on_setup		= true,
+	open_on_setup_file	= true,
+
+}
 
 -- -- OR setup with some options
 -- require("nvim-tree").setup({
@@ -99,14 +102,14 @@ require('Comment').setup( {
         ---Line-comment toggle keymap
         line = '<leader>cc',
         ---Block-comment toggle keymap
-        block = '<leader>bc',
+        block = '<leader>cb',
     },
     ---LHS of operator-pending mappings in NORMAL and VISUAL mode
     opleader = {
         ---Line-comment keymap
         line = '<leader>cc',
         ---Block-comment keymap
-        block = '<leader>bc',
+        block = '<leader>cb',
     },
     ---LHS of extra mappings
     extra = {
@@ -144,7 +147,21 @@ rt.setup({
   },
 })
 
-
-
 require'lspconfig'.jedi_language_server.setup{}
 
+
+-- Tagbar相关配置
+vim.cmd([[nnoremap <silent> <Leader>tt :TagbarToggle<CR>]])
+vim.g['tagbar_position'] = 'leftabove vertical'
+vim.g['tagbar_autofocus'] = 1
+vim.g['tagbar_sort'] = 0
+vim.g['tagbar_compact'] = 1
+vim.g['tagbar_show_tag_linenumbers'] = 2
+vim.g['tagbar_indent'] = 1
+
+
+-- 关闭TableMode的默认映射, 其将只保留<leader>tm的映射
+vim.g['table_mode_disable_tableize_mappings'] = 1
+
+-- Nvim Tree相关配置
+vim.cmd([[nnoremap <silent> <Leader>f :NvimTreeToggle<CR>]])

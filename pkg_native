@@ -53,9 +53,8 @@ gawk 5.2.1-1
 gcc 12.2.1-2
 gdb 13.1-1
 gettext 0.21.1-2
-gftp 2.9.1b-3
 girara 0.3.9-1
-git 2.39.2-1
+git 2.40.0-1
 gnu-netcat 0.7.1-9
 grep 3.9-1
 groff 1.22.4-7
@@ -78,9 +77,9 @@ libjpeg-turbo 2.1.5.1-1
 libreoffice-still 7.4.6-1
 libtool 2.4.7+4+g1ec8fa28-2
 light 1.2.2-3
-linux 6.2.5.arch1-1
+linux 6.2.6.arch1-1
 linux-firmware 20230210.bf4115c-1
-linux-headers 6.2.5.arch1-1
+linux-headers 6.2.6.arch1-1
 lsof 4.98.0-1
 m4 1.4.19-2
 make 4.4.1-1
@@ -103,12 +102,12 @@ nmap 7.93-1
 notification-daemon 3.20.0-4
 noto-fonts-emoji 20220920-1
 ntfs-3g 2022.10.3-1
-nvidia 525.89.02-10
+nvidia 525.89.02-11
 nvidia-settings 525.89.02-1
 os-prober 1.81-1
 pacman 6.0.2-5
 pacman-contrib 1.8.2-1
-pandoc-cli 0.1-26
+pandoc-cli 0.1-27
 patch 2.7.6-9
 pavucontrol 1:5.0+r61+gee77d86-2
 pdfarranger 1.9.2-1
