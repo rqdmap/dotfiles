@@ -129,3 +129,7 @@ vim.cmd([[cnoremap <expr> <CR> CorrectWritePath()]])
 vim.cmd([[nnoremap gb :bn<CR>]])
 
 
+-- 打开原生Markdown折叠支持
+vim.g['markdown_folding'] = 1
+-- 默认不折叠
+vim.o['foldlevel'] = 1000
