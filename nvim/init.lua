@@ -19,7 +19,6 @@ local options = {
 	linebreak	=	true,	-- 特殊符号才触发折行
 	scrolloff	=	5,	-- 垂直滚动时距离上下边界的距离
 
-
 -- Edit
 	autoindent	=	true,
 	smartindent	=	true,
@@ -47,6 +46,7 @@ local options = {
 -- Misc
 	encoding	=	"utf-8",
 	fileencoding	=	"utf-8",
+	updatetime	=	500,	-- 更新时间
 }
 
 local options_special = {
@@ -123,6 +123,9 @@ vim.cmd([[
 	  endif
 	endfunction
 ]])
+
 vim.cmd([[cnoremap <expr> <CR> CorrectWritePath()]])
+
+vim.cmd([[nnoremap gb :bn<CR>]])
 
 

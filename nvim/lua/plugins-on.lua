@@ -66,8 +66,14 @@ vim.g.loaded_netrwPlugin = 1
 -- empty setup using defaults
 require("nvim-tree").setup{
 	open_on_setup		= true,
-	open_on_setup_file	= true,
-
+	-- open_on_setup_file	= true,
+	sort_by				= "modified",
+	filters = {
+		dotfiles = true
+	},
+	trash = {
+		cmd = "trash"
+	},
 }
 
 -- -- OR setup with some options
@@ -153,10 +159,11 @@ require'lspconfig'.jedi_language_server.setup{}
 -- Tagbar相关配置
 vim.cmd([[nnoremap <silent> <Leader>tt :TagbarToggle<CR>]])
 vim.g['tagbar_position'] = 'leftabove vertical'
-vim.g['tagbar_autofocus'] = 1
+vim.g['tagbar_width'] = 30
+vim.g['tagbar_autofocus'] = 0
 vim.g['tagbar_sort'] = 0
 vim.g['tagbar_compact'] = 1
-vim.g['tagbar_show_tag_linenumbers'] = 2
+-- vim.g['tagbar_show_tag_linenumbers'] = 3
 vim.g['tagbar_indent'] = 1
 
 
@@ -165,3 +172,12 @@ vim.g['table_mode_disable_tableize_mappings'] = 1
 
 -- Nvim Tree相关配置
 vim.cmd([[nnoremap <silent> <Leader>f :NvimTreeToggle<CR>]])
+
+
+-- 配置快捷键操作copilot, 因为没有toggle, 所以采用这种方式
+vim.cmd([[nnoremap <silent> <Leader>cp :Copilot ]])
+
+
+
+
+

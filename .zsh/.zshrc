@@ -1,4 +1,5 @@
-zmodload zsh/zprof
+# 与结尾的zprof一起工作, 用于性能分析
+# zmodload zsh/zprof
 
 export ZSH=$HOME/.zsh
 
@@ -9,7 +10,6 @@ compinit
 
 eval "$(dircolors)"
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-
 
 # zoxide: Rust-based cd command with autojump and z features
 eval "$(zoxide init zsh)"
@@ -105,4 +105,7 @@ export GROFF_NO_SGR=1         # For Konsole and Gnome-terminal
 PATH=$PATH:$HOME/.local/bin
 
 eval "$(starship init zsh)"
+
+# 与开头的zprof模块一起工作
+# zprof
 
