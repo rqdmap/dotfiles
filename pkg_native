@@ -43,13 +43,13 @@ fcitx5-configtool 5.0.17-1
 fcitx5-gtk 5.0.22-1
 feh 3.9.1-2
 file 5.44-3
-findutils 4.9.0-2
+findutils 4.9.0-3
 firefox 106.0.3-1
 flameshot 12.1.0-1
 flex 2.6.4-4
 font-manager 0.8.8-1
 fzf 0.38.0-1
-gawk 5.2.1-1
+gawk 5.2.1-2
 gcc 12.2.1-2
 gdb 13.1-1
 gettext 0.21.1-2
@@ -57,7 +57,7 @@ girara 0.3.9-1
 git 2.40.0-1
 gnu-netcat 0.7.1-9
 grep 3.9-1
-groff 1.22.4-7
+groff 1.22.4-10
 grub 2:2.06.r456.g65bc45963-1
 gsl 2.7.1-1
 gvim 9.0.1337-1
@@ -95,7 +95,7 @@ neomutt 20220429-3
 neovim 0.8.3-1
 netctl 1.28-2
 net-tools 2.10-2
-networkmanager 1.42.4-1
+networkmanager 1.42.4-2
 network-manager-applet 1.30.0-1
 nginx-mainline 1.23.3-1
 nmap 7.93-1
@@ -111,8 +111,8 @@ pandoc-cli 0.1-27
 patch 2.7.6-9
 pavucontrol 1:5.0+r61+gee77d86-2
 pdfarranger 1.9.2-1
-php-fpm 8.2.3-1
-php-sqlite 8.2.3-1
+php-fpm 8.2.4-1
+php-sqlite 8.2.4-1
 pkgconf 1.8.0-1
 polybar 3.6.3-3
 poppler-data 0.4.12-1
