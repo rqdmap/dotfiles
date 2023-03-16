@@ -130,7 +130,6 @@ python-statsmodels 0.13.5-1
 python-virtualenv 20.17.1-1
 qemu-full 7.2.0-3
 ranger 1.9.3-6
-ripgrep 13.0.0-3
 rofi 1.7.5-1
 rsync 3.2.7-3
 rust-analyzer 20230313-1
