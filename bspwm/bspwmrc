@@ -1,5 +1,7 @@
 #! /bin/bash
 
+both="1"
+
 # 多显示屏配置
 name1="eDP-1-1"
 rate1="165.01"
@@ -8,9 +10,6 @@ mode1="1920x1080"
 name2="HDMI-0"
 mode2="2560x1080"
 rate2="74.99"
-
-
-both="0"
 
 # Home AOC
 # mode="1920x1080"

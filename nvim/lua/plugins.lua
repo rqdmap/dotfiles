@@ -24,7 +24,6 @@ return require('packer').startup(function(use)
 	-- tagbar
 	use 'majutsushi/tagbar'
 
-
 	use 'Valloric/MatchTagAlways'
 
 	-- 为Rofi提供语法高亮
@@ -32,6 +31,10 @@ return require('packer').startup(function(use)
 
 	-- 直接显示源码对应的颜色
 	use 'ap/vim-css-color'
+
+
+	-- bufferline
+	use {'akinsho/bufferline.nvim', tag = "v3.*", requires = 'nvim-tree/nvim-web-devicons'}
 
 
 -- Edit
