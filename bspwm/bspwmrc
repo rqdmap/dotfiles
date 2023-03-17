@@ -1,11 +1,15 @@
 #! /bin/bash
 
-both="1"
+both="0"
 
 # 多显示屏配置
 name1="eDP-1-1"
 rate1="165.01"
 mode1="1920x1080"
+
+if [[ -z "$(xrandr | grep $name1)" ]]; then
+	name1="eDP-1"
+fi
 
 name2="HDMI-0"
 mode2="2560x1080"
