@@ -70,6 +70,9 @@ alias gitwd='git diff --word-diff=porcelain  | grep -e "^-[^-]" | wc -m | xargs'
 alias gitwdd='git diff --word-diff=porcelain | grep -e"^+[^+]" -e"^-[^-]"|sed -e's/.//'|sort|uniq -d|wc -m|xargs'
 alias gitw='echo $(($(gitwa) - $(gitwd)))'
 
+
+alias ssgs='cd ~/inject/SSGS && source venv/bin/activate && cd SRC/Core'
+
 export VISUAL="nvim"
 export EDITOR="nvim"
 export {http,https,ftp,socks}_proxy="http://127.0.0.1:7890"
