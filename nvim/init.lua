@@ -128,6 +128,7 @@ vim.cmd([[
 vim.cmd([[cnoremap <expr> <CR> CorrectWritePath()]])
 
 vim.cmd([[nnoremap gb :bn<CR>]])
+vim.cmd([[nnoremap gB :bp<CR>]])
 
 
 -- 打开原生Markdown折叠支持
