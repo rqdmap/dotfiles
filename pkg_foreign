@@ -3,12 +3,13 @@ archlinux-themes-sddm 2.0-1
 arm-linux-gnueabi-gcc75-linaro-bin 7.5.0-1
 cajviewer 1.0.3.0-2
 castxml 0.5.1-2
+chromedriver 111.0.5563.64-1
 cloog 0.20.0-2
 ffmpeg-compat-57 3.4.11-1
 gcc44 4.4.7-6
 gftp 2.9.1b-3
 goldendict-git 1:1.5.0rc2.r590.gd424f25f-1
-google-chrome 109.0.5414.119-1
+google-chrome 111.0.5563.64-1
 i386-musl 1.2.3-1
 joshuto 0.9.4-1
 kernel-headers-musl-i386 4.19.88-1

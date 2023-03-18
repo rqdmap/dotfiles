@@ -51,7 +51,7 @@ local options = {
 
 local options_special = {
 	"colorscheme gruvbox",
-	"set clipboard+=unnamedplus",
+	-- "set clipboard+=unnamedplus",
 }
 
 

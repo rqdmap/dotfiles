@@ -69,6 +69,10 @@ xset r rate 300 45
 # 配置Miku Cursor
 xsetroot -cursor_name left_ptr
 
+
+# 重启一次clash, 不然不知道为什么无法连接
+systemctl restart clash
+
 # 禁止屏幕休眠
 xset dpms 0 0 0
 
@@ -101,4 +105,6 @@ bspc config borderless_monocle   true
 bspc config gapless_monocle      true
 
 bspc rule -a Zathura state=tiled
+bspc rule -a Telegram state=floating rectangle=500x500+0+0
+
 
