@@ -71,7 +71,7 @@ alias gitwdd='git diff --word-diff=porcelain | grep -e"^+[^+]" -e"^-[^-]"|sed -e
 alias gitw='echo $(($(gitwa) - $(gitwd)))'
 
 
-alias ssgs='cd ~/inject/SSGS && source venv/bin/activate && cd SRC/Core'
+alias ssgs='cd ~/inject/SSGS && source venv/bin/activate && cd core'
 
 export VISUAL="nvim"
 export EDITOR="nvim"
