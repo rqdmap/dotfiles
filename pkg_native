@@ -35,6 +35,7 @@ dhcping 1.2-3
 dialog 1:1.3_20230209-1
 dkms 3.0.10-1
 docker 1:23.0.1-1
+docker-compose 2.17.0-1
 efibootmgr 18-2
 esbuild 0.17.11-1
 expac 10-5
