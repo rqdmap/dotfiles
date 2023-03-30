@@ -78,6 +78,10 @@ vim.api.nvim_create_autocmd("BufReadPost",{
 vim.o["path"] = "."
 vim.o["path"] = vim.fn.getcwd() .. "/**," .. vim.o["path"];
 
+-- 移除一些文件夹
+vim.o["wildignore"] = "*/__pycache__/*"
+
+
 
 -- Quite ugly... Though works well... 后期一定会改进的...
 -- https://vi.stackexchange.com/questions/41405/how-to-extract-filename-of-w-command-in-vims-autocmd
