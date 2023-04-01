@@ -73,6 +73,8 @@ alias gitw='echo $(($(gitwa) - $(gitwd)))'
 
 alias ssgs='cd ~/inject/SSGS && source venv/bin/activate && cd core'
 
+alias logisim-evolution='_JAVA_AWT_WM_NONREPARENTING=1  logisim-evolution'
+
 export VISUAL="nvim"
 export EDITOR="nvim"
 export {http,https,ftp,socks}_proxy="http://127.0.0.1:7890"
