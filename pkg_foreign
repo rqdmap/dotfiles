@@ -15,6 +15,7 @@ kernel-headers-musl-i386 4.19.88-1
 kuro-bin 9.0.0-1
 libcgroup 2.0-1
 libeb 4.4.3-10
+logisim-evolution 3.8.0-1
 mininet 2.3.0-1
 ms-sys 1:2.8.0-1
 nerd-fonts-complete 2.2.2-1
