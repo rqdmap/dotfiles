@@ -74,6 +74,7 @@ alias gitw='echo $(($(gitwa) - $(gitwd)))'
 alias ssgs='cd ~/inject/SSGS && source venv/bin/activate && cd core'
 
 alias logisim='_JAVA_AWT_WM_NONREPARENTING=1 nohup java -jar /home/rqdmap/Applications/Logisim-ITA.jar > /dev/null 2>&1 &!; exit'
+alias mars='nohup mars-mips > /dev/null 2>&1 &!; exit'
 
 export VISUAL="nvim"
 export EDITOR="nvim"
