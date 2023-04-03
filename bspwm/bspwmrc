@@ -1,6 +1,6 @@
 #! /bin/bash
 
-both="1"
+both="0"
 
 # 多显示屏配置
 name1="eDP-1-1"
