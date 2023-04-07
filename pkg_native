@@ -107,6 +107,7 @@ noto-fonts-emoji 20220920-1
 ntfs-3g 2022.10.3-1
 nvidia 530.41.03-2
 nvidia-settings 530.41.03-1
+openscenegraph 3.6.5-18
 os-prober 1.81-1
 pacman 6.0.2-6
 pacman-contrib 1.9.0-1
