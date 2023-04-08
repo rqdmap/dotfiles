@@ -54,6 +54,7 @@ font-manager 0.8.8-1
 fzf 0.38.0-1
 gawk 5.2.1-2
 gcc 12.2.1-2
+gdal 3.6.3-2
 gdb 13.1-2
 gettext 0.21.1-5
 girara 0.4.0-1
