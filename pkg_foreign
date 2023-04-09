@@ -26,13 +26,10 @@ osl 0.9.5-1
 paru 1.11.1-1
 python-esprima 4.0.1-1
 python-pep517 0.13.0-1
-python-posix_ipc 1.0.5-1
 python-pygraphviz 1.9-2
 qt5-webkit 5.212.0alpha4-18
 sddm-sugar-candy-git r53.2b72ef6-1
 systemd-shutdown-diagnose 6-2
-tclkit 8.6.11-1
-ucl 1.03-9
 unclutter-xfixes-git v1.6.r6.gcf53cfb-1
 urxvt-resize-font-git 27.b593580-1
 vim-gruvbox-git v2.0.0.r69.gbf2885a-1
