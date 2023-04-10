@@ -1,7 +1,8 @@
 {
-  "LuaSnip": { "branch": "master", "commit": "500981ff6cefc7343e3959ef0f939bd0bfd49ba9" },
+  "Comment.nvim": { "branch": "master", "commit": "8d3aa5c22c2d45e788c7a5fe13ad77368b783c20" },
   "MatchTagAlways": { "branch": "master", "commit": "352eb479a4ad1608e0880b79ab2357aac2cf4bed" },
   "bufferline.nvim": { "branch": "main", "commit": "ef4fdc5cea3473801dce89b5fdfe633380c80c65" },
+  "fcitx.vim": { "branch": "fcitx5", "commit": "92247352c6f05c8deebea2f50d8e842bfd91c294" },
   "gruvbox.nvim": { "branch": "main", "commit": "046bd22cc704fef4f19d6a9320fc27bf4527479f" },
   "lazy.nvim": { "branch": "main", "commit": "57cce98dfdb2f2dd05a0567d89811e6d0505e13b" },
   "lualine.nvim": { "branch": "master", "commit": "84ffb80e452d95e2c46fa29a98ea11a240f7843e" },
@@ -10,5 +11,5 @@
   "rasi.vim": { "branch": "main", "commit": "eac9969cf935cd4380987dc99bfa10d69d3f34a6" },
   "tagbar": { "branch": "master", "commit": "be563539754b7af22bbe842ef217d4463f73468c" },
   "vim-css-color": { "branch": "master", "commit": "5687a7978bc80263cd03d0a667c2f56890cfb940" },
-  "vim-snippets": { "branch": "master", "commit": "c7e61b73a546c9dd0525cd158cc1613bb48e414a" }
+  "vim-table-mode": { "branch": "master", "commit": "9555a3e6e5bcf285ec181b7fc983eea90500feb4" }
 }
