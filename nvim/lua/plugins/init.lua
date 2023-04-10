@@ -2,6 +2,8 @@ return {
 	'folke/lazy.nvim',
 
 -- UI
+	require("plugins.nvim-web-devicons"),
+
 	require("plugins.lualine"),
 
 	"ellisonleao/gruvbox.nvim",
