@@ -8,7 +8,7 @@ disabled=true
 
 [username]
 style_user = "bold cyan"
-style_root = "bold black"
+style_root = "bold red"
 show_always=true
 
 [character]
