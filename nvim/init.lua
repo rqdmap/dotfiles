@@ -1,6 +1,5 @@
 require("bootstrap")
-require("plugins")
-require("plugins-on")
+-- require("plugins-on")
 
 local options = {
 -- General
