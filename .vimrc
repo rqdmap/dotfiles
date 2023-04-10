@@ -11,6 +11,7 @@ syntax on		" 语法高亮
 set cursorline		" 光标所在行高亮
 set t_Co=256		" 启用256色
 set background=dark
+" set termguicolors
 " colorscheme gruvbox
 
 " --------------------------------------------------------------------
@@ -22,8 +23,6 @@ set showcmd		" 在底部显示键入的指令
 set wrap		" 自动折行
 set linebreak		" 特点符号(如空格等)才触发折行
 set scrolloff=5		" 垂直滚动时, 光标距离顶部/底部的距离
-set tw=80
-set formatoptions=tcqmM
 
 " --------------------------------------------------------------------
 " Encoding
@@ -51,6 +50,7 @@ set showmatch 		" 显示成对匹配符号
 set hlsearch		" 不要高亮搜索结果
 set ignorecase		" 忽视大小写
 set smartcase		" 智能大小写敏感
+set noincsearch
 
 
 " --------------------------------------------------------------------
@@ -63,6 +63,11 @@ if has("autocmd")
   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
 
+" Default is 'nvi'
+set mouse=
+
+au FileType tex setlocal tw=80
+au FileType tex setlocal formatoptions=tcqmM
 " --------------------------------------------------------------------
 " Tags
 " --------------------------------------------------------------------
