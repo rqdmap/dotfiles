@@ -49,12 +49,6 @@ local options = {
 	updatetime	=	500,	-- 更新时间
 }
 
-local options_special = {
-	"colorscheme gruvbox",
-	-- "set clipboard+=unnamedplus",
-}
-
-
 for key, value in pairs(options) do
 	vim.o[key] = value
 end
@@ -62,10 +56,6 @@ end
 
 -- 指定python3路径, 在使用虚拟环境时也能正常使用Vim
 vim.g['python3_host_prog'] = '/usr/bin/python3'
-
-for _, value in pairs(options_special) do
-	vim.cmd(value)
-end
 
 vim.api.nvim_create_autocmd("BufReadPost",{
 	command = [[
@@ -139,3 +129,6 @@ vim.cmd([[nnoremap gB :bp<CR>]])
 vim.g['markdown_folding'] = 1
 -- 默认不折叠
 vim.o['foldlevel'] = 1000
+
+
+ -- vim.cmd([[filetype plugin indent off]])

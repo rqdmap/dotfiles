@@ -6,7 +6,12 @@ return {
 
 	require("plugins.lualine"),
 
-	"ellisonleao/gruvbox.nvim",
+	{
+		"ellisonleao/gruvbox.nvim",
+		init = function()
+			vim.cmd([[colorscheme gruvbox]])
+		end
+	},
 
 	-- file explorer tree
 	require("plugins.nvim-tree"),
@@ -44,9 +49,10 @@ return {
 
 	require("plugins.copilot"),
 
--- Progr-- amming Languages Support
+-- Programming Languages Support
 	-- nvim-lspconfig
 	require("plugins.lsp"),
+
 	require("plugins.cpp"),
 	require("plugins.rust"),
 	require("plugins.latex"),

@@ -19,13 +19,14 @@ return {
 			vim.g.vimtex_quickfix_mode = 0
 			vim.g.vimtex_view_method = 'zathura'
 			vim.g.vimtex_view_general_viewer = 'zathura'
-			vim.api.nvim_create_autocmd(
-				"FileType",
-				{
-					pattern = "tex",
-					command = "map <buffer> <silent>  <leader>lw :VimtexCountWords! <CR><CR>"
-				}
-			)
+			-- vim.api.nvim_create_autocmd(
+			-- 	"FileType",
+			-- 	{
+			-- 		pattern = "tex",
+			-- 		command = "map <buffer> <silent>  <leader>lw :VimtexCountWords! <CR><CR>"
+			-- 	}
+			-- )
 		end
-	}
+	},
+	print("shit")
 }
