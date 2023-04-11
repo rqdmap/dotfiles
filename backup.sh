@@ -3,17 +3,17 @@
 WORKSPACE='/home/rqdmap/dotfiles'
 cd $WORKSPACE
 
-rsync ~/.vimrc .
-rsync -ah ~/.zsh .
-rsync -ah ~/.config/nvim .
-rsync -ah ~/.config/alacritty .
-rsync ~/.config/starship.toml .
-rsync -ah ~/.config/bspwm .
-rsync -ah ~/.config/sxhkd .
-rsync -ah ~/.config/polybar .
-rsync -ah ~/.config/rofi .
-rsync -ah ~/.config/ranger .
-rsync -ah ~/.config/joshuto .
+rsync		--delete	~/.vimrc .
+rsync -ah	--delete	~/.zsh .
+rsync -ah	--delete	~/.config/nvim .
+rsync -ah	--delete	~/.config/alacritty .
+rsync		--delete	~/.config/starship.toml .
+rsync -ah	--delete	~/.config/bspwm .
+rsync -ah	--delete	~/.config/sxhkd .
+rsync -ah	--delete	~/.config/polybar .
+rsync -ah	--delete	~/.config/rofi .
+rsync -ah	--delete	~/.config/ranger .
+rsync -ah	--delete	~/.config/joshuto .
 
 # Many config not used.
 rsync -ah ~/.Xresources .

@@ -28,5 +28,4 @@ return {
 			-- )
 		end
 	},
-	print("shit")
 }
