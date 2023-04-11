@@ -16,6 +16,11 @@ return {
 			trash = {
 				cmd = "trash"
 			},
+			update_focused_file = {
+				enable = true,
+				update_root = true,
+				ignore_list = {},
+			},
 		}
 
 		-- Nvim Tree相关配置

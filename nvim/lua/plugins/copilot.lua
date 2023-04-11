@@ -1,13 +1,50 @@
 -- Todo
-local toggle = function()
-
-end
-
 return {
-	'github/copilot.vim',
+	"zbirenbaum/copilot.lua",
+	event = "InsertEnter",
 	config = function()
-		-- Todo: 实现Lua函数的map, 通过\cp切换是否开启copilot, 或给出补全选项, 与cmp等结合
-		-- 配置快捷键操作copilot, 
-		-- vim.cmd([[nnoremap <silent> <Leader>cp :Copilot ]])
+		require('copilot').setup({
+			panel = {
+				enabled = true,
+				auto_refresh = false,
+				keymap = {
+					jump_prev = "[[",
+					jump_next = "]]",
+					accept = "<CR>",
+					refresh = "gr",
+					open = "<M-CR>"
+				},
+				layout = {
+					position = "bottom", -- | top | left | right
+					ratio = 0.4
+				},
+			},
+			suggestion = {
+				enabled = true,
+				auto_trigger = false,
+				debounce = 75,
+				keymap = {
+					accept = "<M-l>",
+					accept_word = false,
+					accept_line = false,
+					next = "<M-]>",
+					prev = "<M-[>",
+					dismiss = "<C-]>",
+				},
+			},
+			filetypes = {
+				yaml = false,
+				markdown = false,
+				help = false,
+				gitcommit = false,
+				gitrebase = false,
+				hgcommit = false,
+				svn = false,
+				cvs = false,
+				["."] = false,
+			},
+			copilot_node_command = 'node', -- Node.js version must be > 16.x
+			server_opts_overrides = {},
+		})
 	end
 }
