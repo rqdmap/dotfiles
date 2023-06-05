@@ -1,0 +1,52 @@
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+alias ls='ls --color=auto -t'
+alias diff='diff --color=auto'
+
+alias vim='nvim'
+alias del='trash'
+alias his='history -i 0'
+alias grep='rg'
+alias h='his | rg'
+alias top='htop -u `whoami`'
+alias jo='joshuto'
+alias duu='du -d 1 -h | sort -hr'
+
+
+function ra {
+    local IFS=$'\t\n'
+    local tempfile="$(mktemp -t tmp.XXXXXX)"
+    local ranger_cmd=(
+        command
+        ranger
+        --cmd="map q chain shell echo %d > "$tempfile"; quitall"
+    )
+    
+    ${ranger_cmd[@]} "$@"
+    if [[ -f "$tempfile" ]] && [[ "$(cat -- "$tempfile")" != "$(echo -n `pwd`)" ]]; then
+        pushd -- "$(cat "$tempfile")" || return
+    fi
+    command rm -f -- "$tempfile" 2>/dev/null
+}
+
+alias showpkg="expac --timefmt='%Y-%m-%d %T' '%l\t%n' | sort"
+
+# 稍微有一点硬编码的意思
+alias activate="source ./venv/bin/activate"
+alias mkvenv="python3 -m venv venv"
+
+# git 字数检查
+alias gitwa='git diff --word-diff=porcelain  | grep -e "^+[^+]" | wc -m | xargs'
+alias gitwd='git diff --word-diff=porcelain  | grep -e "^-[^-]" | wc -m | xargs'
+alias gitwdd='git diff --word-diff=porcelain | grep -e"^+[^+]" -e"^-[^-]"|sed -e's/.//'|sort|uniq -d|wc -m|xargs'
+alias gitw='echo $(($(gitwa) - $(gitwd)))'
+
+# logisim
+alias logisim='_JAVA_AWT_WM_NONREPARENTING=1 nohup java -jar /home/rqdmap/Applications/Logisim-ITA.jar > /dev/null 2>&1 &!; exit'
+
+# 启用Node nvm
+function nvm_enable() {
+	source /usr/share/nvm/init-nvm.sh
+}
+

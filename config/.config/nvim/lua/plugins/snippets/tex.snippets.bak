@@ -1,0 +1,81 @@
+priority 100
+
+snippet ieq "IEEE Equation"
+\\begin{IEEEeqnarray}{lCr}
+	${0:${VISUAL}}
+\\end{IEEEeqnarray}
+endsnippet
+
+global !p
+def fix_indent(snip):
+    vim.eval('feedkeys("\<c-f>")')
+endglobal
+post_expand "fix_indent(snip)"
+snippet itm "Correct the indent" b
+\item $0
+endsnippet
+
+# 代码块
+snippet lst
+\\begin{lstlisting}
+	${0:${VISUAL}}
+\\end{lstlisting}
+endsnippet
+snippet lsi
+\\lstinline|${1}| ${0}
+endsnippet
+
+snippet fig "Figure environment" bi
+\begin{figure}[htpb]
+	\centering
+	\includegraphics[width=0.8\textwidth]{$1}
+	\caption{${2}}
+	\label{fig:${3:${1/\.\w+$//g}}}
+\end{figure}
+endsnippet
+
+snippet frame ""
+\begin{frame}[c]
+	\frametitle{${1}}
+	\setlength{\parindent}{2em}
+	\begin{spacing}{1.5}
+		${2:${VISUAL}}
+	\end{spacing}
+\end{frame}
+endsnippet
+
+
+snippet tbf 
+\textbf{${0:${VISUAL}}}
+endsnippet
+
+snippet tit
+\textit{${0:${VISUAL}}}
+endsnippet
+
+snippet table
+\begin{table}[htpb]
+	\centering
+	\begin{tabular}{m{2cm}<{\centering}}
+		\specialrule{0.05em}{3pt}{3pt}
+		\specialrule{0.02em}{2pt}{3pt}
+		\specialrule{0.00em}{1pt}{1pt}
+		\specialrule{0.05em}{2pt}{3pt}
+	\end{tabular}
+	\caption{$0}
+	\label{tab:$1}
+\end{table}
+endsnippet
+
+snippet ((
+\left( $0 \right)
+endsnippet
+
+snippet [[
+\left[ $0 \right]
+endsnippet
+
+snippet {{
+\left{ $0 \right}
+endsnippet
+
