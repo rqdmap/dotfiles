@@ -137,9 +137,17 @@ vim.keymap.set('n', '<Leader>.', to_full)
 
 local modified_enter = function()
 	local pwd = vim.fn.getcwd()
-	local filepath = vim.fn.expand('%:p'):gsub('^' .. pwd, '.')
-	print(pwd)
-	print(filepath)
+	local filepath = vim.fn.expand('%:p')
+	local fail = false
+	for i = 1, #pwd do
+		if pwd:sub(i, i) ~= filepath:sub(i, i) then
+			fail = true
+			break
+		end
+	end
+	if fail == false then
+		print(filepath:sub(#pwd + 2))
+	end
 end
 
 vim.keymap.set('n', '<C-g>', modified_enter)

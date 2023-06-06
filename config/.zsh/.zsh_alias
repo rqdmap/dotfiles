@@ -3,6 +3,8 @@ alias la='ls -A'
 alias l='ls -CF'
 alias ls='ls --color=auto -t'
 alias diff='diff --color=auto'
+alias mv='mv -i'
+alias cp='cp -i'
 
 alias vim='nvim'
 alias del='trash'
