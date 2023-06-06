@@ -12,6 +12,7 @@ alias h='his | rg'
 alias top='htop -u `whoami`'
 alias jo='joshuto'
 alias duu='du -d 1 -h | sort -hr'
+alias dc='docker-compose'
 
 
 function ra {

@@ -61,7 +61,17 @@ return {
 			end
 
 			-- lspconfig.pylyzer.setup{}
-			lspconfig.pyright.setup{}
+			lspconfig.pyright.setup{
+				settings = {
+					python = {
+						analysis = {
+							autoSearchPaths = true,
+							diagnosticMode = "workspace",
+							useLibraryCodeForTypes = false
+						}
+					}
+				}
+			}
 
 			lspconfig.bashls.setup{}
 

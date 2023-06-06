@@ -6,7 +6,6 @@ return {
 	-- https://github.com/dhruvasagar/vim-table-mode/issues/222
 	-- Disable temporarily
 	enabled = false,
-
 	keys = {
 		"<leader>Tm"
 	},
