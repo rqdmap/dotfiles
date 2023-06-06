@@ -4,7 +4,9 @@ ARCHLINUX=$HOME'/dotfiles/archlinux'
 
 FILES=(
     .zshrc
-	.zsh
+	.zsh/.zshrc
+	.zsh/.zsh_cmp
+	.zsh/.zsh_alias
 	.config/starship.toml
 	.Xresources
 	.config/nvim

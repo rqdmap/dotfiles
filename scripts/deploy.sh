@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-source ./scripts//files.sh
+source ./scripts/files.sh
 
 for f in $FILES; do
 	if [ -e $SRC/$f ]; then
