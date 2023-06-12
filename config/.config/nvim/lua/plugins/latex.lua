@@ -17,6 +17,7 @@ return {
 					'-synctex=1',
 					'-interaction=nonstopmode',
 					'-8bit',
+					'--shell-escape',
 					'-pvc',
 				}
 			}

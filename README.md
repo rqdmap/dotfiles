@@ -56,6 +56,12 @@ Those make my Linux unique.
 
 - Cursor hide: unclutter
 
+- Image Process:
+
+	- GIMP
+
+
+
 ## System Config
 
 - iptables

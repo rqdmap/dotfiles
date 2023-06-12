@@ -1,7 +1,7 @@
 print('Hello, Markdown!')
-vim.o.tabstop		= 2
-vim.o.shiftwidth	= 2
-vim.o.softtabstop	= 2
+vim.o.tabstop		= 8
+vim.o.shiftwidth	= 8
+vim.o.softtabstop	= 8
 vim.cmd([[set noexpandtab]])
 
 local keymap = vim.api.nvim_set_keymap

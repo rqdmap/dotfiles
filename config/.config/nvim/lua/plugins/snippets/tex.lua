@@ -225,6 +225,20 @@ return {
 	}),
 
 	s({
+		trig = "rust",
+		name = "rust lstlisting",
+		dscr = [[ ]]
+	},
+	{
+		isn(nil, t({"", ""}), ""),
+		t({"\\begin{scriptsize}","\\begin{spacing}{0.5}", "\\begin{minted}{rust}"}),
+		isn(nil, t({"", ""}), ""),
+		i(1),
+		isn(nil, t({"", ""}), ""),
+		t({"\\end{minted}", "\\end{spacing}", "\\end{scriptsize}"}),
+	}),
+
+	s({
 		trig = "lst2",
 		name = "Two columns of lstlisting",
 		dscr = [[ 
@@ -342,4 +356,20 @@ return {
 	{
 		t("\\paragraph{"), i(1), t({"}", ""})
 	}),
+
+
+	s("code", fmt([==[
+	<>\begin{scriptsize} \begin{spacing}{0.4} \begin{mdframed}
+	\begin{minted}{<>}
+	<>
+	\end{minted}
+	\end{mdframed} \end{spacing} \end{scriptsize}
+
+	]==], {
+		isn(nil, t({""}), ""),
+		i(1, "c"),
+		i(2, "Hello, LuaSnip!")
+	}, {
+		delimiters = "<>"
+	})),
 }

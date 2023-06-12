@@ -144,7 +144,8 @@ return {
 						else
 							fallback()
 						end
-					end),
+					end, {"i", "s"}),
+
 
 					['<S-Tab>'] = cmp.mapping(function(fallback)
 						if cmp.visible() then
