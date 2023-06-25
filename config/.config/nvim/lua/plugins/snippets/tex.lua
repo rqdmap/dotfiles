@@ -159,16 +159,16 @@ return {
 		t({"\\centering", "\t"}),
 		t({"\\subcaptionbox{"}), i(1, "caption"),
 		f(function(args, snip)
-			return "\\label{Fig:" .. args[1][1]:gsub("%.%a+$", "") .. "}"
+			return "\\label{Fig:" .. args[1][1]:gsub("%.%a+$", "") .. "}}"
 		end, {2}),
 		t({"", "\t{\\includegraphics[width=.48\\linewidth]{./images/"}), i(2),
-		t({"}", "\t"}),
+		t({"}}", "\t"}),
 		t({"\\subcaptionbox{"}), i(3, "caption"),
 		f(function(args, snip)
-			return "\\label{Fig:" .. args[1][1]:gsub("%.%a+$", "") .. "}"
+			return "\\label{Fig:" .. args[1][1]:gsub("%.%a+$", "") .. "}}"
 		end, {4}),
 		t({"", "\t{\\includegraphics[width=.48\\linewidth]{./images/"}), i(4),
-		t({"}", "\t"}),
+		t({"}}", "\t"}),
 		t({"\\caption{"}), i(5, "caption"), t({"}", "\t"}),
 		t({"\\label{Fig:"}), i(6, "Label"), t({"}", ""}), t({"\\end{figure}", ""}),
 	}),
@@ -359,16 +359,35 @@ return {
 
 
 	s("code", fmt([==[
-	<>\begin{scriptsize} \begin{spacing}{0.4} \begin{mdframed}
-	\begin{minted}{<>}
-	<>
+	\begin{scriptsize} \begin{spacing}{0.4} \begin{mdframed}
+	\begin{minted}{rust}
+	<><>
+
 	\end{minted}
 	\end{mdframed} \end{spacing} \end{scriptsize}
 
+	\
+
 	]==], {
-		isn(nil, t({""}), ""),
-		i(1, "c"),
-		i(2, "Hello, LuaSnip!")
+		-- i(1, "rust"),
+		isn(nil, t({"", ""}), ""),
+		i(1),
+	}, {
+		delimiters = "<>"
+	})),
+
+
+	s("inline", fmt([==[
+		\mintinline{<>}{<>}
+	]==], {
+		i(1, "rust"),
+		f(function(args, snip)
+			local res = ""
+			for _, ele in ipairs(snip.env.LS_SELECT_RAW) do
+				res = res .. ele
+			end
+			return res
+		end, {}),
 	}, {
 		delimiters = "<>"
 	})),

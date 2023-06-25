@@ -15,9 +15,9 @@ function _blog(){
         compadd "${commands[@]}"
     elif [[ "$words[2]" == "remove" ]] && (( CURRENT == 3 )); then
         # 当前输入位置在第三个参数时，并且第二个参数是 remove 时
-        _files -W ~/hugo-blog/content/posts/ -/
+        _files -W ~/hugo-blog/content/ -/
     elif [[ "$words[2]" == "edit" ]] && (( CURRENT == 3 )); then
-        _files -W ~/hugo-blog/content/posts/ -/
+        _files -W ~/hugo-blog/content/ -/
     fi
 }
 compdef _blog blog

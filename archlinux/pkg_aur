@@ -6,9 +6,12 @@ cloog 0.20.0-2
 com.qq.weixin.deepin 3.2.1.154_14-2
 deepin-wine6-stable 6.0.0.42-1
 deepin-wine-helper 5.1.45_1-1
+foxitreader 2.4.5.0727-1
 gcc44 4.4.7-6
 gftp 2.9.1b-4
 google-chrome 113.0.5672.92-1
+gstreamer0.10 0.10.36-20
+gstreamer0.10-base 0.10.36-13
 haskell-connection 0.3.1-237
 haskell-x509-store 1.6.9-60
 haskell-x509-system 1.6.7-63
@@ -22,6 +25,7 @@ libcgroup 2.0-1
 mininet 2.3.0-1
 ms-sys 1:2.8.0-1
 openjpeg 1.5.2-3
+openssl-1.0 1.0.2.u-6
 osl 0.9.5-1
 phoronix-test-suite 10.8.4-1
 powerstat 0.03.03-1
