@@ -13,6 +13,10 @@ alt + @space
 alt + Return
 	rofi_run
 
+
+control + alt + Return
+	power_run
+
 control + alt + l
 	xsecurelock
 

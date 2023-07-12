@@ -1,7 +1,5 @@
 #!/bin/zsh
 
-source ./scripts/files.sh
-
 for f in $FILES; do
 	if [ -e $SRC/$f ]; then
 		echo -ne "\033[35m[Warning]\033[0m File or directory '$SRC/$f' exists! Override? (y/n) "

@@ -33,18 +33,32 @@ return {
 		t({" %}}", "```", ""})
 	}),
 
-	s({
-		trig = "fig",
-		name = "figure",
-		dscr = [[ 以HTML格式居中图片
-		]]
-	},
-	{
-		t({[[<div align="center">]], ""}),
-		t([[<img src=images/]]), i(1, "path-to-image"), t([[ style="zoom:]]),
-		i(2, "100"), t([[%">]]),
-		t({"", [[</div>]], ""}),
-	}),
+	-- s({
+	-- 	trig = "fig",
+	-- 	name = "figure",
+	-- 	dscr = [[ 以HTML格式居中图片
+	-- 	]]
+	-- },
+	-- {
+	-- 	t({[[<div align="center">]], ""}),
+	-- 	t([[<img src=./images/]]), i(1, "path-to-image"), t([[ style="width:]]),
+	-- 	i(2, "100"), t([[%; max-width:]]),
+	-- 	i(3, "600"), t([[px;">]]),
+	-- 	t({"",  [[</div>]], ""}),
+	-- }),
+
+
+	s("fig", fmt([==[
+		<div align="center">
+		<img src=./images/{} style="width:{}%; max-width:{}px;">
+		<div class="img-caption">{}</div>
+		</div>
+
+	]==], {
+		i(1), i(2, "100"), i(3, "600"), i(4, "Caption")
+	}, {
+		delimiters = "{}"
+	})),
 
 	s({
 		trig = "more",
@@ -140,4 +154,34 @@ return {
 	{
 		t([[<b><font color="green">]]), i(1), t([[</font></b>]])
 	}),
+
+	s("info", fmt([==[
+		{{% info %}}
+		<>
+		{{% /info %}}
+	]==], {
+		i(1, "Title of the box is the first line."),
+	}, {
+		delimiters = "<>"
+	})),
+
+	s("warn", fmt([==[
+		{{% warn %}}
+		<>
+		{{% /warn %}}
+	]==], {
+		i(1, "Title of the box is the first line."),
+	}, {
+		delimiters = "<>"
+	})),
+
+	s("error", fmt([==[
+		{{% error %}}
+		<>
+		{{% /error %}}
+	]==], {
+		i(1, "Title of the box is the first line."),
+	}, {
+		delimiters = "<>"
+	})),
 }

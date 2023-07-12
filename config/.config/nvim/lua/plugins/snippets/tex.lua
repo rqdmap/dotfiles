@@ -131,7 +131,7 @@ return {
 	{
 		t({"\\begin{figure}[htb]", "\t"}),
 		t({"\\centering", "\t"}),
-		t({"\\includegraphics[width=0.6\\linewidth]{./images/"}), i(1), t({"}", "\t"}),
+		t({"\\includegraphics[width=0.8\\linewidth]{./images/"}), i(1), t({"}", "\t"}),
 		t("\\caption{"), i(2), t({"}", "\t"}),
 		t("\\label{Fig:"),
 		f(function(args, snip)
@@ -277,10 +277,10 @@ return {
 	s({
 		trig = "lsi",
 		name = "lstinline",
-		dscr = [[ \lstinline|Code| ]]
+		dscr = [[ \mintinline{c}{...} ]]
 	},
 	{
-		t("\\lstinline|"),
+		t("\\mintinline{bash}|"),
 		 f(function(args, snip)
 			local res = ""
 			for _, ele in ipairs(snip.env.LS_SELECT_RAW) do
@@ -359,15 +359,10 @@ return {
 
 
 	s("code", fmt([==[
-	\begin{scriptsize} \begin{spacing}{0.4} \begin{mdframed}
-	\begin{minted}{rust}
-	<><>
-
+	\begin{scriptsize} \begin{spacing}{0.4} \ \\
+	\begin{minted}[breaklines=true]{rust}<><>
 	\end{minted}
-	\end{mdframed} \end{spacing} \end{scriptsize}
-
-	\
-
+	\ \\ \end{spacing} \end{scriptsize}
 	]==], {
 		-- i(1, "rust"),
 		isn(nil, t({"", ""}), ""),

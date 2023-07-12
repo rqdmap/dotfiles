@@ -14,16 +14,28 @@ return {
 			ignore = nil,
 			---NOTE: If given `false` then the plugin won't create any mappings
 			mappings = false,
-			---Function to call before (un)comment
-			pre_hook = nil,
-			---Function to call after (un)comment
-			post_hook = nil,
 		})
+
 		vim.cmd([[nmap <C-_> <Plug>(comment_toggle_linewise_current)]])
 		vim.cmd([[xmap <C-_> <Plug>(comment_toggle_linewise_visual)]])
 
-		-- 为当前buffer设置默认注释字符串的格式
-		-- https://github.com/numToStr/Comment.nvim#%EF%B8%8F-filetypes--languages
-		vim.bo.commentstring = '#%s'
+		-- --------------------------------------------
+		-- 针对不同的语言可以设置自己想要的注释符号: --
+		-- --------------------------------------------
+		-- local ft = require('Comment.ft')
+		-- ft
+		--  -- Set only line comment
+		--  .set('yaml', '#%s')
+		--  -- Or set both line and block commentstring
+		--  .set('javascript', {'//%s', '/*%s*/'})
+		--
+		-- -- 2. Metatable magic
+		--
+		-- ft.javascript = {'//%s', '/*%s*/'}
+		-- ft.yaml = '#%s'
+		--
+		-- -- Multiple filetypes
+		-- ft({'go', 'rust'}, ft.get('c'))
+		-- ft({'toml', 'graphql'}, '#%s')
 	end
 }

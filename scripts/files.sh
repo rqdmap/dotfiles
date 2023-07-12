@@ -17,6 +17,8 @@ FILES=(
 	.config/rofi
 	.config/ranger
 	.config/picom
+    .config/joshuto
+    .config/htop
 )
 
 

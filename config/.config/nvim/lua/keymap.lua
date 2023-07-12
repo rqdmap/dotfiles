@@ -147,7 +147,10 @@ local modified_enter = function()
 	end
 	if fail == false then
 		print(filepath:sub(#pwd + 2))
+	else
+		print(filepath)
 	end
+
 end
 
 vim.keymap.set('n', '<C-g>', modified_enter)

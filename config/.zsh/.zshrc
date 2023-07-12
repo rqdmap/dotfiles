@@ -79,6 +79,7 @@ export LESS_TERMCAP_ZW=$(tput rsupm)
 export GROFF_NO_SGR=1         # For Konsole and Gnome-terminal
 
 PATH=$PATH:$HOME/.local/bin
+PATH=$PATH:$HOME/.cargo/bin
 
 if [ -f $ZSH/.zsh_alias ]; then
 	source $ZSH/.zsh_alias

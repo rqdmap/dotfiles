@@ -32,6 +32,7 @@
   "rust.vim": { "branch": "master", "commit": "889b9a7515db477f4cb6808bef1769e53493c578" },
   "symbols-outline.nvim": { "branch": "master", "commit": "b740f88a72c4a807f9160176ab93a80761a4464e" },
   "telescope.nvim": { "branch": "master", "commit": "ffe35cb433192fcb5080b557c1aef14d37092035" },
+  "vim-bsv": { "branch": "master", "commit": "b03893b98f5b772297e48671a9c5f92f1c7d10eb" },
   "vim-cpp-enhanced-highlight": { "branch": "master", "commit": "4b7314a497ea2dd0a6911ccb94ce83b2d8684617" },
   "vim-css-color": { "branch": "master", "commit": "5687a7978bc80263cd03d0a667c2f56890cfb940" },
   "vim-snippets": { "branch": "master", "commit": "76e35f37aa9e47a8b7f2909de222844ae38c7007" },

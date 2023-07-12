@@ -14,7 +14,7 @@ return {
 	})),
 	]===], {
 		i(1, "trig"),
-		i(2, "{}"),
+		i(2, "<>"),
 		i(3, [[t("Hello, LuaSnip!")]])
 	}, {
 		delimiters = "<>"
@@ -41,7 +41,7 @@ return {
 		i(1, "trig"),
 		i(2),
 		i(3),
-		i(4, "{}"),
+		i(4, "<>"),
 		i(5, [[t("Hello, LuaSnip!")]])
 	}, {
 		delimiters = "<>"

@@ -98,6 +98,11 @@ cleverStart clash
 
 cleverStart sxhkd
 
+# # Swap Ctrl and CapsLock
+# setxkbmap -option ctrl:swapcaps
+# Make CapsLock an additional Ctrl
+setxkbmap -option ctrl:nocaps
+
 bspc config border_width				3
 bspc config focused_border_color	"#3F73B6"
 # bspc config presel_feedback_color	"#76628A"
