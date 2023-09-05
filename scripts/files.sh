@@ -1,12 +1,14 @@
 SRC=$HOME
 DST=$HOME'/dotfiles/config'
+
 ARCHLINUX=$HOME'/dotfiles/archlinux'
 
-FILES=(
+TARGETS=(
 	.zshrc
 	.zsh/.zshrc
 	.zsh/.zsh_cmp
 	.zsh/.zsh_alias
+	.zsh/joshuto.sh
 	.config/starship.toml
 	.Xresources
 	.config/nvim

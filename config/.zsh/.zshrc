@@ -6,7 +6,6 @@ export ZSH=$HOME/.zsh
 zstyle :compinstall filename '$ZSH/.zshrc'
 zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
 
-
 autoload -Uz compinit
 compinit
 
@@ -39,7 +38,6 @@ setopt RM_STAR_SILENT
 # Add history as long as entered
 setopt INC_APPEND_HISTORY
 
-
 autoload -z edit-command-line
 zle -N edit-command-line
 bindkey -e
@@ -48,7 +46,6 @@ bindkey "\e[3~" delete-char
 
 export VISUAL="nvim"
 export EDITOR="nvim"
-export NVIM_DATA="/home/rqdmap/.local/share/nvim/"
 
 if [ "ArchLinux" = "$(cat /etc/hostname)" ]; then
 	export {http,https,ftp,socks}_proxy="http://127.0.0.1:7890"
@@ -85,9 +82,9 @@ if [ -f $ZSH/.zsh_alias ]; then
 	source $ZSH/.zsh_alias
 fi
 
-
 eval "$(starship init zsh)"
 
 # 与开头的zprof模块一起工作
 # zprof
+
 

@@ -109,7 +109,6 @@ return {
 			-- require'lspconfig'.zk.setup{}  -- No single file support
 
 			lspconfig.rust_analyzer.setup{}
-
 			lspconfig.gopls.setup{}
 		end
 	},
@@ -157,9 +156,9 @@ return {
 				lightbulb = {
 					enable = true,
 					enable_in_insert = true,
-					sign = true,
+					sign = false,
 					sign_priority = 40,
-					virtual_text = false,
+					virtual_text = true,
 				},
 				diagnostic = {
 					on_insert = false,

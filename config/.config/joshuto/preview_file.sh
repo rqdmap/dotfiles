@@ -83,17 +83,13 @@ handle_extension() {
         ## PDF
         pdf)
             ## Preview as text conversion
-            pdftotext -l 10 -nopgbrk -q -- "${FILE_PATH}" - | \
-                fmt -w "${PREVIEW_WIDTH}" && exit 0
-            mutool draw -F txt -i -- "${FILE_PATH}" 1-10 | \
-                fmt -w "${PREVIEW_WIDTH}" && exit 0
-            exiftool "${FILE_PATH}" && exit 0
+            # cat 123 && exit 0 ;
+            # pdftotext -l 10 -nopgbrk -q -- "${FILE_PATH}" - | \
+            #     fmt -w "${PREVIEW_WIDTH}" && exit 0
+            # mutool draw -F txt -i -- "${FILE_PATH}" 1-10 | \
+            #     fmt -w "${PREVIEW_WIDTH}" && exit 0
+            # exiftool "${FILE_PATH}" && exit 0
             exit 1 ;;
-
-        # ## BitTorrent
-        # torrent)
-        #     transmission-show -- "${FILE_PATH}" && exit 0
-        #     exit 1 ;;
 
         # OpenDocument
         odt|ods|odp|sxw)
@@ -103,30 +99,23 @@ handle_extension() {
         #     pandoc -s -t markdown -- "${FILE_PATH}" && exit 0
             exit 1 ;;
 
-        ## XLSX
-        # xlsx)
-        #     ## Preview as csv conversion
-        #     ## Uses: https://github.com/dilshod/xlsx2csv
-        #     xlsx2csv -- "${FILE_PATH}" && exit 0
-        #     exit 1 ;;
-
-        # HTML
-        htm|html|xhtml)
-            # w3m -dump "${FILE_PATH}" && exit 0
-            cat "${FILE_PATH}" && exit 0
-            # lynx -dump -- "${FILE_PATH}" && exit 0
-            # elinks -dump "${FILE_PATH}" && exit 0
-            # pandoc -s -t markdown -- "${FILE_PATH}" && exit 0
-            ;;
-
         ## JSON
         json|ipynb)
             jq --color-output . "${FILE_PATH}" && exit 0
             python -m json.tool -- "${FILE_PATH}" && exit 0
             ;;
 
-            ## Direct Stream Digital/Transfer (DSDIFF) and wavpack aren't detected
-            ## by file(1).
+        txt|tex|htm|html|xhtml)
+            bat --color=always --paging=never \
+                --style=plain \
+                --terminal-width="${PREVIEW_WIDTH}" \
+                "${FILE_PATH}" && exit 0
+            cat "${FILE_PATH}" && exit 0
+            exit 1 ;;
+
+
+        ## Direct Stream Digital/Transfer (DSDIFF) and wavpack aren't detected
+        ## by file(1).
         # dff|dsf|wv|wvc)
         #     mediainfo "${FILE_PATH}" && exit 0
         #     exiftool "${FILE_PATH}" && exit 0
@@ -190,8 +179,9 @@ handle_mime() {
             ## Image
         image/*)
             ## Preview as text conversion
-            exiftool "${FILE_PATH}" && exit 0
-            exit 1 ;;
+            # exiftool "${FILE_PATH}" && exit 0
+            exit 0;;
+            # exit 1 ;;
 
             ## Video and audio
         video/* | audio/*)
@@ -205,6 +195,7 @@ FILE_EXTENSION="${FILE_PATH##*.}"
 FILE_EXTENSION_LOWER="$(printf "%s" "${FILE_EXTENSION}" | tr '[:upper:]' '[:lower:]')"
 handle_extension
 MIMETYPE="$( file --dereference --brief --mime-type -- "${FILE_PATH}" )"
+echo $MIMETYPE
 handle_mime "${MIMETYPE}"
 
 exit 1

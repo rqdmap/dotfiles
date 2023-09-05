@@ -33,9 +33,6 @@ return {
 	-- .ron高亮
 	'ron-rs/ron.vim',
 
-	-- .bsv 高亮
-	'mtikekar/vim-bsv',
-
 	-- 图片预览
 	{
 		'adelarsq/image_preview.nvim',
@@ -68,6 +65,8 @@ return {
 	'ActivityWatch/aw-watcher-vim',
 
 	require("plugins.copilot"),
+
+	'nathangrigg/vim-beancount',
 
 -- Programming Languages Support
 	-- nvim-lspconfig

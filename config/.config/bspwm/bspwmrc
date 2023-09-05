@@ -10,9 +10,9 @@ name2=$(xrandr | grep -i hdmi | grep -w connected  | cut -d ' ' -f 1)
 mode2="2560x1080"
 rate2="74.99"
 
-# Home AOC
-# mode="1920x1080"
-# rate="60"
+# # Home AOC
+# mode2="1920x1080"
+# rate2="144"
 
 function setMonitor(){
 	xrandr --output $1 --rate $2 --mode $3
@@ -76,7 +76,7 @@ xset dpms 0 0 0
 #	After idle for <timeout> seconds, activate dimmer.
 #	After <cycle> seconds, activate xsecurelock.
 xset s on
-xset s 120 1
+xset s 180 1
 cleverStart xss-lock "-n /usr/lib/xsecurelock/dimmer -l -- xsecurelock"
 
 # 打开词典
@@ -98,10 +98,19 @@ cleverStart clash
 
 cleverStart sxhkd
 
+# pushd ~/Documents/moneybook/
+# cleverStart fava main.bean
+# popd
+
+
 # # Swap Ctrl and CapsLock
 # setxkbmap -option ctrl:swapcaps
 # Make CapsLock an additional Ctrl
 setxkbmap -option ctrl:nocaps
+
+# 默认设置Speaker音量为100%, 通过Master整体调节音量
+amixer -c 1 set Speaker 100
+amixer -c 1 set Master 50
 
 bspc config border_width				3
 bspc config focused_border_color	"#3F73B6"

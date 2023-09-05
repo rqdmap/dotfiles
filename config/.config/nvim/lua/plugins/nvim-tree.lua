@@ -14,7 +14,8 @@ return {
 				width = 35,
 			},
 			filters = {
-				dotfiles = true
+				git_ignored = false,
+				dotfiles = false
 			},
 			trash = {
 				cmd = "trash"

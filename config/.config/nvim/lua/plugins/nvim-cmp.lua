@@ -116,7 +116,6 @@ return {
 					fetching_timeout = 50,
 				},
 
-
 				mapping = cmp.mapping.preset.insert({
 					['<Esc>'] = cmp.mapping(function(fallback)
 						if cmp.visible() and cmp.get_selected_entry() ~= nil then
@@ -139,13 +138,24 @@ return {
 					['<Tab>'] = cmp.mapping(function(fallback)
 						if cmp.visible() then
 							cmp.select_next_item()
-						elseif luasnip.locally_jumpable() then
-							luasnip.jump(1)
+						-- elseif luasnip.locally_jumpable() then
+							-- luasnip.jump(1)
 						else
 							fallback()
 						end
 					end, {"i", "s"}),
 
+					['<C-h>'] = cmp.mapping(function()
+						if luasnip.locally_jumpable() then
+							luasnip.jump(-1)
+						end
+					end, {"i", "s"}),
+
+					['<C-l>'] = cmp.mapping(function()
+						if luasnip.locally_jumpable() then
+							luasnip.jump(1)
+						end
+					end, {"i", "s"}),
 
 					['<S-Tab>'] = cmp.mapping(function(fallback)
 						if cmp.visible() then
@@ -177,8 +187,9 @@ return {
 				completion = {
 					-- Describes: Set trigger for autocomplete, not used so far.
 					-- Params: cmp.TriggerEvent[] | false
-					-- autocomplete = true
+					-- autocomplete = false
 				},
+				preselect = cmp.PreselectMode.None,
 				formatting = {
 					expandable_indicator = false,
 					-- ItemField = { },

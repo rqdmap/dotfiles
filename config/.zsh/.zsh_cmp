@@ -9,7 +9,6 @@ function _blog(){
         'stop'
 		'help'
     )
-
     if (( CURRENT == 2 )); then
         # 当前输入位置在第二个参数时，即 blog 后一个参数时
         compadd "${commands[@]}"

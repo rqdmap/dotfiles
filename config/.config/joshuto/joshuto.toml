@@ -8,7 +8,7 @@ watch_files = true
 mode = "default"
 
 automatically_count_files = true
-collapse_preview = true
+collapse_preview = false
 scroll_offset = 4
 # ratios for parent view (optional), current view and preview
 column_ratio = [1, 3, 3]
@@ -29,6 +29,8 @@ reverse = true
 [preview]
 max_preview_size = 2097152                           # 2MB
 preview_script = "~/.config/joshuto/preview_file.sh" # make sure it's marked as executable
+preview_shown_hook_script = "~/.config/joshuto/on_preview_shown"
+preview_removed_hook_script = "~/.config/joshuto/on_preview_removed"
 
 [tab]
 # inherit, home, root

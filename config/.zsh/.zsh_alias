@@ -1,4 +1,4 @@
-alias ll='ls -alF'
+alias ll='ls -alFh'
 alias la='ls -A'
 alias l='ls -CF'
 alias ls='ls --color=auto -t'
@@ -12,26 +12,26 @@ alias his='history -i 0'
 alias grep='rg --hidden'
 alias h='his | rg'
 alias top='htop -u `whoami`'
-alias jo='joshuto'
+# alias jo='joshuto'
 alias duu='du -d 1 -h | sort -hr'
 alias dc='docker-compose'
+alias lg='lazygit'
 
-
-function ra {
+function j {
     local IFS=$'\t\n'
     local tempfile="$(mktemp -t tmp.XXXXXX)"
-    local ranger_cmd=(
-        command
-        ranger
-        --cmd="map q chain shell echo %d > "$tempfile"; quitall"
-    )
-    
-    ${ranger_cmd[@]} "$@"
+    local cmd=(
+		$HOME/.zsh/joshuto.sh
+		--output-file $tempfile
+	)
+    ${cmd[@]} "$@"
     if [[ -f "$tempfile" ]] && [[ "$(cat -- "$tempfile")" != "$(echo -n `pwd`)" ]]; then
-        pushd -- "$(cat "$tempfile")" || return
+        cd -- "$(cat "$tempfile")" || return
     fi
     command rm -f -- "$tempfile" 2>/dev/null
 }
+
+function jo { j }
 
 alias showpkg="expac --timefmt='%Y-%m-%d %T' '%l\t%n' | sort"
 

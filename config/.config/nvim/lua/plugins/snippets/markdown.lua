@@ -55,7 +55,19 @@ return {
 		</div>
 
 	]==], {
-		i(1), i(2, "100"), i(3, "600"), i(4, "Caption")
+		i(1), i(2, "100"), i(3, "600"), i(4, "")
+	}, {
+		delimiters = "{}"
+	})),
+
+	s("svg", fmt([==[
+		<div align="center">
+		<object data=./images/{} type="image/svg+xml" style="width:{}%; max-width:{}px;"></object>
+		<div class="img-caption">{}</div>
+		</div>
+
+	]==], {
+		i(1), i(2, "100"), i(3, "600"), i(4, "")
 	}, {
 		delimiters = "{}"
 	})),
