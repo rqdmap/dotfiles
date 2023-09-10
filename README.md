@@ -48,6 +48,9 @@ Those make my Linux unique.
 	- giph 
 	- OBS
 
+- Video Editor:
+	- ShotCut
+
 - Screenkey
 
 - Notification Servers: dunst
@@ -57,9 +60,7 @@ Those make my Linux unique.
 - Cursor hide: unclutter
 
 - Image Process:
-
 	- GIMP
-
 
 
 ## System Config

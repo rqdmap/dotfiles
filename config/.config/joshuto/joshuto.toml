@@ -27,7 +27,7 @@ directories_first = false
 reverse = true
 
 [preview]
-max_preview_size = 2097152                           # 2MB
+max_preview_size = 20971520                           # 2MB
 preview_script = "~/.config/joshuto/preview_file.sh" # make sure it's marked as executable
 preview_shown_hook_script = "~/.config/joshuto/on_preview_shown"
 preview_removed_hook_script = "~/.config/joshuto/on_preview_removed"

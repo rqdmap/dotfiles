@@ -128,7 +128,7 @@ return {
 					['<Cr>'] = cmp.mapping(function(fallback)
 						if cmp.visible() and cmp.get_selected_entry() ~=nil then
 							cmp.confirm({
-								-- behavior = cmp.ConfirmBehavior.Insert,
+								behavior = cmp.ConfirmBehavior.Select,
 							})
 						else
 							fallback()
