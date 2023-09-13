@@ -92,6 +92,7 @@ inetutils 2.4-1
 inkscape 1.3-3
 intel-ucode 20230808-1
 inxi 3.3.29.1-1
+iotop 0.6-10
 iperf3 3.14-3
 irssi 1.4.4-3
 jq 1.7-1
@@ -116,6 +117,7 @@ m4 1.4.19-3
 make 4.4.1-2
 man-pages 6.05.01-1
 mariadb 11.1.2-1
+memtest86+-efi 6.20-1
 mesa-utils 9.0.0-2
 meson 1.2.1-1
 musl 1.2.4-1
