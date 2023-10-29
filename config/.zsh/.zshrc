@@ -49,33 +49,12 @@ export EDITOR="nvim"
 
 if [ "ArchLinux" = "$HOST" ] || [ "ArchMacBook" = "$HOST" ]; then
 	export {http,https,ftp,socks}_proxy="http://127.0.0.1:7890"
+	# export {http,https,ftp,socks}_proxy="http://127.0.0.1:60078"
 	export no_proxy="localhost,127.0.0.0/8,10.0.0.0/8"
 fi
 
-# 为journalctl-less设置标记
-export SYSTEMD_LESS=FRXMK
-export LESSCHARSET=utf-8
-
 # 24hours format
 export LC_TIME=C.UTF-8
-
-# Colorful less
-export LESS_TERMCAP_mb=$(tput bold; tput setaf 2) # green
-export LESS_TERMCAP_md=$(tput bold; tput setaf 6) # cyan
-export LESS_TERMCAP_me=$(tput sgr0)
-export LESS_TERMCAP_so=$(tput bold; tput setaf 3; tput setab 4) # yellow on blue
-export LESS_TERMCAP_se=$(tput rmso; tput sgr0)
-export LESS_TERMCAP_us=$(tput smul; tput bold; tput setaf 7) # white
-export LESS_TERMCAP_ue=$(tput rmul; tput sgr0)
-export LESS_TERMCAP_mr=$(tput rev)
-export LESS_TERMCAP_mh=$(tput dim)
-export LESS_TERMCAP_ZN=$(tput ssubm)
-export LESS_TERMCAP_ZV=$(tput rsubm)
-export LESS_TERMCAP_ZO=$(tput ssupm)
-export LESS_TERMCAP_ZW=$(tput rsupm)
-export GROFF_NO_SGR=1         # For Konsole and Gnome-terminal
-
-export TERM=xterm-256color
 
 PATH=$PATH:$HOME/.local/bin
 PATH=$PATH:$HOME/.cargo/bin

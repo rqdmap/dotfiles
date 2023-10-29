@@ -82,6 +82,7 @@ keymap = [
 
   { keys = ["delete"], commands = ["delete_files"] },
   { keys = ["d", "D"], commands = ["shell trash %s"] },
+  { keys = ["d", "k"], commands = ["shell rm -ri %s"] },
 
   { keys = ["p", "p"], commands = ["paste_files"] },
   { keys = ["p", "o"], commands = ["paste_files --overwrite=true"] },

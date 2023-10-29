@@ -386,4 +386,12 @@ return {
 	}, {
 		delimiters = "<>"
 	})),
+
+	s("BLUE", fmt([==[
+		\textbf{\color{blue}<>}
+	]==], {
+		i(1, "")
+	}, {
+		delimiters = "<>"
+	})),
 }

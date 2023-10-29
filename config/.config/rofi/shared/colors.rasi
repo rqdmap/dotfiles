@@ -1,0 +1,19 @@
+* {
+    background:     #282A2E;
+    background-alt: #373B41;
+    foreground:     #C5C8C6;
+    selected:       #61AFEFFF;
+    active:         #98C379FF;
+    urgent:         #E06C75FF;
+    border:         #608ECA;
+}
+
+// Gruvbox
+// * {
+//     background:     #282828FF;
+//     background-alt: #353535FF;
+//     foreground:     #EBDBB2FF;
+//     selected:       #83A598FF;
+//     active:         #B8BB26FF;
+//     urgent:         #FB4934FF;
+// }

@@ -1,0 +1,78 @@
+#!/bin/zsh
+
+theme="$HOME/.config/rofi/tools.rasi"
+config="$HOME/.config/rofi/config.rasi"
+
+# CMDs
+uptime="`uptime -p | sed -e 's/up //g'`"
+host=`whoami`@`hostnamectl  hostname`
+
+msg=$host
+
+opts=(
+"󱓞 Launcher:	rofi_run"
+" 关机:	systemctl poweroff"
+" 重启:	systemctl reboot"
+"󰥻 键盘切换:	switch_keyboard"
+" 禁用独显:	close_nouveau_nvidia"
+" bspwm重启:	bspc wm -r"
+"󰥻 sxhkd重启:	pkill -USR1 -x sxhkd"
+" record窗口:	record -k -r"
+" record全屏:	record -k -f"
+" Factorio:	/home/rqdmap/Games/factorio/bin/x64/factorio"
+)
+
+
+# Rofi CMD
+_rofi() {
+	rofi -dmenu -mesg $msg -theme $theme -config $config
+}
+
+# Pass variables to rofi dmenu
+run_rofi() {
+    str=""
+    i=1
+	for i in $opts; do
+		str="$str\n$i"
+		i=i+1
+	done
+
+    # 移除第一个换行符
+    str=${str:2}
+    echo -e "$str" | _rofi
+}
+
+# Execute Command
+run_cmd() {
+	selected=$yes
+	if [[ "$selected" == "$yes" ]]; then
+		if [[ $1 == '--shutdown' ]]; then
+			systemctl poweroff
+		elif [[ $1 == '--reboot' ]]; then
+			systemctl reboot
+		elif [[ $1 == '--suspend' ]]; then
+			mpc -q pause
+			amixer set Master mute
+			systemctl suspend
+		elif [[ $1 == '--logout' ]]; then
+			if [[ "$DESKTOP_SESSION" == 'openbox' ]]; then
+				openbox --exit
+			elif [[ "$DESKTOP_SESSION" == 'bspwm' ]]; then
+				bspc quit
+			elif [[ "$DESKTOP_SESSION" == 'i3' ]]; then
+				i3-msg exit
+			elif [[ "$DESKTOP_SESSION" == 'plasma' ]]; then
+				qdbus org.kde.ksmserver /KSMServer logout 0 0 0
+			fi
+		fi
+	else
+		exit 0
+	fi
+}
+
+# Actions
+chosen="$(run_rofi)"
+
+cmd=$(echo $chosen | cut -d ':' -f 2 | sed -e 's/^[ 	]*//g' | sed -e 's/[ 	]*$//g')
+
+eval $cmd
