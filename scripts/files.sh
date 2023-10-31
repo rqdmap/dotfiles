@@ -21,6 +21,7 @@ TARGETS=(
 	.config/picom
     .config/joshuto
     .config/htop
+    .config/tmux
 )
 
 
