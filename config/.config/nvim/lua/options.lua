@@ -15,7 +15,7 @@ local options = {
 		showcmd					=	true,
 		wrap					=	true,				-- 自动折行
 		linebreak				=	true,				-- 特殊符号才触发折行
-		scrolloff				=	5,					-- 垂直滚动时距离上下边界的距离
+		scrolloff				=	0,					-- 垂直滚动时距离上下边界的距离
 
 	-- Edit
 		autoindent				=	true,
@@ -48,7 +48,7 @@ local options = {
 	-- File
 		encoding				=	"utf-8",
 		-- fileencoding			=	"utf-8",
-		fileencodings			=	"ucs-bom,utf-8,utf-16,gbk,big5,gb18030,latin1",
+		fileencodings			=	"ucs-bom,utf-8,chines",
 
 	-- Misc
 		updatetime				=	500,				-- 更新时间

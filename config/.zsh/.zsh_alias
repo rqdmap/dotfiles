@@ -1,12 +1,11 @@
 alias ll='ls -alFh'
 alias la='ls -A'
 alias l='ls -CF'
-alias ls='ls --color=auto -t'
-alias diff='diff --color=auto'
-alias mv='mv -i'
-alias cp='cp -i'
-
-alias vim='nvim'
+alias ls='ls --color=auto -t' 
+alias diff='diff --color=auto' 
+alias mv='mv -i' 
+alias cp='cp -i' 
+alias vim='nvim' 
 alias del='trash'
 alias his='history -i 0'
 alias grep='rg --hidden'
@@ -21,7 +20,7 @@ function j {
     local IFS=$'\t\n'
     local tempfile="$(mktemp -t tmp.XXXXXX)"
     local cmd=(
-		$HOME/.zsh/joshuto.sh
+		joshuto
 		--output-file $tempfile
 	)
     ${cmd[@]} "$@"
@@ -45,8 +44,31 @@ alias gitwd='git diff --word-diff=porcelain  | grep -e "^-[^-]" | wc -m | xargs'
 alias gitwdd='git diff --word-diff=porcelain | grep -e"^+[^+]" -e"^-[^-]"|sed -e's/.//'|sort|uniq -d|wc -m|xargs'
 alias gitw='echo $(($(gitwa) - $(gitwd)))'
 
-# logisim
-alias logisim='_JAVA_AWT_WM_NONREPARENTING=1 nohup java -jar /home/rqdmap/Applications/Logisim-ITA.jar > /dev/null 2>&1 &!; exit'
+function boe_push() {
+	source ~/.secret
+	now=$(dirname $(pwd))
+	if [[ ! "$now" == "/Users/bytedance/Codes" ]]; then
+		echo "当前不在 Codes 目录下的一级目录"
+		return
+	fi
+
+	rsync -av --delete $(pwd) $SECRET_NAME@$SECRET_BOE_IP:/home/$SECRET_NAME/
+}
+
+function boe_pull() {
+	source ~/.secret
+	now=$(dirname $(pwd))
+	if [[ ! "$now" == "/Users/bytedance/Codes" ]]; then
+		echo "当前不在 Codes 目录下的一级目录"
+		return
+	fi
+	rsync -av --delete $SECRET_NAME@$SECRET_BOE_IP:/home/$SECRET_NAME/$(basename $(pwd)) $now/
+}
+
+function boe() {
+	source ~/.secret
+	ssh $SECRET_NAME@$SECRET_BOE_IP
+}
 
 # 启用Node nvm
 function nvm_enable() {

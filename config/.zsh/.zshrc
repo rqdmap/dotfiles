@@ -9,11 +9,6 @@ zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:
 autoload -Uz compinit
 compinit
 
-if [ 'ArchLinux' = "$(cat /etc/hostname)" ]; then
-	source /usr/share/fzf/key-bindings.zsh
-	source /usr/share/fzf/completion.zsh
-fi
-
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 if [ -f $ZSH/.zsh_cmp ]; then
@@ -75,14 +70,17 @@ export LESS_TERMCAP_ZO=$(tput ssupm)
 export LESS_TERMCAP_ZW=$(tput rsupm)
 export GROFF_NO_SGR=1         # For Konsole and Gnome-terminal
 
-export TERM=xterm-256color
 
 PATH=$PATH:$HOME/.local/bin
 PATH=$PATH:$HOME/.cargo/bin
+PATH=$PATH:/opt/local/libexec/gnubin/
 
 if [ -f $ZSH/.zsh_alias ]; then
 	source $ZSH/.zsh_alias
 fi
+
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 eval "$(starship init zsh)"
 

@@ -5,7 +5,7 @@ return {
 	-- Changing prefix doesn't work, so I cannot spare <Leader>t for tagbar
 	-- https://github.com/dhruvasagar/vim-table-mode/issues/222
 	-- Disable temporarily
-	-- enabled = false,
+	enabled = false,
 	-- keys = {
 	-- 	"<leader>Tm"
 	-- },

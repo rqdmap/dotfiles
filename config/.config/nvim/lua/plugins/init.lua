@@ -50,6 +50,7 @@ return {
 
 	-- 切换模式时切换输入法
 	'lilydjwg/fcitx.vim',
+	'rlue/vim-barbaric',
 
 	-- 表格模式
 	require("plugins.vim-table-mode"),
@@ -64,10 +65,6 @@ return {
 	-- AW计时器
 	{
 		'ActivityWatch/aw-watcher-vim',
-		enabled = function()
-			local hostname = vim.api.nvim_call_function('hostname', {})
-			return hostname == 'ArchLinux'
-		end,
 	},
 
 	require("plugins.copilot"),

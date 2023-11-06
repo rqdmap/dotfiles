@@ -5,6 +5,7 @@ return {
 	dependencies = {
 		'neovim/nvim-lspconfig',
 	},
+	enabled = false,
 
 	config = function()
 		require("symbols-outline").setup({

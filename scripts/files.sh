@@ -21,6 +21,9 @@ TARGETS=(
 	.config/picom
     .config/joshuto
     .config/htop
+    .yabairc
+    .skhdrc
+    .config/karabiner
 )
 
 
