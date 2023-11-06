@@ -24,6 +24,7 @@ TARGETS=(
     .yabairc
     .skhdrc
     .config/karabiner
+    "Library/Application Support/Übersicht/widgets/simple-bar/lib/settings.js"
 )
 
 
