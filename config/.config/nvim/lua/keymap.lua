@@ -152,5 +152,13 @@ local modified_enter = function()
 	end
 
 end
-
 vim.keymap.set('n', '<C-g>', modified_enter)
+
+local highlight_current_word = function()
+	vim.cmd("normal! *")
+	vim.cmd("normal! N")
+	vim.cmd("normal! zz")
+end
+
+-- 创建一个命令来调用高亮函数
+vim.keymap.set('n', '*', highlight_current_word)
