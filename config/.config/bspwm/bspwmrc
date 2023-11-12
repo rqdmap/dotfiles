@@ -110,9 +110,9 @@ foo /data/rqdmap/Applications/frp/frps.sh
 
 foo sudo /data/rqdmap/Applications/frp/auto_proxy.sh
 
-# pushd ~/Documents/moneybook/
-# foo fava main.bean
-# popd
+pushd ~/Documents/moneybook/
+foo fava main.bean
+popd
 
 
 # # Swap Ctrl and CapsLock

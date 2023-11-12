@@ -65,7 +65,7 @@ utils.log = function(msg, file)
 
 	fp:write(utils.dump(msg))
 
-	fp:write("\nEND =================================================\n\n")
+	fp:write("\n")
 	fp:close()
 	return 0
 end
