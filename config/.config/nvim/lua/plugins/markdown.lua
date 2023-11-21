@@ -4,7 +4,7 @@ return {
 		'iamcco/markdown-preview.vim',
 		ft = 'markdown',
 		config = function()
-			vim.g.mkdp_path_to_chrome = 'google-chrome-stable --new-window'
+			vim.g.mkdp_path_to_chrome = '/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome'
 			vim.g.mkdp_auto_close = 0
 			vim.g.mkdp_refresh_slow = 1
 

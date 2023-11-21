@@ -434,6 +434,34 @@
           ]
         },
         {
+          "description": "Ctrl + d = Command + d",
+          "type": "basic",
+          "from": {
+            "key_code": "d",
+            "modifiers": {
+              "mandatory": [
+                "left_control"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "d",
+              "modifiers": [
+                "left_command"
+              ]
+            }
+          ],
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": [
+                "Chrome"
+              ]
+            }
+          ]
+        },
+        {
           "description": "Ctrl + h = Command + y: 显示历史记录",
           "type": "basic",
           "from": {
@@ -447,6 +475,90 @@
           "to": [
             {
               "key_code": "y",
+              "modifiers": [
+                "left_command"
+              ]
+            }
+          ],
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": [
+                "Chrome"
+              ]
+            }
+          ]
+        },
+        {
+          "description": "Ctrl + + = Command + +: 放大",
+          "type": "basic",
+          "from": {
+            "key_code": "equal_sign",
+            "modifiers": {
+              "mandatory": [
+                "left_control"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "equal_sign",
+              "modifiers": [
+                "left_command"
+              ]
+            }
+          ],
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": [
+                "Chrome"
+              ]
+            }
+          ]
+        },
+        {
+          "description": "Ctrl + - = Command + -: 缩小",
+          "type": "basic",
+          "from": {
+            "key_code": "hyphen",
+            "modifiers": {
+              "mandatory": [
+                "left_control"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "hyphen",
+              "modifiers": [
+                "left_command"
+              ]
+            }
+          ],
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": [
+                "Chrome"
+              ]
+            }
+          ]
+        },
+        {
+          "description": "Ctrl + / = Command + /: 注释",
+          "type": "basic",
+          "from": {
+            "key_code": "slash",
+            "modifiers": {
+              "mandatory": [
+                "left_control"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "slash",
               "modifiers": [
                 "left_command"
               ]

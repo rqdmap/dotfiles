@@ -154,11 +154,19 @@ local modified_enter = function()
 end
 vim.keymap.set('n', '<C-g>', modified_enter)
 
-local highlight_current_word = function()
-	vim.cmd("normal! *")
-	vim.cmd("normal! N")
-	vim.cmd("normal! zz")
-end
+local reload_native = {
+	['*'] = function()
+		vim.cmd("normal! *")
+		vim.cmd("normal! N")
+		vim.cmd("normal! zz")
+	end,
+	-- ['<C-j>'] = function()
+	-- 	vim.cmd("command! <C-]>")
+	-- 	vim.cmd("normal! zz")
+	-- end
+}
 
+for k, v in pairs(reload_native) do
+	vim.keymap.set('n', k, v)
+end
 -- 创建一个命令来调用高亮函数
-vim.keymap.set('n', '*', highlight_current_word)

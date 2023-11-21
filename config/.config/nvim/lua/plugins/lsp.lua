@@ -110,6 +110,8 @@ return {
 
 			lspconfig.rust_analyzer.setup{}
 			lspconfig.gopls.setup{}
+
+			lspconfig.sqlls.setup{}
 		end
 	},
 	{
@@ -154,7 +156,7 @@ return {
 					},
 				},
 				lightbulb = {
-					enable = true,
+					enable = false,
 					enable_in_insert = true,
 					sign = false,
 					sign_priority = 40,
@@ -185,7 +187,7 @@ return {
 					win_position = "left",
 					win_with = "",
 					win_width = 35,
-					preview_width= 0.4,
+					preview_width= 35,
 					show_detail = true,
 					auto_preview = true,
 					auto_refresh = true,
