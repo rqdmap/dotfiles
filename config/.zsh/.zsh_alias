@@ -72,3 +72,5 @@ function nvm_enable() {
 	source /usr/share/nvm/init-nvm.sh
 }
 
+alias day='vim ~/rqdmap/daily/main.md'
+

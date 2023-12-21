@@ -1,21 +1,11 @@
 -- Todo
 return {
-	{
-		'iamcco/markdown-preview.vim',
-		ft = 'markdown',
-		config = function()
-			vim.g.mkdp_path_to_chrome = '/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome'
-			vim.g.mkdp_auto_close = 0
-			vim.g.mkdp_refresh_slow = 1
-
-			local restart = function()
-				if vim.fn.exists(':MarkdownPreviewStop') ~= 0 then
-					vim.cmd('MarkdownPreviewStop')
-				end
-				vim.cmd('MarkdownPreview')
-			end
-
-			vim.keymap.set('n', '<leader>mm', restart)
-		end
-	}
+	"iamcco/markdown-preview.nvim",
+	cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+	build = "cd app && yarn install",
+	config = function()
+		vim.g.mkdp_filetypes = { "markdown" }
+		vim.keymap.set('n', '<leader>mm', "<Plug>MarkdownPreview")
+	end,
+	ft = { "markdown" },
 }

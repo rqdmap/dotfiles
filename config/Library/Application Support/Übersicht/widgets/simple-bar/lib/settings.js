@@ -107,7 +107,8 @@ export const data = {
     fullWidth: true,
   },
   displaySkhdMode: {
-    label: "Display current skhd mode (requires some configuration, see readme file)",
+    label:
+      "Display current skhd mode (requires some configuration, see readme file)",
     type: "checkbox",
     fullWidth: true,
   },
@@ -179,6 +180,11 @@ export const data = {
     type: "checkbox",
     fullWidth: true,
   },
+  hideCreateSpaceButton: {
+    label: "Hide create space button",
+    type: "checkbox",
+    fullWidth: true,
+  },
   widgets: { label: "Widgets" },
   processWidget: { label: "Process name", type: "checkbox" },
   zoomWidget: { label: "Zoom", type: "checkbox" },
@@ -189,6 +195,7 @@ export const data = {
   micWidget: { label: "Microphone", type: "checkbox" },
   soundWidget: { label: "Sound", type: "checkbox" },
   weatherWidget: { label: "Weather", type: "checkbox" },
+  netstatsWidget: { label: "Network stats", type: "checkbox" },
   batteryWidget: { label: "Battery", type: "checkbox" },
   keyboardWidget: { label: "Keyboard", type: "checkbox" },
   spotifyWidget: { label: "Spotify", type: "checkbox" },
@@ -197,7 +204,6 @@ export const data = {
   musicWidget: { label: "Music/iTunes", type: "checkbox" },
   mpdWidget: { label: "MPD state via mpc", type: "checkbox" },
   browserTrackWidget: { label: "Browser track", type: "checkbox" },
-  dndWidget: { label: "Do not disturb", type: "checkbox" },
 
   weatherWidgetOptions: {
     label: "Weather",
@@ -219,6 +225,14 @@ export const data = {
     type: "text",
     placeholder: "example: Paris",
     fullWidth: true,
+  },
+
+  netstatsWidgetOptions: {
+    label: "Network stats",
+    infos: [
+      "Here you can set the refresh frequency of the widget.",
+      "The default value is set to 2000 ms (2 seconds).",
+    ],
   },
 
   batteryWidgetOptions: {
@@ -247,7 +261,7 @@ export const data = {
     infos: [
       "Here you can override the default displayed network source.",
       "And also turn Wifi on / off when clicking the Wifi icon.",
-      "Additionally, you can choose to hide the network name for privacy."
+      "Additionally, you can choose to hide the network name for privacy.",
     ],
   },
   networkDevice: {
@@ -331,9 +345,6 @@ export const data = {
   browserTrackWidgetOptions: { label: "Browser" },
   showSpecter: { label: "Show animated specter", type: "checkbox" },
 
-  dndWidgetOptions: { label: "Do not disturb" },
-  showDndLabel: { label: "Show on/off label", type: "checkbox" },
-
   denomination: { label: "Denomination", type: "text", placeholder: "usd" },
   identifiers: {
     label: "Identifiers",
@@ -400,7 +411,7 @@ export const defaultSettings = {
   },
   themes: {
     lightTheme: "GruvboxDark",
-    darkTheme: "GruvboxDark",
+    darkTheme: "NightShiftDark",
   },
   process: {
     displayOnlyCurrent: false,
@@ -420,6 +431,7 @@ export const defaultSettings = {
     displayAllSpacesOnAllScreens: false,
     hideDuplicateAppsInSpaces: false,
     displayStickyWindowsSeparately: false,
+    hideCreateSpaceButton: false,
     hideEmptySpaces: false,
     showOptionsOnHover: true,
     switchSpacesWithoutYabai: false,
@@ -427,6 +439,7 @@ export const defaultSettings = {
   widgets: {
     processWidget: true,
     weatherWidget: false,
+    netstatsWidget: true,
     batteryWidget: true,
     wifiWidget: true,
     vpnWidget: false,
@@ -436,13 +449,12 @@ export const defaultSettings = {
     dateWidget: true,
     timeWidget: true,
     keyboardWidget: false,
-    spotifyWidget: true,
+    spotifyWidget: false,
     cryptoWidget: false,
     stockWidget: false,
     musicWidget: true,
     mpdWidget: false,
-    dndWidget: false,
-    // browserTrackWidget: true,
+    browserTrackWidget: false,
   },
   weatherWidgetOptions: {
     refreshFrequency: 1000 * 60 * 30,
@@ -450,6 +462,9 @@ export const defaultSettings = {
     hideLocation: false,
     hideGradient: false,
     customLocation: "",
+  },
+  netstatsWidgetOptions: {
+    refreshFrequency: 2000,
   },
   batteryWidgetOptions: {
     refreshFrequency: 10000,
@@ -481,7 +496,7 @@ export const defaultSettings = {
   },
   dateWidgetOptions: {
     refreshFrequency: 30000,
-    shortDateFormat: true,
+    shortDateFormat: false,
     locale: "zh-CN",
     calendarApp: "",
   },
@@ -525,10 +540,6 @@ export const defaultSettings = {
     mpdPort: "6600",
     mpdHost: "127.0.0.1",
     mpdFormatString: "%title%[ - %artist%]|[%file%]",
-  },
-  dndWidgetOptions: {
-    refreshFrequency: 60000,
-    showDndLabel: false,
   },
   browserTrackWidgetOptions: {
     refreshFrequency: 10000,

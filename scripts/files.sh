@@ -10,21 +10,14 @@ TARGETS=(
 	.zsh/.zsh_alias
 	.zsh/joshuto.sh
 	.config/starship.toml
-	.Xresources
 	.config/nvim
 	.config/alacritty
-	.config/bspwm
-	.config/sxhkd
-	.config/polybar 
-	.config/rofi
-	.config/ranger
-	.config/picom
-    .config/joshuto
-    .config/htop
-    .yabairc
-    .skhdrc
-    .config/karabiner
-    "Library/Application Support/Übersicht/widgets/simple-bar/lib/settings.js"
+	.config/joshuto
+	.config/htop
+	.yabairc
+	.skhdrc
+	.config/karabiner
+	"Library/Application Support/Übersicht/widgets/simple-bar/lib/settings.js"
 )
 
 

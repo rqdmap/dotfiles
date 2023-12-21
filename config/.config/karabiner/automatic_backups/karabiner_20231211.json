@@ -663,26 +663,6 @@
                                     }
                                 ],
                                 "type": "basic"
-                            },
-                            {
-                                "description": "Ctrl + leftclick = Command + leftclick",
-                                "from": {
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "left_control"
-                                        ]
-                                    },
-                                    "pointing_button": "button1"
-                                },
-                                "to": [
-                                    {
-                                        "modifiers": [
-                                            "left_command"
-                                        ],
-                                        "pointing_button": "button1"
-                                    }
-                                ],
-                                "type": "basic"
                             }
                         ]
                     }
@@ -768,7 +748,7 @@
                         "product_id": 45083,
                         "vendor_id": 1133
                     },
-                    "ignore": false,
+                    "ignore": true,
                     "manipulate_caps_lock_led": true,
                     "simple_modifications": [],
                     "treat_as_built_in_keyboard": false

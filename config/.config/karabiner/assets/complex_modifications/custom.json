@@ -652,6 +652,26 @@
               ]
             }
           ]
+        },
+        {
+          "description": "Ctrl + leftclick = Command + leftclick" ,
+          "type": "basic",
+          "from": {
+            "pointing_button": "button1",
+            "modifiers": {
+              "mandatory": [
+                "left_control"
+              ]
+            }
+          },
+          "to": [
+            {
+              "pointing_button": "button1",
+              "modifiers": [
+                "left_command"
+              ]
+            }
+          ]
         }
       ]
     }

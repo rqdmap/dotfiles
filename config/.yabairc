@@ -61,4 +61,6 @@ yabai -m config                                 \
 
 yabai -m rule --add app="choose" sticky=on layer=above manage=off
 
+yabai -m rule --add app="CopyQ" sticky=on layer=above manage=off
+
 echo "yabai configuration loaded.."

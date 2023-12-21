@@ -32,3 +32,10 @@ vim.api.nvim_create_autocmd("BufRead",{
 	]]
 })
 
+-- -- 自动生成dot文件的png图片
+-- vim.api.nvim_create_autocmd("BufWritePost",{
+-- 	pattern = "*.dot",
+-- 	command = [[
+-- 		!dot -Tpng -o %.png % 
+-- 	]]
+-- })

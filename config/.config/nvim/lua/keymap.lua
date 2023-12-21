@@ -1,6 +1,8 @@
 -- Jump between buffer quickly, any
-vim.cmd([[nnoremap gb :bn<CR>]])
-vim.cmd([[nnoremap gB :bp<CR>]])
+vim.cmd([[nnoremap gj :bn<CR>]])
+vim.cmd([[nnoremap gk :bp<CR>]])
+vim.cmd([[nnoremap gh :tabprevious<CR>]])
+vim.cmd([[nnoremap gl :tabnext<CR>]])
 
 -- getpos of '< and '> only works well only **after** the selection is canceled !
 -- [<(3) How to get the visual selection range? : neovim>](https://www.reddit.com/r/neovim/comments/oo97pq/how_to_get_the_visual_selection_range/)
@@ -169,4 +171,26 @@ local reload_native = {
 for k, v in pairs(reload_native) do
 	vim.keymap.set('n', k, v)
 end
--- 创建一个命令来调用高亮函数
+
+
+local git_commit = function()
+	local pwd = vim.fn.getcwd()
+	local filepath = vim.fn.expand('%:p')
+	local fail = false
+	for i = 1, #pwd do
+		if pwd:sub(i, i) ~= filepath:sub(i, i) then
+			fail = true
+			break
+		end
+	end
+	if fail == true then
+		print("Not in current dir")
+		return
+	end
+	local rel_path = filepath:sub(#pwd + 2)
+	local cmd = 'git add ' .. rel_path .. ' > /dev/null 2>&1; git commit -m "[ Neovim Lua 快捷保存 ]" > /dev/null 2>&1'
+	print(cmd)
+	os.execute(cmd)
+end
+
+vim.keymap.set('n', '<Leader>sv', git_commit)
