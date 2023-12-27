@@ -6,6 +6,7 @@ alias diff='diff --color=auto'
 alias mv='mv -i' 
 alias cp='cp -i' 
 alias vim='nvim' 
+alias v='nvim' 
 alias del='trash'
 alias his='history -i 0'
 alias grep='rg --hidden'
@@ -52,7 +53,7 @@ function boe() {
 	else
 		source ~/.secret
 		now=$(dirname $(pwd))
-		if [[ ! "$now" == "/Users/bytedance/Codes" ]]; then
+		if [[ ! "$now" == "/Users/bytedance/rqdmap/Codes" && ! "$now" == "/Users/bytedance/Codes" ]]; then
 			echo "当前不在 Codes 目录下的一级目录"
 			return
 		fi
@@ -72,5 +73,5 @@ function nvm_enable() {
 	source /usr/share/nvm/init-nvm.sh
 }
 
-alias day='vim ~/rqdmap/daily/main.md'
+alias day='cd ~/rqdmap/daily; vim main.md'
 

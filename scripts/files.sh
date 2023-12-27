@@ -18,6 +18,7 @@ TARGETS=(
 	.skhdrc
 	.config/karabiner
 	"Library/Application Support/Übersicht/widgets/simple-bar/lib/settings.js"
+	Library/Rime
 )
 
 
