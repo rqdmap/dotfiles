@@ -1,3 +1,4 @@
+-- TODO
 return {
 	{
 		'lewis6991/gitsigns.nvim',
@@ -308,6 +309,8 @@ return {
 				},
 			  },
 			})
+
+			vim.keymap.set('n', '<leader>df', ':DiffviewOpen ')
 		end
 	}
 }

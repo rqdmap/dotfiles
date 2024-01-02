@@ -215,8 +215,9 @@ return {
 			})
 			local keymap = vim.keymap.set
 			keymap("n", "<Leader>T", "<cmd>Lspsaga outline<CR>")
-			-- keymap("n", "<Leader>d", "<cmd>Lspsaga peek_definition<CR>")
-			keymap("n", "<Leader>D", "<cmd>Lspsaga lsp_finder<CR>")
+			-- 使用浮窗查看对应的定义, 不如 <C-]>, 注释掉
+			-- keymap("n", "<Leader>D", "<cmd>Lspsaga peek_definition<CR>")
+			-- keymap("n", "<Leader>D", "<cmd>Lspsaga lsp_finder<CR>")
 			keymap("n", "<Leader>a", "<cmd>Lspsaga code_action<CR>")
 			keymap("n", "<Leader>ew", "<cmd>Lspsaga show_workspace_diagnostics<CR>")
 			keymap("n", "<Leader>eb", "<cmd>Lspsaga show_buf_diagnostics<CR>")
