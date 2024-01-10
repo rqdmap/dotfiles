@@ -61,17 +61,30 @@ return {
 			end
 
 			-- lspconfig.pylyzer.setup{}
-			lspconfig.pyright.setup{
+			-- [<python-lsp-server/CONFIGURATION.md at develop · python-lsp/python-lsp-server>](https://github.com/python-lsp/python-lsp-server/blob/develop/CONFIGURATION.md)
+			require'lspconfig'.pylsp.setup{
 				settings = {
-					python = {
-						analysis = {
-							autoSearchPaths = true,
-							diagnosticMode = "workspace",
-							useLibraryCodeForTypes = false
+					pylsp = {
+						plugins = {
+							pycodestyle = {
+								-- ignore = {'E302'},
+								maxLineLength = 120
+							}
 						}
 					}
 				}
 			}
+			-- lspconfig.pyright.setup{
+			-- 	settings = {
+			-- 		python = {
+			-- 			analysis = {
+			-- 				autoSearchPaths = true,
+			-- 				diagnosticMode = "workspace",
+			-- 				useLibraryCodeForTypes = false
+			-- 			}
+			-- 		}
+			-- 	}
+			-- }
 
 			lspconfig.bashls.setup{}
 
@@ -112,6 +125,8 @@ return {
 			lspconfig.gopls.setup{}
 
 			lspconfig.sqlls.setup{}
+
+			lspconfig.vuels.setup{}
 		end
 	},
 	{

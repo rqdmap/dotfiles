@@ -2,22 +2,12 @@ return {
 	'folke/lazy.nvim',
 
 -- UI
-	require("plugins.nvim-web-devicons"),
-
-	require("plugins.lualine"),
-
 	{
 		"ellisonleao/gruvbox.nvim",
 		init = function()
 			vim.cmd([[colorscheme gruvbox]])
 		end
 	},
-
-	-- file explorer tree
-	require("plugins.nvim-tree"),
-
-	-- tagbar
-	require("plugins.symbols-outline"),
 
 	'Valloric/MatchTagAlways',
 
@@ -26,9 +16,6 @@ return {
 
 	-- 直接显示源码对应的颜色
 	'ap/vim-css-color',
-
-	-- bufferline
-	require("plugins.bufferline"),
 
 	-- .ron高亮
 	'ron-rs/ron.vim',
@@ -42,24 +29,10 @@ return {
 	},
 
 -- Edit
-	-- 代码块补全
-	require("plugins.luasnip"),
-
-	-- 自动补全
-	require("plugins.nvim-cmp"),
 
 	-- 切换模式时切换输入法
 	'lilydjwg/fcitx.vim',
 	'rlue/vim-barbaric',
-
-	-- 表格模式
-	require("plugins.vim-table-mode"),
-
-	-- 注释
-	require("plugins.Comment"),
-
--- Search
-	require("plugins.telescope"),
 
 -- MISC
 	-- AW计时器
@@ -67,16 +40,6 @@ return {
 		'ActivityWatch/aw-watcher-vim',
 	},
 
-	require("plugins.copilot"),
 
 	'nathangrigg/vim-beancount',
-
--- Programming Languages Support
-	-- nvim-lspconfig
-	require("plugins.lsp"),
-
-	require("plugins.cpp"),
-	require("plugins.rust"),
-	require("plugins.latex"),
-	require("plugins.markdown"),
 }
