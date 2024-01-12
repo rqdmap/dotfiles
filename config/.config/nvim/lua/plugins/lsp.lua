@@ -67,24 +67,29 @@ return {
 					pylsp = {
 						plugins = {
 							pycodestyle = {
-								-- ignore = {'E302'},
+								ignore = {'E731'},
 								maxLineLength = 120
 							}
 						}
 					}
 				}
 			}
-			-- lspconfig.pyright.setup{
-			-- 	settings = {
-			-- 		python = {
-			-- 			analysis = {
-			-- 				autoSearchPaths = true,
-			-- 				diagnosticMode = "workspace",
-			-- 				useLibraryCodeForTypes = false
-			-- 			}
-			-- 		}
-			-- 	}
-			-- }
+
+			-- 支持 call graph; pylyzer 好像不支持
+			lspconfig.pyright.setup{
+				settings = {
+					python = {
+						-- [<Language Server Settings>](https://microsoft.github.io/pyright/#/settings)
+						analysis = {
+							autoSearchPaths = true,
+							diagnosticMode = "workspace",
+							useLibraryCodeForTypes = false,
+							typeCheckingMode = "off",
+							-- typeCheckingMode = "strict",
+						}
+					}
+				}
+			}
 
 			lspconfig.bashls.setup{}
 
