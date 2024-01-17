@@ -205,14 +205,15 @@ return {
 				},
 				outline = {
 					win_position = "left",
-					win_with = "",
-					win_width = 35,
-					preview_width= 35,
-					show_detail = true,
+					-- win_width = 35,
 					auto_preview = true,
-					auto_refresh = true,
+					detail = false,
 					auto_close = true,
-					custom_sort = nil,
+					close_after_jump = false,
+					layout = 'float',   -- or 'float'
+					max_height = 0.5,	 -- height of outline float layout
+					left_width = 0.3,	 -- width of outline float layout left window
+
 					keys = {
 						expand_or_jump = 'o',
 						quit = "q",
