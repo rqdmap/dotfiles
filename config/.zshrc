@@ -75,6 +75,7 @@ PATH=$PATH:$HOME/.local/bin
 PATH=$PATH:$HOME/.cargo/bin
 PATH=$PATH:/opt/local/bin
 PATH=$PATH:/opt/local/libexec/gnubin/
+PATH=$PATH:/Users/bytedance/Library/Python/3.9/bin
 
 if [ -f $ZSH/.zsh_alias ]; then
 	source $ZSH/.zsh_alias
@@ -82,6 +83,7 @@ fi
 
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
+export TERM=xterm-256color
 
 eval "$(starship init zsh)"
 

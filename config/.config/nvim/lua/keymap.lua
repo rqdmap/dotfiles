@@ -1,4 +1,3 @@
--- Jump between buffer quickly, any
 vim.cmd([[nnoremap gn :bn<CR>]])
 vim.cmd([[nnoremap gp :bp<CR>]])
 vim.cmd([[nnoremap gh :tabprevious<CR>]])

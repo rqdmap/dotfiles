@@ -585,6 +585,14 @@
                                 "type": "basic"
                             },
                             {
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
+                                            "alacritty"
+                                        ],
+                                        "type": "frontmost_application_unless"
+                                    }
+                                ],
                                 "description": "Ctrl + backspace = Option + backspace",
                                 "from": {
                                     "key_code": "delete_or_backspace",
