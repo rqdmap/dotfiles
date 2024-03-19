@@ -9,7 +9,7 @@ return {
 		end
 	},
 
-	'Valloric/MatchTagAlways',
+	-- 'Valloric/MatchTagAlways',
 
 	-- 为Rofi提供语法高亮
 	'Fymyte/rasi.vim',

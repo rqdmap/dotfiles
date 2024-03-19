@@ -46,28 +46,6 @@ alias gitwd='git diff --word-diff=porcelain  | grep -e "^-[^-]" | wc -m | xargs'
 alias gitwdd='git diff --word-diff=porcelain | grep -e"^+[^+]" -e"^-[^-]"|sed -e's/.//'|sort|uniq -d|wc -m|xargs'
 alias gitw='echo $(($(gitwa) - $(gitwd)))'
 
-function boe() {
-	if [[ $# -eq 0 ]]; then
-		source ~/.secret
-		ssh $SECRET_NAME@$SECRET_BOE_IP
-	else
-		source ~/.secret
-		now=$(dirname $(pwd))
-		if [[ ! "$now" == "/Users/bytedance/rqdmap/Codes" && ! "$now" == "/Users/bytedance/Codes" ]]; then
-			echo "当前不在 Codes 目录下的一级目录"
-			return
-		fi
-
-		if [[ $1 == "push" ]]; then
-			rsync -av --delete $(pwd) $SECRET_NAME@$SECRET_BOE_IP:/home/$SECRET_NAME/
-		elif [[ $1 == "pull" || $1 == "pop" ]]; then
-			rsync -av --delete $SECRET_NAME@$SECRET_BOE_IP:/home/$SECRET_NAME/$(basename $(pwd)) $now/
-		else
-			echo "invalid op: $1"
-		fi
-	fi
-}
-
 # 启用Node nvm
 function nvm_enable() {
 	source /usr/share/nvm/init-nvm.sh

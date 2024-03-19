@@ -39,3 +39,60 @@ vim.api.nvim_create_autocmd("BufRead",{
 -- 		!dot -Tpng -o %.png % 
 -- 	]]
 -- })
+
+-- 自动 rsync
+vim.api.nvim_create_autocmd("BufWritePost",{
+	pattern = "*/Codes/reasoner/*",
+	command = [[
+		silent !boe push ~/Codes/reasoner
+	]]
+})
+
+vim.api.nvim_create_autocmd("BufWritePost",{
+	pattern = "*/Codes/ocean_rpc_service/*",
+	command = [[
+		silent !boe push ~/Codes/ocean_rpc_service
+	]]
+})
+
+vim.api.nvim_create_autocmd("BufWritePost",{
+	pattern = "*/Codes/ocean/*",
+	command = [[
+		silent !boe push ~/Codes/ocean
+	]]
+})
+
+vim.api.nvim_create_autocmd("BufWritePost",{
+	pattern = "*/Codes/tmp/*",
+	command = [[
+		silent !boe push ~/Codes/tmp
+	]]
+})
+
+vim.api.nvim_create_autocmd("BufWritePost",{
+	pattern = "*/Codes/bkb_engine_server/*",
+	command = [[
+		silent !boe push ~/Codes/bkb_engine_server
+	]]
+})
+
+vim.api.nvim_create_autocmd("BufWritePost",{
+	pattern = "*/Codes/bkb_robot/*",
+	command = [[
+		silent !boe push ~/Codes/bkb_robot
+	]]
+})
+
+vim.api.nvim_create_autocmd("BufWritePost",{
+	pattern = "*/Codes/baike_realtime/*",
+	command = [[
+		silent !boe push ~/Codes/baike_realtime
+	]]
+})
+
+vim.api.nvim_create_autocmd("BufWritePost",{
+	pattern = "*/Codes/sql直连操作mysql/*",
+	command = [[
+		silent !boe push ~/Codes/sql直连操作mysql
+	]]
+})
