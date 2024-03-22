@@ -36,7 +36,7 @@ local options = {
 		incsearch				=	false,				-- 不要每输入一个字符都跳转
 
 	-- Search	
-		path					=	vim.fn.getcwd() .. "/**,.",	-- 使得find可以递归获取子目录下所有文件
+		-- path					=	vim.fn.getcwd() .. "/**,.",	-- 使得find可以递归获取子目录下所有文件; 但是会炸
 		wildignore				=	"*/__pycache__/*",	-- 指定通配符拓展忽略的模式
 
 	-- Mouse
