@@ -114,6 +114,7 @@ pushd ~/Documents/moneybook/
 foo fava main.bean
 popd
 
+# foo syncthing
 
 # # Swap Ctrl and CapsLock
 # setxkbmap -option ctrl:swapcaps

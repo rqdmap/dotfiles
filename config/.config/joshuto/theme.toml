@@ -23,9 +23,9 @@ bold = true
 fg = "light_red"
 bold = true
 
-[selection.prefix]
-prefix = "  "
-size = 2
+# [selection.prefix]
+# prefix = "  "
+# size = 2
 
 ##########################################
 ## File List - System File Types

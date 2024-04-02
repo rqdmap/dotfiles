@@ -14,6 +14,10 @@ keymap = [
   { keys = ["\t"], commands = ["tab_switch 1"] },
   { keys = ["backtab"], commands = ["tab_switch -1"] },
 
+  { keys = ["f"], commands = [":filter "] },
+  { keys = ["F"], commands = [":filter_regex "] },
+
+
   { keys = ["R"], commands = ["reload_dirlist"] },
   { keys = ["z", "h"], commands = ["toggle_hidden"] },
   { keys = ["ctrl+h"], commands = ["toggle_hidden"] },
@@ -92,7 +96,7 @@ keymap = [
   { keys = ["I"], commands = ["rename_prepend"] },
   # { keys = ["r", "s"], commands = ["rename_keep_ext"] },
 
-  { keys = ["f", "t"], commands = [":touch "] },
+  # { keys = ["f", "t"], commands = [":touch "] },
 
   { keys = [" "], commands = ["select --toggle=true"] },
   { keys = ["t"], commands = ["select --all=true --toggle=true"] },

@@ -19,6 +19,7 @@ opts=(
 "󰥻 sxhkd重启:	pkill -USR1 -x sxhkd"
 " record窗口:	record -k -r"
 " record全屏:	record -k -f"
+" 键盘回显:	record -k"
 " Factorio:	/home/rqdmap/Games/factorio/bin/x64/factorio"
 )
 

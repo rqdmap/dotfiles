@@ -34,7 +34,7 @@ return {
 			require("mason").setup()
 			require("mason-lspconfig").setup({
 				ensure_installed = {},
-				automatic_installation = true
+				automatic_installation = false
 			})
 
 			-- local capabilities = require('cmp_nvim_lsp').default_capabilities()
@@ -61,17 +61,36 @@ return {
 			end
 
 			-- lspconfig.pylyzer.setup{}
-			lspconfig.pyright.setup{
+			-- [<python-lsp-server/CONFIGURATION.md at develop · python-lsp/python-lsp-server>](https://github.com/python-lsp/python-lsp-server/blob/develop/CONFIGURATION.md)
+			lspconfig.pylsp.setup{
 				settings = {
-					python = {
-						analysis = {
-							autoSearchPaths = true,
-							diagnosticMode = "workspace",
-							useLibraryCodeForTypes = false
+					pylsp = {
+						plugins = {
+							pycodestyle = {
+								ignore = {'E731'},
+								maxLineLength = 120
+							}
 						}
 					}
 				}
 			}
+
+			-- 支持 call graph; pylyzer 好像不支持
+			lspconfig.pyright.setup{
+				settings = {
+					python = {
+						-- [<Language Server Settings>](https://microsoft.github.io/pyright/#/settings)
+						analysis = {
+							autoSearchPaths = true,
+							diagnosticMode = "workspace",
+							useLibraryCodeForTypes = false,
+							typeCheckingMode = "off",
+							-- typeCheckingMode = "strict",
+						}
+					}
+				}
+			}
+
 
 			lspconfig.bashls.setup{}
 
@@ -108,7 +127,21 @@ return {
 			lspconfig.marksman.setup{}
 			-- require'lspconfig'.zk.setup{}  -- No single file support
 
-			lspconfig.rust_analyzer.setup{}
+			lspconfig.rust_analyzer.setup({
+				settings = {
+					['rust-analyzer'] = {
+						inlayHints = {
+							-- closingBraceHints = {
+							-- 	enable = true;
+							-- 	minLines = 0;
+							-- }
+						}
+					}
+				},
+				on_attach = function(client, bufnr)
+					vim.lsp.inlay_hint.enable(bufnr)
+				end
+			})
 			lspconfig.gopls.setup{}
 		end
 	},
@@ -183,19 +216,21 @@ return {
 				},
 				outline = {
 					win_position = "left",
-					win_with = "",
-					win_width = 35,
-					preview_width= 0.4,
-					show_detail = true,
+					-- win_width = 35,
 					auto_preview = true,
-					auto_refresh = true,
+					detail = false,
 					auto_close = true,
-					custom_sort = nil,
+					close_after_jump = false,
+					layout = 'float',   -- or 'float'
+					max_height = 0.5,	 -- height of outline float layout
+					left_width = 0.3,	 -- width of outline float layout left window
+
 					keys = {
 						expand_or_jump = 'o',
 						quit = "q",
 					},
 				},
+
 				ui = {
 					-- This option only works in Neovim 0.9
 					title = true,

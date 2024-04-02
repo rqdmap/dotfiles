@@ -49,7 +49,13 @@ return {
 	require("plugins.nvim-cmp"),
 
 	-- 切换模式时切换输入法
-	'lilydjwg/fcitx.vim',
+	{
+		'lilydjwg/fcitx.vim',
+		enabled = function()
+			local hostname = vim.api.nvim_call_function('hostname', {})
+			return hostname == 'ArchLinux'
+		end,
+	},
 
 	-- 表格模式
 	require("plugins.vim-table-mode"),
