@@ -14,7 +14,6 @@ electron25 25.9.8-1
 faudio 24.03-1
 fava 1.26.2-2
 fcitx5-pinyin-moegirl 20240309-1
-feishu-bin 6.9.20-1
 foxitreader 2.4.5.0727-1
 frpc-bin 0.52.3-3
 frps-bin 0.52.3-3
@@ -35,7 +34,6 @@ lib32-udis86-git 1.7.2.186.g5336633-1
 libcgroup 2.0-1
 libeb 4.4.3-10
 light 1.2.2-3
-mininet 2.3.0-1
 modprobed-db 2.46-2
 ms-sys 1:2.8.0-1
 neovim-git 0.10.0.r2712.g63f7b1f31e-1
@@ -48,7 +46,6 @@ paru 2.0.3-1
 powerstat 0.03.03-1
 pyinstaller 6.3.0-1
 pyinstaller-hooks-contrib 2024.0-1
-python39 3.9.18-2
 python-altgraph 0.17.4-1
 python-argparse 1.4.0-14
 python-esprima 4.0.1-1
