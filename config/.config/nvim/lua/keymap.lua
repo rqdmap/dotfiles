@@ -167,3 +167,25 @@ end
 -- 创建一个命令来调用高亮函数
 vim.keymap.set('n', '*', highlight_current_word)
 
+
+local git_commit = function()
+	local pwd = vim.fn.getcwd()
+	local filepath = vim.fn.expand('%:p')
+	local fail = false
+	for i = 1, #pwd do
+		if pwd:sub(i, i) ~= filepath:sub(i, i) then
+			fail = true
+			break
+		end
+	end
+	if fail == true then
+		print("Not in current dir")
+		return
+	end
+	local rel_path = filepath:sub(#pwd + 2)
+	local cmd = 'git add ' .. rel_path .. ' > /dev/null 2>&1; git commit -m "[ Neovim Lua 快捷保存 ]" > /dev/null 2>&1'
+	print(cmd)
+	os.execute(cmd)
+end
+
+vim.keymap.set('n', '<Leader>sv', git_commit)

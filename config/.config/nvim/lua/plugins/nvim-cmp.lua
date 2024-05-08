@@ -58,17 +58,6 @@ return {
 				}
 			}
 
-			-- 由于nvim-cmp带有的模糊查找功能, 一些*子序列*的优先级可能会超过*前缀*序列
-			-- 因而检查 ** 前缀相等的长度** 以此排序
-			local cmp_prefix = function(entry1, entry2)
-				local foo = require("utils").prefix_cnt
-				local words = words_before_cursor()
-				local cnt1 = foo(words, entry1.completion_item.label)
-				local cnt2 = foo(words, entry2.completion_item.label)
-				if(cnt1 > cnt2) then return true
-				elseif(cnt2 > cnt1) then return false end
-			end
-
 			local comparator_helper = function(is_something)
 				local comparator = function(entry1, entry2)
 					if is_something(entry1) and not is_something(entry2) then
@@ -82,18 +71,42 @@ return {
 
 			local is_luasnip_exact = function(entry)
 				local name = entry.source.name
-				if name == 'luasnip' and entry.exact then
-					return true
-				end
+				if name == 'luasnip' and entry.exact then return true end
 				return false
 			end
 
-			local is_ai_cmp = function(entry)
+			local is_ai_source = function(entry)
 				local name = entry.source.name
-				if name == 'codeium' or name == 'copilot' then
-					return true
-				end
+				if name == 'codeium' or name == 'copilot' then return true end
 				return false
+			end
+
+			local is_field_kind = function(entry)
+				local kind = entry:get_kind()
+				local CompletionItemKind = require("cmp.types").lsp.CompletionItemKind
+				if kind == CompletionItemKind.Field then return true end
+				return false
+			end
+
+			local not_text_kind = function(entry)
+				local kind = entry:get_kind()
+				local CompletionItemKind = require("cmp.types").lsp.CompletionItemKind
+				if kind ~= CompletionItemKind.Text then return true end
+				return false
+			end
+
+			-- 由于nvim-cmp带有的模糊查找功能, 一些*子序列*的优先级可能会超过*前缀*序列
+			-- 因而使用 KMP 检查 ** 最长公共前后缀的长度** 以此排序
+			local cmp_prefix = function(entry1, entry2)
+				local foo = require("utils").longest_common_prefix_suffix
+				-- local foo = require("utils").prefix_cnt
+				local words = words_before_cursor()
+				if words == nil then return end
+
+				local cnt1 = foo(entry1.completion_item.label .. words)
+				local cnt2 = foo(entry2.completion_item.label .. words)
+				if(cnt1 > cnt2) then return true
+				elseif(cnt2 > cnt1) then return false end
 			end
 
 			-- Read The Fucking Manual
@@ -227,13 +240,13 @@ return {
 				sorting = {
 					comparators = {
 						comparator_helper(is_luasnip_exact),
-
-						comparator_helper(is_ai_cmp),
-
+						comparator_helper(is_ai_source),
 						cmp_prefix,
+						comparator_helper(is_field_kind),
+						comparator_helper(not_text_kind),
+						cmp.config.compare.kind,
 						cmp.config.compare.length,
 
-						-- cmp.config.compare.kind,
 						-- cmp.config.compare.locality,
 						-- cmp.config.compare.score,
 						-- cmp.config.compare.sort_text,

@@ -13,6 +13,7 @@ opts=(
 "󱓞 Launcher:	rofi_run"
 " 关机:	systemctl poweroff"
 " 重启:	systemctl reboot"
+" 重启:    	sudo grub-reboot 3 && reboot"
 "󰥻 键盘切换:	switch_keyboard"
 " 禁用独显:	close_nouveau_nvidia"
 " bspwm重启:	bspc wm -r"

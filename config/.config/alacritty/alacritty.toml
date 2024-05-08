@@ -187,7 +187,7 @@ family = "Iosevka Nerd Font"
 bindings = [
   { chars = "\u001F", key = "Slash", mods = "Control" },
   { action = "ScrollLineUp", key = "Key1", mods = "Control" },
-  { action = "ScrollLineDown", key = "Key2", mods = "Control" }
+  { action = "ScrollLineDown", key = "Key2", mods = "Control" },
 # Todo
 ]
 
