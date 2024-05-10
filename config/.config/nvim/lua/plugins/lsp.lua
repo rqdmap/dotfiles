@@ -67,7 +67,7 @@ return {
 					pylsp = {
 						plugins = {
 							pycodestyle = {
-								ignore = {'E731'},
+								ignore = {'E731', 'E302'},
 								maxLineLength = 120
 							}
 						}

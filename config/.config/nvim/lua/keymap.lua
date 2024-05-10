@@ -189,3 +189,58 @@ local git_commit = function()
 end
 
 vim.keymap.set('n', '<Leader>sv', git_commit)
+
+
+-- vim.api.nvim_set_keymap('n', '<C-b>', '<cmd>lua if is_markdown() then print("Custom action in Markdown mode") else vim.cmd("normal! \<C-b>") end<CR>', { noremap = true, silent = true })
+
+
+-- Markdown 快捷键
+local function is_markdown()
+    return vim.bo.filetype == "markdown"
+end
+
+-- 仅支持 Visual 模式下的操作
+local wrap_text = function(wrapper)
+	if vim.fn.mode() ~= 'v' then return end
+
+	-- 获取选中区域的起始行和结束行
+	local _, start_line, start_col, _ = unpack(vim.fn.getpos("v"))
+	local _, end_line, end_col, _ = unpack(vim.fn.getpos("."))
+
+	if start_line > end_line then
+		start_line, start_col, end_line, end_col = end_line, end_col, start_line, start_col
+	elseif start_col > end_col then
+		start_col, end_col = end_col, start_col
+	end
+
+	if start_line == end_line then
+		end_col = end_col + 2
+	end
+
+	vim.api.nvim_buf_set_text(0, start_line - 1, start_col - 1, start_line - 1, start_col - 1, {wrapper})
+	end_col = math.min(end_col, string.len(vim.api.nvim_get_current_line()))
+	vim.api.nvim_buf_set_text(0, end_line - 1, end_col, end_line - 1, end_col, {wrapper})
+	vim.api.nvim_input('<Esc>')
+end
+
+local text_bold = function ()
+	if not is_markdown() or vim.fn.mode() ~= 'v' then
+		-- vim.cmd([[exe "normal! \<c-b>"]])
+		return
+	end
+	wrap_text("**")
+end
+
+local text_italy = function ()
+	if not is_markdown() or vim.fn.mode() ~= 'v' then return end
+	wrap_text("*")
+end
+
+local text_delete = function ()
+	if not is_markdown() or vim.fn.mode() ~= 'v' then return end
+	wrap_text("~~")
+end
+
+vim.keymap.set('x', '<S-b>', text_bold)
+vim.keymap.set('x', '<S-i>', text_bold)
+vim.keymap.set('x', '<S-d>', text_delete)
