@@ -199,7 +199,7 @@ local function is_markdown()
     return vim.bo.filetype == "markdown"
 end
 
--- 仅支持 Visual 模式下的操作
+-- 仅支持 Visual 模式下的操作, 支持 CJK
 local wrap_text = function(wrapper)
 	if vim.fn.mode() ~= 'v' then return end
 
@@ -207,20 +207,10 @@ local wrap_text = function(wrapper)
 	local _, start_line, start_col, _ = unpack(vim.fn.getpos("v"))
 	local _, end_line, end_col, _ = unpack(vim.fn.getpos("."))
 
-	if start_line > end_line then
-		start_line, start_col, end_line, end_col = end_line, end_col, start_line, start_col
-	elseif start_col > end_col then
-		start_col, end_col = end_col, start_col
+	if start_line > end_line or (start_line == end_line and start_col > end_col) then
+		vim.api.nvim_input('o')
 	end
-
-	if start_line == end_line then
-		end_col = end_col + 2
-	end
-
-	vim.api.nvim_buf_set_text(0, start_line - 1, start_col - 1, start_line - 1, start_col - 1, {wrapper})
-	end_col = math.min(end_col, string.len(vim.api.nvim_get_current_line()))
-	vim.api.nvim_buf_set_text(0, end_line - 1, end_col, end_line - 1, end_col, {wrapper})
-	vim.api.nvim_input('<Esc>')
+	vim.api.nvim_input('<Esc>a' ..wrapper .. '<Esc>gvo<Esc>i' .. wrapper .. '<Esc>')
 end
 
 local text_bold = function ()
