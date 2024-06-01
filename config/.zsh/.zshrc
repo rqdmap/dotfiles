@@ -12,9 +12,13 @@ compinit
 if [ 'ArchLinux' = "$(cat /etc/hostname)" ]; then
 	source /usr/share/fzf/key-bindings.zsh
 	source /usr/share/fzf/completion.zsh
+
 fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd completion)
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 if [ -f $ZSH/.zsh_cmp ]; then
 	source $ZSH/.zsh_cmp
@@ -49,7 +53,6 @@ export EDITOR="nvim"
 
 if [ "ArchLinux" = "$HOST" ] || [ "ArchMacBook" = "$HOST" ]; then
 	export {http,https,ftp,socks}_proxy="http://127.0.0.1:7890"
-	# export {http,https,ftp,socks}_proxy="http://127.0.0.1:60078"
 	export no_proxy="localhost,127.0.0.0/8,10.0.0.0/8"
 fi
 

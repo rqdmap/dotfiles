@@ -208,29 +208,40 @@ local wrap_text = function(wrapper)
 	local _, end_line, end_col, _ = unpack(vim.fn.getpos("."))
 
 	if start_line > end_line or (start_line == end_line and start_col > end_col) then
-		vim.api.nvim_input('o')
+		vim.api.nvim_input('o<Esc>a' ..wrapper .. '<Esc>gvo<Esc>i' .. wrapper .. '<Esc>')
+	else
+		vim.api.nvim_input('<Esc>a' ..wrapper .. '<Esc>gvo<Esc>i' .. wrapper .. '<Esc>')
 	end
-	vim.api.nvim_input('<Esc>a' ..wrapper .. '<Esc>gvo<Esc>i' .. wrapper .. '<Esc>')
 end
 
 local text_bold = function ()
 	if not is_markdown() or vim.fn.mode() ~= 'v' then
-		-- vim.cmd([[exe "normal! \<c-b>"]])
+		vim.cmd([[exe "normal! \<B>"]])
 		return
 	end
 	wrap_text("**")
 end
 
-local text_italy = function ()
-	if not is_markdown() or vim.fn.mode() ~= 'v' then return end
-	wrap_text("*")
-end
+-- local text_italy = function ()
+-- 	if not is_markdown() or vim.fn.mode() ~= 'v' then
+-- 		return
+-- 	end
+-- 	wrap_text("*")
+-- end
 
 local text_delete = function ()
-	if not is_markdown() or vim.fn.mode() ~= 'v' then return end
+	if not is_markdown() or vim.fn.mode() ~= 'v' then 
+		return
+	end
 	wrap_text("~~")
 end
 
-vim.keymap.set('x', '<S-b>', text_bold)
-vim.keymap.set('x', '<S-i>', text_bold)
-vim.keymap.set('x', '<S-d>', text_delete)
+local text_code = function ()
+	if not is_markdown() or vim.fn.mode() ~= 'v' then return end
+	wrap_text("`")
+end
+
+vim.keymap.set('x', 'B', text_bold)
+-- vim.keymap.set('x', 'I', text_italy)
+vim.keymap.set('x', 'D', text_delete)
+vim.keymap.set('x', '~', text_code)

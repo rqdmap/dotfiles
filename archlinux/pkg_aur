@@ -5,7 +5,7 @@ asp 8-1
 beancount 2.3.6-1
 chromedriver 122.0.6261.128-1
 cloog 0.21.1-1
-fava 1.27.3-1
+dingtalk-bin 7.5.10.404099-1
 fcitx5-pinyin-moegirl 20240309-1
 fcitx5-pinyin-moegirl-rime 20240309-2
 foxitreader 2.4.5.0727-1
@@ -13,7 +13,7 @@ frpc-bin 0.57.0-1
 frps-bin 0.57.0-1
 gcc44 4.4.7-6
 gftp 2.9.1b-5
-goldendict-git 1:1.5.0.r18.g59363bc9-1
+goldendict-ng-git 24.02.16.r5395.e2e1ca2d-1
 google-chrome 123.0.6312.122-1
 gstreamer0.10 0.10.36-20
 gstreamer0.10-base 0.10.36-13
@@ -31,9 +31,9 @@ osl 0.9.7-1
 paru 2.0.3-1
 powerstat 0.03.03-1
 python-argparse 1.4.0-14
+python-cached-property 1.5.2-7
 python-esprima 4.0.1-1
 python-pygraphviz 1.11-1
-qt5-webkit 5.212.0alpha4-24
 sddm-sugar-candy-git r53.2b72ef6-1
 systemd-shutdown-diagnose 6-2
 tree-sitter-git 0.22.6.r5.g8e8648af-1
