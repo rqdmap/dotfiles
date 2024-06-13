@@ -34,7 +34,7 @@ return {
 			require("mason").setup()
 			require("mason-lspconfig").setup({
 				ensure_installed = {},
-				automatic_installation = true
+				automatic_installation = false
 			})
 
 			-- local capabilities = require('cmp_nvim_lsp').default_capabilities()
@@ -45,13 +45,13 @@ return {
 
 			-- https://www.reddit.com/r/neovim/comments/xt4f7g/how_to_set_ccls_offset_encoding_in_astrovim/
 			-- https://github.com/jose-elias-alvarez/null-ls.nvim/issues/428
-			lspconfig.ccls.setup {
-				init_options = {
-					cache = {
-						directory = ".ccls-cache";
-					};
-				},
-			}
+			-- lspconfig.ccls.setup {
+			-- 	init_options = {
+			-- 		cache = {
+			-- 			directory = ".ccls-cache";
+			-- 		};
+			-- 	},
+			-- }
 			local notify = vim.notify
 			vim.notify = function(msg, ...)
 				if msg:match("warning: multiple different client offset_encodings") then
@@ -62,13 +62,13 @@ return {
 
 			-- lspconfig.pylyzer.setup{}
 			-- [<python-lsp-server/CONFIGURATION.md at develop · python-lsp/python-lsp-server>](https://github.com/python-lsp/python-lsp-server/blob/develop/CONFIGURATION.md)
-			require'lspconfig'.pylsp.setup{
+			lspconfig.pylsp.setup{
 				settings = {
 					pylsp = {
 						plugins = {
 							pycodestyle = {
-								ignore = {'E731'},
-								maxLineLength = 100
+								ignore = {'E731', 'E302'},
+								maxLineLength = 120
 							}
 						}
 					}
@@ -91,6 +91,7 @@ return {
 				}
 			}
 
+
 			lspconfig.bashls.setup{}
 
 			lspconfig.dotls.setup{}
@@ -98,6 +99,8 @@ return {
 			--Enable (broadcasting) snippet capability for completion
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
 			capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+			lspconfig.clangd.setup {}
 
 			lspconfig.cssls.setup {
 				capabilities = capabilities,
@@ -122,16 +125,27 @@ return {
 			-- IMPORTANT: If you want all the features jdtls has to offer,
 			-- **nvim-jdtls** is highly recommended.
 			lspconfig.jdtls.setup{}
+			-- lspconfig.java_language_server.setup{}
 
 			lspconfig.marksman.setup{}
 			-- require'lspconfig'.zk.setup{}  -- No single file support
 
-			lspconfig.rust_analyzer.setup{}
+			lspconfig.rust_analyzer.setup({
+				settings = {
+					['rust-analyzer'] = {
+						inlayHints = {
+							-- closingBraceHints = {
+							-- 	enable = true;
+							-- 	minLines = 0;
+							-- }
+						}
+					}
+				},
+				on_attach = function(client, bufnr)
+					vim.lsp.inlay_hint.enable(bufnr)
+				end
+			})
 			lspconfig.gopls.setup{}
-
-			lspconfig.sqlls.setup{}
-
-			lspconfig.vuels.setup{}
 		end
 	},
 	{
@@ -144,28 +158,6 @@ return {
 		},
 		config = function()
 			require("lspsaga").setup({
-				finder = {
-					max_height = 0.5,
-					min_width = 30,
-					force_max_height = false,
-					keys = {
-						jump_to = 'p',
-						expand_or_jump = 'o', -- Do NOT execute
-						vsplit = 'v',
-						split = 's',
-						tabe = 't',
-						tabnew = 'r',
-						quit = { 'q', '<ESC>' },
-						close_in_preview = '<ESC>',
-					},
-				},
-				definition = {
-					edit = "<C-c>o", -- Do NOT execute
-					vsplit = "<C-c>v",
-					split = "<C-c>s",
-					tabe = "<C-c>t",
-					quit = "q",
-				},
 				code_action = {
 					num_shortcut = true,
 					show_server_name = true,
@@ -175,8 +167,40 @@ return {
 						exec = "<CR>",
 					},
 				},
+				-- definition = {
+				-- 	edit = "<C-c>o", -- Do NOT execute
+				-- 	vsplit = "<C-c>v",
+				-- 	split = "<C-c>s",
+				-- 	tabe = "<C-c>t",
+				-- 	quit = "q",
+				-- },
+				finder = {
+					max_height = 0.5,
+					min_width = 30,
+					force_max_height = false,
+					keys = {
+						toggle_or_open = {'o', '<CR>'},
+						vsplit = 'v',
+						split = 's',
+						tabe = 't',
+						tabnew = 'r',
+						quit = { 'q', '<ESC>' },
+						close_in_preview = '<ESC>',
+					},
+				},
+				callhierarchy = {
+					keys = {
+						edit = {'o', '<CR>'},
+						vsplit = 'v',
+						split = 's',
+						tabe = 't',
+						tabnew = 'r',
+						quit = { 'q', '<ESC>' },
+						close_in_preview = '<ESC>',
+					},
+				},
 				lightbulb = {
-					enable = false,
+					enable = true,
 					enable_in_insert = true,
 					sign = false,
 					sign_priority = 40,
@@ -206,11 +230,11 @@ return {
 				outline = {
 					win_position = "left",
 					-- win_width = 35,
-					auto_preview = true,
+					auto_preview = false,
 					detail = false,
 					auto_close = true,
 					close_after_jump = false,
-					layout = 'float',   -- or 'float'
+					layout = 'normal',   -- or 'float'
 					max_height = 0.5,	 -- height of outline float layout
 					left_width = 0.3,	 -- width of outline float layout left window
 
@@ -219,6 +243,7 @@ return {
 						quit = "q",
 					},
 				},
+
 				ui = {
 					-- This option only works in Neovim 0.9
 					title = true,
@@ -235,23 +260,24 @@ return {
 				},
 			})
 			local keymap = vim.keymap.set
-			keymap("n", "<Leader>T", "<cmd>Lspsaga outline<CR>")
-			-- 使用浮窗查看对应的定义, 不如 <C-]>, 注释掉
-			-- keymap("n", "<Leader>D", "<cmd>Lspsaga peek_definition<CR>")
-			-- keymap("n", "<Leader>D", "<cmd>Lspsaga lsp_finder<CR>")
+			-- Callhierarchy
+			keymap("n", "<Leader>ci", "<cmd>Lspsaga incoming_calls<CR>")
+			keymap("n", "<Leader>co", "<cmd>Lspsaga outgoing_calls<CR>")
+
+			-- Code Action
 			keymap("n", "<Leader>a", "<cmd>Lspsaga code_action<CR>")
+
+			-- -- Definition
+			-- keymap("n", "<Leader>d", "<cmd>Lspsaga peek_definition<CR>")
+			-- keymap("n", "<Leader>d", "<cmd>Lspsaga goto_type_definition<CR>")
+
+			-- Diagnostic
+			-- See `:help vim.diagnostic.*` for documentation on any of the below functions
 			keymap("n", "<Leader>ew", "<cmd>Lspsaga show_workspace_diagnostics<CR>")
 			keymap("n", "<Leader>eb", "<cmd>Lspsaga show_buf_diagnostics<CR>")
 			keymap("n", "<Leader>ee", "<cmd>Lspsaga show_line_diagnostics<CR>")
 			keymap("n", "<Leader>e]", "<cmd>Lspsaga diagnostic_jump_next<CR>")
 			keymap("n", "<Leader>e[", "<cmd>Lspsaga diagnostic_jump_prev<CR>")
-			keymap("n", "<Leader>S", "<cmd>Lspsaga term_toggle<CR>")
-			-- Many LSP not support yet?
-			keymap("n", "<Leader>ci", "<cmd>Lspsaga incoming_calls<CR>")
-			keymap("n", "<Leader>co", "<cmd>Lspsaga outgoing_calls<CR>")
-			-- keymap("n", "<Leader>h", "<cmd>Lspsaga hover_doc<CR>")
-
-			-- See `:help vim.diagnostic.*` for documentation on any of the below functions
 			vim.keymap.set('n', '<Leader>et', function()
 				if(vim.diagnostic.is_disabled()) then
 					vim.diagnostic.enable()
@@ -259,6 +285,18 @@ return {
 					vim.diagnostic.disable()
 				end
 			end)
+
+			-- Finder
+			keymap("n", "<Leader>d", "<cmd>Lspsaga finder<CR>")
+
+			-- Float Terminal
+			keymap("n", "<Leader>S", "<cmd>Lspsaga term_toggle<CR>")
+
+			-- Hover
+			keymap("n", "<Leader>h", "<cmd>Lspsaga hover_doc<CR>")
+
+			-- Outline
+			keymap("n", "<Leader>t", "<cmd>Lspsaga outline<CR>")
 		end,
 	},
 }

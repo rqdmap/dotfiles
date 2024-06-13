@@ -60,7 +60,6 @@ mkv.inherit = "video_default"
 m4v.inherit = "video_default"
 mov.inherit = "video_default"
 mp4.inherit = "video_default"
-ts.inherit = "video_default"
 webm.inherit = "video_default"
 wmv.inherit = "video_default"
 
@@ -108,6 +107,7 @@ xml.inherit = "text_default"
 yaml.inherit = "text_default"
 yml.inherit = "text_default"
 tex.inherit = "text_default"
+ts.inherit = "text_default"
 
 # archive formats
 7z.app_list = [

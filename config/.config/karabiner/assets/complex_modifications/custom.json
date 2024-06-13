@@ -32,7 +32,8 @@
             {
               "type": "frontmost_application_unless",
               "bundle_identifiers": [
-                "alacritty"
+                "alacritty",
+				"com.jetbrains.intellij.ce"
               ]
             }
           ]
@@ -60,7 +61,66 @@
             {
               "type": "frontmost_application_unless",
               "bundle_identifiers": [
-                "alacritty"
+                "alacritty",
+				"com.jetbrains.intellij.ce"
+              ]
+            }
+          ]
+        },
+        {
+          "description": "(IDEA) Ctrl + Shift + c = Command + c",
+          "type": "basic",
+          "from": {
+            "key_code": "c",
+            "modifiers": {
+              "mandatory": [
+                "left_control",
+				"left_shift"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "c",
+              "modifiers": [
+                "left_command"
+              ]
+            }
+          ],
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": [
+				"com.jetbrains.intellij.ce"
+              ]
+            }
+          ]
+        },
+        {
+          "description": "(IDEA) Ctrl + Shift + v = Command + v",
+          "type": "basic",
+          "from": {
+            "key_code": "v",
+            "modifiers": {
+              "mandatory": [
+                "left_control",
+				"left_shift"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "v",
+              "modifiers": [
+                "left_command"
+              ]
+            }
+          ],
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": [
+				"com.jetbrains.intellij.ce"
               ]
             }
           ]
@@ -88,7 +148,8 @@
             {
               "type": "frontmost_application_unless",
               "bundle_identifiers": [
-                "alacritty"
+                "alacritty",
+				"com.jetbrains.intellij.ce"
               ]
             }
           ]
@@ -116,7 +177,8 @@
             {
               "type": "frontmost_application_unless",
               "bundle_identifiers": [
-                "alacritty"
+                "alacritty",
+				"com.jetbrains.intellij.ce"
               ]
             }
           ]
@@ -144,7 +206,8 @@
             {
               "type": "frontmost_application_unless",
               "bundle_identifiers": [
-                "alacritty"
+                "alacritty",
+				"com.jetbrains.intellij.ce"
               ]
             }
           ]
@@ -172,7 +235,8 @@
             {
               "type": "frontmost_application_unless",
               "bundle_identifiers": [
-                "alacritty"
+                "alacritty",
+				"com.jetbrains.intellij.ce"
               ]
             }
           ]
@@ -200,7 +264,8 @@
             {
               "type": "frontmost_application_unless",
               "bundle_identifiers": [
-                "alacritty"
+                "alacritty",
+				"com.jetbrains.intellij.ce"
               ]
             }
           ]
@@ -228,7 +293,8 @@
             {
               "type": "frontmost_application_unless",
               "bundle_identifiers": [
-                "alacritty"
+                "alacritty",
+				"com.jetbrains.intellij.ce"
               ]
             }
           ]
@@ -256,7 +322,8 @@
             {
               "type": "frontmost_application_unless",
               "bundle_identifiers": [
-                "alacritty"
+                "alacritty",
+				"com.jetbrains.intellij.ce"
               ]
             }
           ]
@@ -314,7 +381,8 @@
             {
               "type": "frontmost_application_if",
               "bundle_identifiers": [
-                "Chrome"
+                "Chrome",
+				"org.mozilla.firefox"
               ]
             }
           ]
@@ -342,7 +410,8 @@
             {
               "type": "frontmost_application_if",
               "bundle_identifiers": [
-                "Chrome"
+                "Chrome",
+				"org.mozilla.firefox"
               ]
             }
           ]
@@ -370,7 +439,8 @@
             {
               "type": "frontmost_application_if",
               "bundle_identifiers": [
-                "Chrome"
+                "Chrome",
+				"org.mozilla.firefox"
               ]
             }
           ]
@@ -400,7 +470,8 @@
             {
               "type": "frontmost_application_if",
               "bundle_identifiers": [
-                "Chrome"
+                "Chrome",
+				"org.mozilla.firefox"
               ]
             }
           ]
@@ -428,7 +499,8 @@
             {
               "type": "frontmost_application_if",
               "bundle_identifiers": [
-                "Chrome"
+                "Chrome",
+				"org.mozilla.firefox"
               ]
             }
           ]
@@ -456,7 +528,8 @@
             {
               "type": "frontmost_application_if",
               "bundle_identifiers": [
-                "Chrome"
+                "Chrome",
+				"org.mozilla.firefox"
               ]
             }
           ]
@@ -484,7 +557,8 @@
             {
               "type": "frontmost_application_if",
               "bundle_identifiers": [
-                "Chrome"
+                "Chrome",
+				"org.mozilla.firefox"
               ]
             }
           ]
@@ -512,7 +586,8 @@
             {
               "type": "frontmost_application_if",
               "bundle_identifiers": [
-                "Chrome"
+                "Chrome",
+				"org.mozilla.firefox"
               ]
             }
           ]
@@ -540,7 +615,8 @@
             {
               "type": "frontmost_application_if",
               "bundle_identifiers": [
-                "Chrome"
+                "Chrome",
+				"org.mozilla.firefox"
               ]
             }
           ]
@@ -568,7 +644,8 @@
             {
               "type": "frontmost_application_if",
               "bundle_identifiers": [
-                "Chrome"
+                "Chrome",
+				"org.mozilla.firefox"
               ]
             }
           ]

@@ -1,5 +1,8 @@
+local autocmd = vim.api.nvim_create_autocmd
+
+
 -- 自动跳转到上次编辑的位置
-vim.api.nvim_create_autocmd("BufReadPost",{
+autocmd("BufReadPost",{
 	command = [[
 		if line("'\"") > 0 && line("'\"") <= line("$") |
 		exe "normal! g`\"" |
@@ -9,7 +12,7 @@ vim.api.nvim_create_autocmd("BufReadPost",{
 
 
 -- 自动生成dot文件的png图片
-vim.api.nvim_create_autocmd("BufWritePost",{
+autocmd("BufWritePost",{
 	pattern = "*.dot",
 	command = [[
 		!dot -Tpng -o %.png % 
@@ -17,7 +20,7 @@ vim.api.nvim_create_autocmd("BufWritePost",{
 })
 
 -- 自动重新生成polybar
-vim.api.nvim_create_autocmd("BufWritePost",{
+autocmd("BufWritePost",{
 	pattern = "*/polybar/config.ini",
 	command = [[
 		!polybar_run
@@ -25,74 +28,54 @@ vim.api.nvim_create_autocmd("BufWritePost",{
 })
 
 -- 修改giph源码时则修改对应的缩进
-vim.api.nvim_create_autocmd("BufRead",{
+autocmd("BufRead",{
 	pattern = "giph",
 	command = [[
 		setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 	]]
 })
 
--- -- 自动生成dot文件的png图片
--- vim.api.nvim_create_autocmd("BufWritePost",{
--- 	pattern = "*.dot",
--- 	command = [[
--- 		!dot -Tpng -o %.png % 
--- 	]]
--- })
 
--- 自动 rsync
-vim.api.nvim_create_autocmd("BufWritePost",{
-	pattern = "*/Codes/reasoner/*",
-	command = [[
-		silent !boe push ~/Codes/reasoner
-	]]
-})
+-- MacOS 输入法切换, 需要安装 macsim
+-- xkbswitch 无法正确切换鼠须管, issue: https://github.com/rime/squirrel/issues/402
+local get_current_layout = function()
+    local file = io.popen('macism')
+	if file then
+		local output = file:read('*all')
+		file:close()
+		return output
+	else
+		error("Error occured: macism failed")
+		return nil
+	end
+end
 
-vim.api.nvim_create_autocmd("BufWritePost",{
-	pattern = "*/Codes/ocean_rpc_service/*",
-	command = [[
-		silent !boe push ~/Codes/ocean_rpc_service
-	]]
-})
+local saved_layout = get_current_layout()
+local us_layout_name = "com.apple.keylayout.ABC"
 
-vim.api.nvim_create_autocmd("BufWritePost",{
-	pattern = "*/Codes/ocean/*",
-	command = [[
-		silent !boe push ~/Codes/ocean
-	]]
-})
+autocmd(
+	{'InsertLeave', 'FocusLost'},
+	{
+		pattern = "*",
+		callback = function()
+			-- vim.schedule(function()
+				saved_layout = get_current_layout()
+				os.execute('macism ' .. us_layout_name);
+			-- end)
+		end
+	}
+)
 
-vim.api.nvim_create_autocmd("BufWritePost",{
-	pattern = "*/Codes/tmp/*",
-	command = [[
-		silent !boe push ~/Codes/tmp
-	]]
-})
-
-vim.api.nvim_create_autocmd("BufWritePost",{
-	pattern = "*/Codes/bkb_engine_server/*",
-	command = [[
-		silent !boe push ~/Codes/bkb_engine_server
-	]]
-})
-
-vim.api.nvim_create_autocmd("BufWritePost",{
-	pattern = "*/Codes/bkb_robot/*",
-	command = [[
-		silent !boe push ~/Codes/bkb_robot
-	]]
-})
-
-vim.api.nvim_create_autocmd("BufWritePost",{
-	pattern = "*/Codes/baike_realtime/*",
-	command = [[
-		silent !boe push ~/Codes/baike_realtime
-	]]
-})
-
-vim.api.nvim_create_autocmd("BufWritePost",{
-	pattern = "*/Codes/sql直连操作mysql/*",
-	command = [[
-		silent !boe push ~/Codes/sql直连操作mysql
-	]]
-})
+autocmd(
+	{'InsertEnter', 'FocusGained'},
+	{
+		pattern = "*",
+		callback = function()
+			-- vim.schedule(function()
+			if(saved_layout ~= us_layout_name) then
+				os.execute('macism ' .. saved_layout);
+			end
+			-- end)
+		end
+	}
+)

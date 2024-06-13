@@ -9,3 +9,4 @@ return {
 	end,
 	ft = { "markdown" },
 }
+

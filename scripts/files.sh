@@ -16,9 +16,6 @@ TARGETS=(
 	.config/htop
 	.yabairc
 	.skhdrc
-	.config/karabiner
+	.config/karabiner/assets
 	"Library/Application Support/Übersicht/widgets/simple-bar/lib/settings.js"
-	Library/Rime
-	.taskrc
-	.task
 )

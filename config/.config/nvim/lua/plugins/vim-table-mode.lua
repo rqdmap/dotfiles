@@ -6,9 +6,9 @@ return {
 	-- https://github.com/dhruvasagar/vim-table-mode/issues/222
 	-- Disable temporarily
 	enabled = false,
-	-- keys = {
-	-- 	"<leader>Tm"
-	-- },
+	keys = {
+		"<leader>Tm"
+	},
 	init = function()
 		vim.g['table_mode_map_prefix'] = '<Leade>T'
 	end

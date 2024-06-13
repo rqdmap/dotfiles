@@ -5,11 +5,17 @@ return {
 	{
 		"ellisonleao/gruvbox.nvim",
 		init = function()
+			require("gruvbox").setup({
+				-- Markdown 换行的列表颜色
+				palette_overrides = {
+					bright_aqua = "",
+				}
+			})
 			vim.cmd([[colorscheme gruvbox]])
 		end
 	},
 
-	-- 'Valloric/MatchTagAlways',
+	'Valloric/MatchTagAlways',
 
 	-- 为Rofi提供语法高亮
 	'Fymyte/rasi.vim',
@@ -28,18 +34,38 @@ return {
 		end
 	},
 
--- Edit
-
 	-- 切换模式时切换输入法
-	'lilydjwg/fcitx.vim',
-	'rlue/vim-barbaric',
+	{
+		'lilydjwg/fcitx.vim',
+		enabled = function()
+			local hostname = vim.api.nvim_call_function('hostname', {})
+			return hostname == 'ArchLinux'
+		end,
+	},
 
--- MISC
+	-- {
+	-- 	'ivanesmantovich/xkbswitch.nvim',
+	-- 	init = function ()
+	-- 		require('xkbswitch').setup()
+	-- 	end
+	-- },
+
 	-- AW计时器
 	{
 		'ActivityWatch/aw-watcher-vim',
+		enabled = function()
+			local hostname = vim.api.nvim_call_function('hostname', {})
+			return hostname == 'ArchLinux'
+		end,
 	},
 
-
 	'nathangrigg/vim-beancount',
+
+	{
+		'norcalli/nvim-colorizer.lua',
+		config = function()
+			require('colorizer').setup()
+		end
+	}
+
 }

@@ -9,7 +9,7 @@ zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:
 autoload -Uz compinit
 compinit
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+source <(fzf --zsh)
 
 if [ -f $ZSH/.zsh_cmp ]; then
 	source $ZSH/.zsh_cmp
@@ -71,9 +71,27 @@ export LESS_TERMCAP_ZW=$(tput rsupm)
 export GROFF_NO_SGR=1         # For Konsole and Gnome-terminal
 
 
-PATH=$PATH:$HOME/.local/bin
-PATH=$PATH:$HOME/.cargo/bin
-PATH=$PATH:/opt/local/libexec/gnubin/
+PATH=$HOME/.local/bin:$PATH
+PATH=$HOME/.cargo/bin:$PATH
+PATH=/opt/local/bin:$PATH
+PATH=/opt/local/libexec/gnubin/:$PATH
+PATH=/Users/bytedance/Library/Python/3.9/bin:$PATH
+PATH=/opt/homebrew/bin:$PATH
+
+
+PATH=/Users/rqdmap/Applications/apache-maven-3.9.7/bin:$PATH
+
+# JAVA_HOME=/Users/rqdmap/Applications/corretto-17.0.11/Contents/Home
+# JAVA_HOME=/Users/rqdmap/Applications/corretto-1.8.0_412/Contents/Home
+JAVA_HOME=/Users/rqdmap/Applications/openjdk-22.0.1/Contents/Home/
+# JAVA_HOME=/Users/rqdmap/Applications/graalvm-jdk-17.0.11+7.1/Contents/Home
+# JAVA_HOME=/Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin/Contents/Home
+
+PATH=$JAVA_HOME/bin:$PATH:.
+CLASSPATH=$JAVA_HOME/lib/tools.jar:$JAVA_HOME/lib/dt.jar:.
+export JAVA_HOME
+export CLASSPATH
+
 
 if [ -f $ZSH/.zsh_alias ]; then
 	source $ZSH/.zsh_alias
@@ -81,10 +99,10 @@ fi
 
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
+export TERM=xterm-256color
 
 eval "$(starship init zsh)"
 
 # 与开头的zprof模块一起工作
 # zprof
-
 

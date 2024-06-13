@@ -1,9 +1,11 @@
+import * as Uebersicht from "uebersicht";
 import * as Themes from "./styles/themes";
 import * as Utils from "./utils";
 import UserWidgetsCreator from "./components/settings/user-widgets-creator.jsx";
 
 export { Component, styles, Wrapper } from "./components/settings/settings.jsx";
 
+const EXTERNAL_CONFIG_FILE_PATH = `~/.simplebarrc`;
 const SETTINGS_STORAGE_KEY = "simple-bar-settings";
 
 const availableThemes = Object.keys(Themes.collection).map((key) => {
@@ -16,6 +18,7 @@ const lightThemes = availableThemes.filter((theme) => theme.kind === "light");
 export const data = {
   global: {
     label: "Global",
+    documentation: "/global-settings/",
     infos: [
       '- "<b>No bar background</b>" is visually better with the "Floating bar" option activated',
       '- The higher the "<b>Sliding animation pace</b>" value, the faster the texts slides (must be > 0, default is set to 4)',
@@ -63,7 +66,7 @@ export const data = {
   yabaiPath: {
     label: "Yabai path",
     type: "text",
-    placeholder: "default: /usr/local/bin/yabai",
+    placeholder: "default: /opt/homebrew/bin/yabai",
     fullWidth: true,
   },
   shell: {
@@ -72,19 +75,53 @@ export const data = {
     type: "radio",
     options: ["sh", "bash", "dash"],
   },
+  terminal: {
+    title: "Which terminal should user facing commands be run in?",
+    label: "",
+    type: "radio",
+    options: ["Terminal", "iTerm2"],
+  },
   slidingAnimationPace: {
     label: "Sliding animation speed",
     type: "number",
     placeholder: "Default: 4",
     fullWidth: true,
   },
+  enableServer: {
+    label: "Enable simple-bar-server connection",
+    type: "checkbox",
+    fullWidth: true,
+  },
   externalConfigFile: { label: "External config file", type: "checkbox" },
+  serverHttpPort: {
+    label: "simple-bar-server http port",
+    type: "number",
+    placeholder: "Default: 7776",
+    fullWidth: true,
+  },
+  serverSocketPort: {
+    label: "simple-bar-server socket port",
+    type: "number",
+    placeholder: "Default: 7777",
+    fullWidth: true,
+  },
+  yabaiServerRefresh: {
+    label: "Refresh spaces & process with simple-bar-server",
+    type: "checkbox",
+    fullWidth: true,
+  },
 
-  themes: { label: "Themes" },
+  themes: {
+    label: "Themes",
+    documentation: "/themes-settings/",
+  },
   darkTheme: { label: "Dark theme", type: "select", options: darkThemes },
   lightTheme: { label: "Light theme", type: "select", options: lightThemes },
 
-  process: { label: "Process" },
+  process: {
+    label: "Process",
+    documentation: "/process-settings/",
+  },
   displayOnlyCurrent: {
     label: "Display only current process name",
     type: "checkbox",
@@ -103,6 +140,11 @@ export const data = {
   },
   displayOnlyIcon: {
     label: "Display only process icon",
+    type: "checkbox",
+    fullWidth: true,
+  },
+  expandAllProcesses: {
+    label: "Expand all processes",
     type: "checkbox",
     fullWidth: true,
   },
@@ -125,6 +167,7 @@ export const data = {
 
   spacesDisplay: {
     label: "Spaces",
+    documentation: "/spaces-settings/",
     infos: [
       "You can declare here which apps to exclude from the spaces display",
       'Each exclusion must be separated by a comma and a space ", "',
@@ -185,7 +228,10 @@ export const data = {
     type: "checkbox",
     fullWidth: true,
   },
-  widgets: { label: "Widgets" },
+  widgets: {
+    label: "Widgets",
+    documentation: "/widgets/",
+  },
   processWidget: { label: "Process name", type: "checkbox" },
   zoomWidget: { label: "Zoom", type: "checkbox" },
   timeWidget: { label: "Time", type: "checkbox" },
@@ -196,6 +242,7 @@ export const data = {
   soundWidget: { label: "Sound", type: "checkbox" },
   weatherWidget: { label: "Weather", type: "checkbox" },
   netstatsWidget: { label: "Network stats", type: "checkbox" },
+  cpuWidget: { label: "Cpu", type: "checkbox" },
   batteryWidget: { label: "Battery", type: "checkbox" },
   keyboardWidget: { label: "Keyboard", type: "checkbox" },
   spotifyWidget: { label: "Spotify", type: "checkbox" },
@@ -205,13 +252,21 @@ export const data = {
   mpdWidget: { label: "MPD state via mpc", type: "checkbox" },
   browserTrackWidget: { label: "Browser track", type: "checkbox" },
 
-  weatherWidgetOptions: {
-    label: "Weather",
-    infos: [
-      'Leave "Your location" blank in order to let simple-bar use your geolocation.',
-      "Doing so, you need to allow Übersicht access to your location: a popup should appear on first use.",
-    ],
+  showOnDisplay: {
+    label: "Show on display n°",
+    type: "text",
+    placeholder: "example: 1,2 (leave blank to show on all displays)",
+    fullWidth: true,
   },
+
+  // weatherWidgetOptions: {
+  //   label: "Weather",
+  //   documentation: "/weather/",
+  //   infos: [
+  //     'Leave "Your location" blank in order to let simple-bar use your geolocation.',
+  //     "Doing so, you need to allow Übersicht access to your location: a popup should appear on first use.",
+  //   ],
+  // },
   unit: {
     title: "Temperature unit",
     label: "",
@@ -229,14 +284,38 @@ export const data = {
 
   netstatsWidgetOptions: {
     label: "Network stats",
+    documentation: "/network-stats/",
     infos: [
       "Here you can set the refresh frequency of the widget.",
       "The default value is set to 2000 ms (2 seconds).",
     ],
   },
 
+  cpuWidgetOptions: {
+    label: "Cpu usage",
+    documentation: "/cpu/",
+    infos: [
+      "Here you can set the refresh frequency of the widget.",
+      "The default value is set to 2000 ms (2 seconds).",
+    ],
+  },
+
+  displayAsGraph: {
+    label: "Display as graph",
+    type: "checkbox",
+    fullWidth: true,
+  },
+
+  cpuMonitorApp: {
+    title: "Cpu Monitor",
+    label: "",
+    type: "radio",
+    options: ["Top", "Activity Monitor", "None"],
+  },
+
   batteryWidgetOptions: {
     label: "Battery",
+    documentation: "/battery/",
     infos: [
       "no option (default) — Prevent the system from sleeping, not the display",
       "-d — Prevent the display from sleeping.",
@@ -249,6 +328,7 @@ export const data = {
   toggleCaffeinateOnClick: {
     label: "Toggle caffeinate on click",
     type: "checkbox",
+    fullWidth: true,
   },
   caffeinateOption: {
     label: "Caffeinate options",
@@ -258,6 +338,7 @@ export const data = {
 
   networkWidgetOptions: {
     label: "Network",
+    documentation: "/network/",
     infos: [
       "Here you can override the default displayed network source.",
       "And also turn Wifi on / off when clicking the Wifi icon.",
@@ -275,6 +356,7 @@ export const data = {
 
   vpnWidgetOptions: {
     label: "Viscosity VPN",
+    documentation: "/viscosity-vpn/",
     infos: ["Here you can set your Viscosity vpn connection name."],
   },
   vpnConnectionName: {
@@ -288,20 +370,38 @@ export const data = {
     fullWidth: true,
   },
 
-  zoomWidgetOptions: { label: "Zoom status" },
+  zoomWidgetOptions: {
+    label: "Zoom status",
+    documentation: "/zoom/",
+  },
   showVideo: { label: "Show video status", type: "checkbox" },
   showMic: { label: "Show mic status", type: "checkbox" },
 
-  soundWidgetOptions: { label: "Sound" },
-  micWidgetOptions: { label: "Mic" },
-  keyboardWidgetOptions: { label: "Keyboard" },
+  soundWidgetOptions: {
+    label: "Sound",
+    documentation: "/sound/",
+  },
+  micWidgetOptions: {
+    label: "Mic",
+    documentation: "/microphone/",
+  },
+  keyboardWidgetOptions: {
+    label: "Keyboard",
+    documentation: "/keyboard/",
+  },
 
-  timeWidgetOptions: { label: "Time" },
+  timeWidgetOptions: {
+    label: "Time",
+    documentation: "/time/",
+  },
   hour12: { label: "12h time format", type: "checkbox" },
   dayProgress: { label: "Day progress", type: "checkbox" },
   showSeconds: { label: "Show seconds", type: "checkbox" },
 
-  dateWidgetOptions: { label: "Date" },
+  dateWidgetOptions: {
+    label: "Date",
+    documentation: "/date/",
+  },
   shortDateFormat: { label: "Short format", type: "checkbox" },
   locale: { label: "Locale", type: "text", placeholder: "example: en-UK" },
   calendarApp: {
@@ -311,10 +411,17 @@ export const data = {
     fullWidth: true,
   },
 
-  spotifyWidgetOptions: { label: "Spotify" },
-  cryptoWidgetOptions: { label: "Crypto" },
+  spotifyWidgetOptions: {
+    label: "Spotify",
+    documentation: "/spotify/",
+  },
+  cryptoWidgetOptions: {
+    label: "Crypto",
+    documentation: "/crypto/",
+  },
   stockWidgetOptions: {
     label: "Stock",
+    documentation: "/stocks/",
     infos: [
       "Here you can configure your API key for the Yahoo Finance API.",
       "If you haven't gotten one yet, go to https://www.yahoofinanceapi.com/.",
@@ -322,9 +429,15 @@ export const data = {
     ],
   },
 
-  musicWidgetOptions: { label: "Music/iTunes" },
+  musicWidgetOptions: {
+    label: "Music/iTunes",
+    documentation: "/music-itunes/",
+  },
 
-  mpdWidgetOptions: { label: "MPD via mpc" },
+  mpdWidgetOptions: {
+    label: "MPD via mpc",
+    documentation: "/mpd-state-via-mpc/",
+  },
   mpdHost: {
     label: "Host",
     type: "text",
@@ -342,7 +455,10 @@ export const data = {
     fullWidth: true,
   },
 
-  browserTrackWidgetOptions: { label: "Browser" },
+  browserTrackWidgetOptions: {
+    label: "Browser",
+    documentation: "/browser-track/",
+  },
   showSpecter: { label: "Show animated specter", type: "checkbox" },
 
   denomination: { label: "Denomination", type: "text", placeholder: "usd" },
@@ -375,12 +491,18 @@ export const data = {
     type: "checkbox",
   },
 
-  userWidgets: { label: "User widgets" },
+  userWidgets: {
+    label: "User widgets",
+    documentation: "/custom-widgets/",
+  },
   userWidgetsList: { type: "component", Component: UserWidgetsCreator },
 
   refreshFrequency: { label: "Refresh frequency (in ms)", type: "text" },
 
-  customStyles: { label: "Custom styles" },
+  customStyles: {
+    label: "Custom styles",
+    documentation: "/custom-styles/",
+  },
   styles: {
     label: "Styles",
     type: "textarea",
@@ -398,32 +520,39 @@ export const defaultSettings = {
     bottomBar: true,
     inlineSpacesOptions: false,
     disableNotifications: false,
-    compactMode: true,
+    compactMode: false,
     widgetMaxWidth: "160px",
     spacesBackgroundColorAsForeground: false,
     widgetsBackgroundColorAsForeground: false,
     font: "JetBrains Mono, Monaco, Menlo, monospace",
     fontSize: "11px",
-    yabaiPath: "/usr/local/bin/yabai",
+    yabaiPath: "/opt/homebrew/bin/yabai",
     shell: "sh",
+    terminal: "Terminal",
     slidingAnimationPace: 4,
     externalConfigFile: false,
+    enableServer: false,
+    serverSocketPort: 7776,
+    yabaiServerRefresh: false,
   },
   themes: {
     lightTheme: "GruvboxDark",
     darkTheme: "NightShiftDark",
   },
   process: {
+    showOnDisplay: "",
     displayOnlyCurrent: false,
     centered: true,
     showCurrentSpaceMode: false,
     hideWindowTitle: false,
     displayOnlyIcon: false,
+    expandAllProcesses: false,
     displaySkhdMode: false,
     displayStackIndex: true,
     displayOnlyCurrentStack: false,
   },
   spacesDisplay: {
+    showOnDisplay: "",
     exclusions: "",
     titleExclusions: "",
     spacesExclusions: "",
@@ -440,12 +569,13 @@ export const defaultSettings = {
     processWidget: true,
     weatherWidget: false,
     netstatsWidget: true,
-    batteryWidget: true,
+    cpuWidget: true,
+    batteryWidget: false,
     wifiWidget: true,
     vpnWidget: false,
     zoomWidget: false,
-    soundWidget: true,
-    micWidget: true,
+    soundWidget: false,
+    micWidget: false,
     dateWidget: true,
     timeWidget: true,
     keyboardWidget: false,
@@ -458,6 +588,7 @@ export const defaultSettings = {
   },
   weatherWidgetOptions: {
     refreshFrequency: 1000 * 60 * 30,
+    showOnDisplay: "",
     unit: "C",
     hideLocation: false,
     hideGradient: false,
@@ -465,14 +596,24 @@ export const defaultSettings = {
   },
   netstatsWidgetOptions: {
     refreshFrequency: 2000,
+    showOnDisplay: "",
+    displayAsGraph: false,
+  },
+  cpuWidgetOptions: {
+    refreshFrequency: 2000,
+    showOnDisplay: "",
+    displayAsGraph: true,
+    cpuMonitorApp: "Top",
   },
   batteryWidgetOptions: {
     refreshFrequency: 10000,
+    showOnDisplay: "",
     toggleCaffeinateOnClick: true,
     caffeinateOption: "",
   },
   networkWidgetOptions: {
     refreshFrequency: 20000,
+    showOnDisplay: "",
     networkDevice: "en0",
     hideWifiIfDisabled: false,
     toggleWifiOnClick: false,
@@ -480,43 +621,52 @@ export const defaultSettings = {
   },
   vpnWidgetOptions: {
     refreshFrequency: 8000,
+    showOnDisplay: "",
     vpnConnectionName: "",
     vpnShowConnectionName: false,
   },
   zoomWidgetOptions: {
     refreshFrequency: 5000,
+    showOnDisplay: "",
     showVideo: true,
     showMic: true,
   },
   soundWidgetOptions: {
     refreshFrequency: 20000,
+    showOnDisplay: "",
   },
   micWidgetOptions: {
     refreshFrequency: 20000,
+    showOnDisplay: "",
   },
   dateWidgetOptions: {
     refreshFrequency: 30000,
+    showOnDisplay: "",
     shortDateFormat: false,
     locale: "zh-CN",
     calendarApp: "",
   },
   timeWidgetOptions: {
     refreshFrequency: 1000,
+    showOnDisplay: "",
     hour12: false,
     dayProgress: true,
     showSeconds: true,
   },
   keyboardWidgetOptions: {
     refreshFrequency: 20000,
+    showOnDisplay: "",
   },
   cryptoWidgetOptions: {
     refreshFrequency: 5 * 60 * 1000,
+    showOnDisplay: "",
     denomination: "usd",
     identifiers: "bitcoin,ethereum,celo",
     precision: 5,
   },
   stockWidgetOptions: {
     refreshFrequency: 15 * 60 * 1000,
+    showOnDisplay: "",
     yahooFinanceApiKey: "YOUR_API_KEY",
     symbols: "AAPL,TSLA",
     showSymbol: true,
@@ -528,14 +678,17 @@ export const defaultSettings = {
   },
   spotifyWidgetOptions: {
     refreshFrequency: 10000,
+    showOnDisplay: "",
     showSpecter: true,
   },
   musicWidgetOptions: {
     refreshFrequency: 10000,
+    showOnDisplay: "",
     showSpecter: true,
   },
   mpdWidgetOptions: {
     refreshFrequency: 10000,
+    showOnDisplay: "",
     showSpecter: true,
     mpdPort: "6600",
     mpdHost: "127.0.0.1",
@@ -543,6 +696,7 @@ export const defaultSettings = {
   },
   browserTrackWidgetOptions: {
     refreshFrequency: 10000,
+    showOnDisplay: "",
     showSpecter: true,
   },
   userWidgets: {
@@ -562,6 +716,7 @@ export const userWidgetDefault = {
   onRightClickAction: "",
   onMiddleClickAction: "",
   refreshFrequency: 10000,
+  showOnDisplay: "",
   active: true,
   noIcon: false,
 };
@@ -580,21 +735,28 @@ export const userWidgetColors = [
   "--cyan",
 ];
 
-export const get = () => {
+export function get() {
   const storedSettings = window.localStorage.getItem(SETTINGS_STORAGE_KEY);
   const settings = storedSettings
     ? Utils.mergeDeep(defaultSettings, JSON.parse(storedSettings))
     : defaultSettings;
   return settings;
-};
+}
 
-export const set = async (newSettings) =>
+export async function set(newSettings) {
   window.localStorage.setItem(
     SETTINGS_STORAGE_KEY,
     JSON.stringify(newSettings)
   );
+}
 
-export const getRefreshFrequency = (value, defaultValue) => {
-  const parsedValue = parseInt(value);
-  return isNaN(parsedValue) ? defaultValue : parsedValue;
-};
+export async function saveToConfigFile(newSettings) {
+  const { externalConfigFile } = newSettings.global;
+  if (externalConfigFile) {
+    const settings = JSON.stringify(newSettings, undefined, 2);
+    const cleanSettings = settings.replace(/'/g, "'\"'\"'");
+    await Uebersicht.run(
+      `echo '${cleanSettings}' | tee ${EXTERNAL_CONFIG_FILE_PATH}`
+    );
+  }
+}

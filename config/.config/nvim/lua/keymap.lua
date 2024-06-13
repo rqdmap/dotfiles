@@ -1,7 +1,9 @@
+-- Jump between buffer quickly, any
 vim.cmd([[nnoremap gn :bn<CR>]])
 vim.cmd([[nnoremap gp :bp<CR>]])
 vim.cmd([[nnoremap gh :tabprevious<CR>]])
 vim.cmd([[nnoremap gl :tabnext<CR>]])
+
 
 -- getpos of '< and '> only works well only **after** the selection is canceled !
 -- [<(3) How to get the visual selection range? : neovim>](https://www.reddit.com/r/neovim/comments/oo97pq/how_to_get_the_visual_selection_range/)
@@ -153,23 +155,17 @@ local modified_enter = function()
 	end
 
 end
+
 vim.keymap.set('n', '<C-g>', modified_enter)
 
-local reload_native = {
-	['*'] = function()
-		vim.cmd("normal! *")
-		vim.cmd("normal! N")
-		vim.cmd("normal! zz")
-	end,
-	-- ['<C-j>'] = function()
-	-- 	vim.cmd("command! <C-]>")
-	-- 	vim.cmd("normal! zz")
-	-- end
-}
-
-for k, v in pairs(reload_native) do
-	vim.keymap.set('n', k, v)
+local highlight_current_word = function()
+	vim.cmd("normal! *")
+	vim.cmd("normal! N")
+	vim.cmd("normal! zz")
 end
+
+-- 创建一个命令来调用高亮函数
+vim.keymap.set('n', '*', highlight_current_word)
 
 
 local git_commit = function()
@@ -193,3 +189,42 @@ local git_commit = function()
 end
 
 vim.keymap.set('n', '<Leader>sv', git_commit)
+
+
+-- vim.api.nvim_set_keymap('n', '<C-b>', '<cmd>lua if is_markdown() then print("Custom action in Markdown mode") else vim.cmd("normal! \<C-b>") end<CR>', { noremap = true, silent = true })
+
+
+-- Markdown 快捷键
+local function is_markdown()
+    return vim.bo.filetype == "markdown"
+end
+
+-- 仅支持 Visual 模式下的操作, 支持 CJK
+local wrap_text = function(wrapper)
+	if vim.fn.mode() ~= 'v' then return end
+
+	-- 获取选中区域的起始行和结束行
+	local _, start_line, start_col, _ = unpack(vim.fn.getpos("v"))
+	local _, end_line, end_col, _ = unpack(vim.fn.getpos("."))
+
+	if start_line > end_line or (start_line == end_line and start_col > end_col) then
+		vim.api.nvim_input('o')
+	end
+	vim.api.nvim_input('<Esc>a' ..wrapper .. '<Esc>gvo<Esc>i' .. wrapper .. '<Esc>')
+end
+
+local text_bold = function ()
+	if not is_markdown() or vim.fn.mode() ~= 'v' then
+		-- vim.cmd([[exe "normal! \<c-b>"]])
+		return
+	end
+	wrap_text("**")
+end
+
+local text_delete = function ()
+	if not is_markdown() or vim.fn.mode() ~= 'v' then return end
+	wrap_text("~~")
+end
+
+vim.keymap.set('x', '<S-b>', text_bold)
+vim.keymap.set('x', '<S-d>', text_delete)

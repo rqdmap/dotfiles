@@ -29,6 +29,31 @@ utils.prefix_cnt = function(s1, s2)
 	return cnt
 end
 
+utils.longest_common_prefix_suffix = function(s_)
+	local s = {}
+	for i = 1, #s_, 1 do
+		s[i] = string.sub(s_, i, i)
+	end
+
+	local n = #s;
+	local pi = {}
+	for i = 1, n, 1 do
+		pi[i] = 0
+	end
+	for i = 2, n, 1 do
+		local j = pi[i - 1] + 1
+		while j > 1 and s[i] ~= s[j] do
+			j = pi[j - 1]
+		end
+		if s[i] == s[j] then
+			pi[i] = j
+		end
+	end
+
+	return pi[n]
+end
+
+
 
 -- Merge t1 with t2, insert every kv from t2 into t1;
 -- entries with the same key will be overwrite by `t2`
@@ -65,7 +90,7 @@ utils.log = function(msg, file)
 
 	fp:write(utils.dump(msg))
 
-	fp:write("\nEND =================================================\n\n")
+	fp:write("\n")
 	fp:close()
 	return 0
 end
