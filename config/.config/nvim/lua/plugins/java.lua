@@ -1,3 +1,34 @@
 return  {
-	'mfussenegger/nvim-jdtls',
+
+-- 	'mfussenegger/nvim-jdtls',
+-- 	config = function()
+-- 		local jdtls_path = vim.fn.expand('~/.local/share/nvim/mason/packages/jdtls')
+--
+-- 		local config = {
+-- 			cmd = {
+-- 				'java',
+-- 				'-Declipse.application=org.eclipse.jdt.ls.core.id1',
+-- 				'-Dosgi.bundles.defaultStartLevel=4',
+-- 				'-Declipse.product=org.eclipse.jdt.ls.core.product',
+-- 				'-Dlog.protocol=true',
+-- 				'-Dlog.level=ALL',
+-- 				'-Xmx1g',
+-- 				'--add-modules=ALL-SYSTEM',
+-- 				'--add-opens', 'java.base/java.util=ALL-UNNAMED',
+-- 				'--add-opens', 'java.base/java.lang=ALL-UNNAMED',
+--
+-- 				'-jar', jdtls_path .. '/plugins/org.eclipse.equinox.launcher.cocoa.macosx.aarch64_1.2.900.v20240129-1338.jar',
+--
+-- 				'-configuration', '/Users/rqdmap/.cache/jdtls/config',
+--
+-- 				-- 💀
+-- 				-- See `data directory configuration` section in the README
+-- 				'-data', '/Users/rqdmap/.cache/jdtls/workspace'
+-- 			},
+-- 			root_dir = vim.fs.dirname(vim.fs.find({'gradlew', '.git', 'mvnw'}, { upward = true })[1]),
+-- 		}
+-- -- 		-- This starts a new client & server,
+-- -- 		-- or attaches to an existing client & server depending on the `root_dir`.
+-- 		require('jdtls').start_or_attach(config)
+-- 	end
 }

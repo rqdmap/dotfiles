@@ -537,7 +537,7 @@ export const defaultSettings = {
   },
   themes: {
     lightTheme: "GruvboxDark",
-    darkTheme: "NightShiftDark",
+    darkTheme: "GruvboxDark",
   },
   process: {
     showOnDisplay: "",

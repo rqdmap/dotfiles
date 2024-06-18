@@ -124,7 +124,15 @@ return {
 
 			-- IMPORTANT: If you want all the features jdtls has to offer,
 			-- **nvim-jdtls** is highly recommended.
-			lspconfig.jdtls.setup{}
+			local HOME = vim.fn.expand('$HOME')
+			lspconfig.jdtls.setup{
+				cmd = {
+					"jdtls",
+					"-configuration", HOME .. "/.cache/jdtls/config",
+					"-data", HOME .. "/.cache/jdtls/workspace",
+					"--jvm-arg=-javaagent:" .. HOME .. "/.local/share/nvim/mason/packages/jdtls/lombok.jar",
+				}
+			}
 			-- lspconfig.java_language_server.setup{}
 
 			lspconfig.marksman.setup{}
@@ -200,8 +208,8 @@ return {
 					},
 				},
 				lightbulb = {
-					enable = true,
-					enable_in_insert = true,
+					enable = false,
+					enable_in_insert = false,
 					sign = false,
 					sign_priority = 40,
 					virtual_text = true,
@@ -229,7 +237,7 @@ return {
 				},
 				outline = {
 					win_position = "left",
-					-- win_width = 35,
+					-- win_width = 50,
 					auto_preview = false,
 					detail = false,
 					auto_close = true,
@@ -239,7 +247,7 @@ return {
 					left_width = 0.3,	 -- width of outline float layout left window
 
 					keys = {
-						expand_or_jump = 'o',
+						expand_or_jump = {'<CR>', 'o'},
 						quit = "q",
 					},
 				},

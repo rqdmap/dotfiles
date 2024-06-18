@@ -4,6 +4,8 @@ vim.cmd([[nnoremap gp :bp<CR>]])
 vim.cmd([[nnoremap gh :tabprevious<CR>]])
 vim.cmd([[nnoremap gl :tabnext<CR>]])
 
+vim.cmd([[nnoremap <Leader>ms :mksession! S<CR>]])
+
 
 -- getpos of '< and '> only works well only **after** the selection is canceled !
 -- [<(3) How to get the visual selection range? : neovim>](https://www.reddit.com/r/neovim/comments/oo97pq/how_to_get_the_visual_selection_range/)
@@ -228,3 +230,4 @@ end
 
 vim.keymap.set('x', '<S-b>', text_bold)
 vim.keymap.set('x', '<S-d>', text_delete)
+

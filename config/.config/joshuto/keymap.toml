@@ -17,6 +17,7 @@ keymap = [
   { keys = ["f"], commands = [":filter "] },
   { keys = ["F"], commands = [":filter_regex "] },
 
+
   { keys = ["R"], commands = ["reload_dirlist"] },
   { keys = ["z", "h"], commands = ["toggle_hidden"] },
   { keys = ["ctrl+h"], commands = ["toggle_hidden"] },
@@ -85,6 +86,7 @@ keymap = [
 
   { keys = ["delete"], commands = ["delete_files"] },
   { keys = ["d", "D"], commands = ["shell trash %s"] },
+  { keys = ["d", "k"], commands = ["shell rm -ri %s"] },
 
   { keys = ["p", "p"], commands = ["paste_files"] },
   { keys = ["p", "o"], commands = ["paste_files --overwrite=true"] },
@@ -94,7 +96,7 @@ keymap = [
   { keys = ["I"], commands = ["rename_prepend"] },
   # { keys = ["r", "s"], commands = ["rename_keep_ext"] },
 
-  # { keys = [""], commands = [":touch "] },
+  # { keys = ["f", "t"], commands = [":touch "] },
 
   { keys = [" "], commands = ["select --toggle=true"] },
   { keys = ["t"], commands = ["select --all=true --toggle=true"] },
@@ -180,3 +182,4 @@ keymap = [
   { keys = ["w"], commands = ["show_tasks"] },
   { keys = ["escape"], commands = ["show_tasks"] },
 ]
+
