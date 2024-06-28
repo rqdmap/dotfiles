@@ -12,6 +12,7 @@ TARGETS=(
 	.config/starship.toml
 	.config/nvim
 	.config/alacritty
+	.config/sketchybar
 	.config/joshuto
 	.config/htop
 	.yabairc

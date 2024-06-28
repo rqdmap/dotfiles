@@ -79,3 +79,10 @@ autocmd(
 		end
 	}
 )
+
+autocmd("BufWritePost",{
+	pattern = "*/.config/sketchybar/*",
+	command = [[
+		!sketchybar --reload
+	]]
+})

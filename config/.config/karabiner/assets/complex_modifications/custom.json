@@ -97,35 +97,6 @@
           ]
         },
         {
-          "description": "(IDEA) Ctrl + Shift + v = Command + v",
-          "type": "basic",
-          "from": {
-            "key_code": "v",
-            "modifiers": {
-              "mandatory": [
-                "left_control",
-				"left_shift"
-              ]
-            }
-          },
-          "to": [
-            {
-              "key_code": "v",
-              "modifiers": [
-                "left_command"
-              ]
-            }
-          ],
-          "conditions": [
-            {
-              "type": "frontmost_application_if",
-              "bundle_identifiers": [
-				"com.jetbrains.intellij.ce"
-              ]
-            }
-          ]
-        },
-        {
           "description": "Ctrl + a = Command + a",
           "type": "basic",
           "from": {

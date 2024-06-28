@@ -67,16 +67,20 @@ end
 
 
 utils.dump = function(o)
+	local level = level or 1
+	local indent_str = ""
+	for _ = 1, level do
+		   indent_str = indent_str.."  "
+	end
 	if type(o) == 'table' then
-		local s = '{\n'
-		for k,v in pairs(o) do
-			 if type(k) ~= 'number' then k = '"'.. k ..'"' end
-
-			 s = s .. '\t['..k..'] = ' .. utils.dump(v) .. ',\n'
-		end
-		return s .. '\n}\n'
+		   local s = '{\n' .. indent_str
+		   for k,v in pairs(o) do
+					if type(k) ~= 'number' then k = '"'.. k ..'"' end
+					s = s .. '['..k..'] = ' .. dump(v, level + 1) .. ',\n' .. indent_str
+		   end
+		   return s .. '\n' .. indent_str:sub(1, -3) .. '}'
 	else
-		return '"' .. tostring(o) .. '"'
+		   return '"' .. tostring(o) .. '"'
 	end
 end
 

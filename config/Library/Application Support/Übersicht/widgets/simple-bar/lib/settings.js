@@ -533,7 +533,7 @@ export const defaultSettings = {
     externalConfigFile: false,
     enableServer: false,
     serverSocketPort: 7776,
-    yabaiServerRefresh: false,
+    yabaiServerRefresh: true,
   },
   themes: {
     lightTheme: "GruvboxDark",
@@ -560,10 +560,10 @@ export const defaultSettings = {
     displayAllSpacesOnAllScreens: false,
     hideDuplicateAppsInSpaces: false,
     displayStickyWindowsSeparately: false,
-    hideCreateSpaceButton: false,
+    hideCreateSpaceButton: true,
     hideEmptySpaces: false,
     showOptionsOnHover: true,
-    switchSpacesWithoutYabai: false,
+    switchSpacesWithoutYabai: true,
   },
   widgets: {
     processWidget: true,

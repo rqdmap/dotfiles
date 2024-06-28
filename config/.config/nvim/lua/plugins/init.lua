@@ -53,10 +53,6 @@ return {
 	-- AW计时器
 	{
 		'ActivityWatch/aw-watcher-vim',
-		enabled = function()
-			local hostname = vim.api.nvim_call_function('hostname', {})
-			return hostname == 'ArchLinux'
-		end,
 	},
 
 	'nathangrigg/vim-beancount',

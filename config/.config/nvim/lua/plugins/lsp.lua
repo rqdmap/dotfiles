@@ -122,8 +122,6 @@ return {
 
 			lspconfig.texlab.setup{}
 
-			-- IMPORTANT: If you want all the features jdtls has to offer,
-			-- **nvim-jdtls** is highly recommended.
 			local HOME = vim.fn.expand('$HOME')
 			lspconfig.jdtls.setup{
 				cmd = {
@@ -131,6 +129,24 @@ return {
 					"-configuration", HOME .. "/.cache/jdtls/config",
 					"-data", HOME .. "/.cache/jdtls/workspace",
 					"--jvm-arg=-javaagent:" .. HOME .. "/.local/share/nvim/mason/packages/jdtls/lombok.jar",
+				},
+				settings = {
+					java = {
+						format = {
+							settings = {
+								url = "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml",
+								profile = "GoogleStyle"
+							}
+						}
+				-- 		configuration = {
+				-- 			-- 使 jdtls 了解你的 Maven 配置，
+				-- 			-- 这里指定 settings.xml 路径
+				-- 			updateBuildConfiguration = "interactive",
+				-- 			maven = {
+				-- 				userSettings = "/Users/rqdmap/Applications/apache-maven-3.9.7/conf/settings.xml"
+				-- 			}
+				-- 		},
+					}
 				}
 			}
 			-- lspconfig.java_language_server.setup{}
@@ -245,9 +261,11 @@ return {
 					layout = 'normal',   -- or 'float'
 					max_height = 0.5,	 -- height of outline float layout
 					left_width = 0.3,	 -- width of outline float layout left window
+					-- auto_resize = true,
 
 					keys = {
-						expand_or_jump = {'<CR>', 'o'},
+						jump = {'<CR>', 'o'},
+						-- expnd_or_jump = {'t'},
 						quit = "q",
 					},
 				},
@@ -304,7 +322,7 @@ return {
 			keymap("n", "<Leader>h", "<cmd>Lspsaga hover_doc<CR>")
 
 			-- Outline
-			keymap("n", "<Leader>t", "<cmd>Lspsaga outline<CR>")
+			-- keymap("n", "<Leader>t", "<cmd>Lspsaga outline<CR>")
 		end,
 	},
 }

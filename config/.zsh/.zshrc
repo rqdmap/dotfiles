@@ -10,6 +10,9 @@ autoload -Uz compinit
 compinit
 
 source <(fzf --zsh)
+export ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd completion)
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 if [ -f $ZSH/.zsh_cmp ]; then
 	source $ZSH/.zsh_cmp
@@ -83,8 +86,8 @@ PATH=/Users/rqdmap/Applications/apache-maven-3.9.7/bin:$PATH
 
 # JAVA_HOME=/Users/rqdmap/Applications/corretto-17.0.11/Contents/Home
 # JAVA_HOME=/Users/rqdmap/Applications/corretto-1.8.0_412/Contents/Home
-JAVA_HOME=/Users/rqdmap/Applications/openjdk-22.0.1/Contents/Home/
-# JAVA_HOME=/Users/rqdmap/Applications/graalvm-jdk-17.0.11+7.1/Contents/Home
+# JAVA_HOME=/Users/rqdmap/Applications/openjdk-22.0.1/Contents/Home/
+JAVA_HOME=/Users/rqdmap/Applications/graalvm-jdk-17.0.11+7.1/Contents/Home
 # JAVA_HOME=/Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin/Contents/Home
 
 PATH=$JAVA_HOME/bin:$PATH:.
