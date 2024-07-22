@@ -54,5 +54,4 @@ function nvm_enable() {
 }
 
 alias day='cd ~/rqdmap/daily; vim main.md'
-alias todo='cd ~/rqdmap/todo; vim main.md'
 

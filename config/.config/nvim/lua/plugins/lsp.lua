@@ -127,8 +127,8 @@ return {
 				cmd = {
 					"jdtls",
 					"-configuration", HOME .. "/.cache/jdtls/config",
-					"-data", HOME .. "/.cache/jdtls/workspace",
 					"--jvm-arg=-javaagent:" .. HOME .. "/.local/share/nvim/mason/packages/jdtls/lombok.jar",
+					"-data", HOME .. "/.cache/jdtls/workspace",
 				},
 				settings = {
 					java = {
@@ -137,15 +137,15 @@ return {
 								url = "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml",
 								profile = "GoogleStyle"
 							}
-						}
-				-- 		configuration = {
-				-- 			-- 使 jdtls 了解你的 Maven 配置，
-				-- 			-- 这里指定 settings.xml 路径
-				-- 			updateBuildConfiguration = "interactive",
-				-- 			maven = {
-				-- 				userSettings = "/Users/rqdmap/Applications/apache-maven-3.9.7/conf/settings.xml"
-				-- 			}
-				-- 		},
+						},
+						-- configuration = {
+						-- 	-- 使 jdtls 了解你的 Maven 配置，
+						-- 	-- 这里指定 settings.xml 路径
+						-- 	updateBuildConfiguration = "interactive",
+						-- 	maven = {
+						-- 		userSettings = "/Users/rqdmap/Applications/apache-maven-3.9.7/conf/settings.xml"
+						-- 	}
+						-- },
 					}
 				}
 			}

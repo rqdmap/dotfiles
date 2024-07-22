@@ -170,5 +170,7 @@ shift + ctrl + cmd - l : yabai -m window --resize left:+20:0
 # float / unfloat window and center on screen
 cmd - s : yabai -m window --toggle float --grid 4:4:1:1:2:2
 
+# cmd - r : yabai -m space --rotate 90
+
 # toggle sticky(+float), topmost, picture-in-picture
 # alt - p : yabai -m window --toggle sticky --toggle topmost --toggle pip

@@ -52,7 +52,7 @@ return {
 				map('n', 'L',		api.tree.expand_all,		opts('Expand all'))
 				map('n', 'H',		api.tree.collapse_all,		opts('Collapse all'))
 				map('n', '<C-h>',	toggle_all_filter,			opts('Toggle filter'))
-			end
+			end,
 		}
 
 		vim.cmd([[nnoremap <silent> <Leader>f :NvimTreeToggle<CR>]])

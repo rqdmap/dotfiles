@@ -86,7 +86,7 @@ keymap = [
 
   { keys = ["delete"], commands = ["delete_files"] },
   { keys = ["d", "D"], commands = ["shell mv %s /Users/rqdmap/.Trash/"] },
-  { keys = ["d", "k"], commands = ["shell rm -ri %s"] },
+  { keys = ["d", "k"], commands = ["shell rm -rfi %s"] },
 
   { keys = ["p", "p"], commands = ["paste_files"] },
   { keys = ["p", "o"], commands = ["paste_files --overwrite=true"] },
