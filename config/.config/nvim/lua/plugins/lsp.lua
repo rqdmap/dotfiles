@@ -45,13 +45,13 @@ return {
 
 			-- https://www.reddit.com/r/neovim/comments/xt4f7g/how_to_set_ccls_offset_encoding_in_astrovim/
 			-- https://github.com/jose-elias-alvarez/null-ls.nvim/issues/428
-			-- lspconfig.ccls.setup {
-			-- 	init_options = {
-			-- 		cache = {
-			-- 			directory = ".ccls-cache";
-			-- 		};
-			-- 	},
-			-- }
+			lspconfig.ccls.setup {
+				init_options = {
+					cache = {
+						directory = ".ccls-cache";
+					};
+				},
+			}
 			local notify = vim.notify
 			vim.notify = function(msg, ...)
 				if msg:match("warning: multiple different client offset_encodings") then
@@ -100,7 +100,7 @@ return {
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
 			capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-			lspconfig.clangd.setup {}
+			-- lspconfig.clangd.setup {}
 
 			lspconfig.cssls.setup {
 				capabilities = capabilities,
@@ -150,6 +150,9 @@ return {
 				}
 			}
 			-- lspconfig.java_language_server.setup{}
+
+            lspconfig.kotlin_language_server.setup{}
+
 
 			lspconfig.marksman.setup{}
 			-- require'lspconfig'.zk.setup{}  -- No single file support

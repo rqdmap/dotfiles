@@ -115,17 +115,18 @@ sketchybar --add item front_app center  \
 
 COLOR="$YELLOW"
 
-sketchybar --add item cpu right \
-           --set cpu update_freq=2 script="$PLUGIN_DIR/cpu.sh"
-
-# sketchybar --add item clock right \
-#            --set clock update_freq=1 icon=  script="$PLUGIN_DIR/clock.sh" \
+sketchybar --add item clock right \
+           --set clock update_freq=1 icon=  script="$PLUGIN_DIR/clock.sh"
 #            --add item volume right \
 #            --set volume script="$PLUGIN_DIR/volume.sh" \
 #            --subscribe volume volume_change \
 #            --add item battery right \
 #            --set battery update_freq=120 script="$PLUGIN_DIR/battery.sh" \
 #            --subscribe battery system_woke power_source_change
+
+sketchybar --add item cpu right \
+           --set cpu update_freq=2 script="$PLUGIN_DIR/cpu.sh"
+
 
 ##### Force all scripts to run the first time (never do this in a script) #####
 sketchybar --update

@@ -36,7 +36,7 @@ autocmd("BufRead",{
 })
 
 
--- MacOS 输入法切换, 需要安装 macsim
+-- MacOS 输入法切换, 需要安装 macism
 -- xkbswitch 无法正确切换鼠须管, issue: https://github.com/rime/squirrel/issues/402
 local get_current_layout = function()
     local file = io.popen('macism')

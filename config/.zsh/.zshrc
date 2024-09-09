@@ -93,8 +93,11 @@ JAVA_HOME=/Users/rqdmap/Applications/openjdk-22.0.1/Contents/Home/
 
 PATH=$JAVA_HOME/bin:$PATH:.
 CLASSPATH=$JAVA_HOME/lib/tools.jar:$JAVA_HOME/lib/dt.jar:.
+M2_REPO=$HOME/.m2/repository
+
 export JAVA_HOME
 export CLASSPATH
+export M2_REPO
 
 
 if [ -f $ZSH/.zsh_alias ]; then

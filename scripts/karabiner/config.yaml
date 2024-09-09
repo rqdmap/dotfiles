@@ -1,0 +1,155 @@
+title: Karabiner-Capslock+
+version: 1.0.0
+maintainers:
+- rqdmap
+author: rqdmap(rqdmap@gmail.com)
+rules:
+- description: Macbook NTR
+  manipulators:
+  # Global Modifier
+  - description: left_control + s = left_command + s
+  - description: left_control + left_shift + s = left_command + left_shift + s
+  - description: left_control + delete_or_backspace = left_option + delete_or_backspace
+  - description: left_control + delete_forward = left_option + delete_forward
+  - description: left_control + left_arrow = left_option + left_arrow
+  - description: left_control + right_arrow = left_option + right_arrow
+  - description: left_control + button1 = left_command + button1 # left click
+
+  # Global Modifier Unless Terminal, Code Editor ETC.
+  - description: left_control + c = left_command + c
+    conditions:
+    - type: frontmost_application_unless
+      identifiers:
+      - alacritty
+      - com.jetbrains.intellij.ce
+  - description: left_control + v = left_command + v
+    conditions:
+    - type: frontmost_application_unless
+      identifiers:
+      - alacritty
+      - com.jetbrains.intellij.ce
+  - description: left_control + a = left_command + a
+    conditions:
+    - type: frontmost_application_unless
+      identifiers:
+      - alacritty
+      - com.jetbrains.intellij.ce
+  - description: left_control + f = left_command + f
+    conditions:
+    - type: frontmost_application_unless
+      identifiers:
+      - alacritty
+      - com.jetbrains.intellij.ce
+  - description: left_control + z = left_command + z
+    conditions:
+    - type: frontmost_application_unless
+      identifiers:
+      - alacritty
+      - com.jetbrains.intellij.ce
+  - description: left_control + x = left_command + x
+    conditions:
+    - type: frontmost_application_unless
+      identifiers:
+      - alacritty
+      - com.jetbrains.intellij.ce
+  - description: left_control + b = left_command + b
+    conditions:
+    - type: frontmost_application_unless
+      identifiers:
+      - alacritty
+      - com.jetbrains.intellij.ce
+  - description: left_control + i = left_command + i
+    conditions:
+    - type: frontmost_application_unless
+      identifiers:
+      - alacritty
+      - com.jetbrains.intellij.ce
+  - description: left_control + u = left_command + u
+    conditions:
+    - type: frontmost_application_unless
+      identifiers:
+      - alacritty
+      - com.jetbrains.intellij.ce
+  - description: left_control + left_shift + x = left_command + left_shift + x  # Delete line in DingTalk
+    conditions:
+    - type: frontmost_application_unless
+      identifiers:
+      - alacritty
+
+  # Idea CE Modifier
+  - description: left_control + left_shift + c = left_command + c
+    conditions:
+    - type: frontmost_application_if
+      identifiers:
+      - com.jetbrains.intellij.ce
+  - description: left_control + left_shift + c = left_command + v
+    conditions:
+    - type: frontmost_application_if
+      identifiers:
+      - com.jetbrains.intellij.ce
+
+  # Special
+  - description: left_control + slash = left_command + slash    # Comment on online editor
+    conditions:
+    - type: frontmost_application_if
+      identifiers:
+      - Chrome
+      - org.mozilla.firefox
+      - com.jetbrains.intellij.ce
+
+  # Chrome Modifier
+  - description: left_control + t = left_command + t            # New Tab
+    conditions:
+    - type: frontmost_application_if
+      identifiers:
+      - Chrome
+      - org.mozilla.firefox
+  - description: left_control + r = left_command + r            # Refresh
+    conditions:
+    - type: frontmost_application_if
+      identifiers:
+      - Chrome
+      - org.mozilla.firefox
+  - description: left_control + w = left_command + w            # Close tab
+    conditions:
+    - type: frontmost_application_if
+      identifiers:
+      - Chrome
+      - org.mozilla.firefox
+  - description: left_control + left_shift + t = left_command + left_shift + t  # Recover tab
+    conditions:
+    - type: frontmost_application_if
+      identifiers:
+      - Chrome
+      - org.mozilla.firefox
+  - description: left_control + n = left_command + n            # New window
+    conditions:
+    - type: frontmost_application_if
+      identifiers:
+      - Chrome
+      - org.mozilla.firefox
+  - description: left_control + d = left_command + d            # Bookmark
+    conditions:
+    - type: frontmost_application_if
+      identifiers:
+      - Chrome
+      - org.mozilla.firefox
+  - description: left_control + h = left_command + y            # Show history
+    conditions:
+    - type: frontmost_application_if
+      identifiers:
+      - Chrome
+      - org.mozilla.firefox
+  - description: left_control + equal_sign  = left_command + equal_sign # Zoom in
+    conditions:
+    - type: frontmost_application_if
+      identifiers:
+      - Chrome
+      - org.mozilla.firefox
+  - description: left_control + hyphen = left_command + hyphen  # Zoom out
+    conditions:
+    - type: frontmost_application_if
+      identifiers:
+      - Chrome
+      - org.mozilla.firefox
+

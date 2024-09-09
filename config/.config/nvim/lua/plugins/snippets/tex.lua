@@ -7,10 +7,10 @@ return {
 	},
 	{
 		t({"\\begin{frame}[fragile]", "\t"}),
-		t("\\frametitle{"), i(1), t({"}", "\t"}),
-		t({"\\setlength{\\parindent}{2em}", "\t"}),
-		t({"\\begin{spacing}{1.5}", "\t\t"}), i(2), t({"", "\t"}),
-		t({"\\end{spacing}", ""}),
+		t({"\\frametitle{\\hei{\\currentdeepesttitle}}", "\t"}),
+		t({"\\begin{spacing}{1.5} \\begin{heienv}", "\t"}),
+        t({"\\setlength{\\parindent}{2em}", "\t\t"}), i(1), t({"", "\t"}),
+		t({"\\end{heienv} \\end{spacing}", ""}),
 		t({"\\end{frame}", ""}),
 	}),
 	s({

@@ -55,3 +55,4 @@ function nvm_enable() {
 
 alias day='cd ~/rqdmap/daily; vim main.md'
 
+alias g++='g++-14'

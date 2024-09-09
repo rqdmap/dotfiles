@@ -64,6 +64,7 @@ yabai -m config                                 \
 yabai -m rule --add app="choose" sticky=on layer=above manage=off
 yabai -m rule --add app="系统设置" manage=off
 yabai -m rule --add app="rogue" manage=off
+yabai -m rule --add app="GIMP" manage=off
 # yabai -m rule --add app="阿里钉" manage=off
 
 echo "yabai configuration loaded.."
