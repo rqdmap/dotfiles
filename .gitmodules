@@ -1,0 +1,12 @@
+[submodule "zsh/.zsh/zsh-autosuggestions"]
+	path = zsh/.zsh/zsh-autosuggestions
+	url = https://github.com/zsh-users/zsh-autosuggestions
+[submodule "zsh/.zsh/zsh-syntax-highlighting"]
+	path = zsh/.zsh/zsh-syntax-highlighting
+	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
+[submodule "nvim/.config/nvim"]
+	path = nvim/.config/nvim
+	url = git@github.com:rqdmap/neovim-dotfiles.git
+[submodule "rime/.local/share/fcitx5/rime"]
+	path = rime/.local/share/fcitx5/rime
+	url = https://github.com/rqdmap/rime

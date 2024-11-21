@@ -1,0 +1,8 @@
+#!/bin/bash
+
+pkill -x polybar > /dev/null 2>&1
+
+for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
+	MONITOR=$m polybar top > /dev/null 2>&1 &
+	MONITOR=$m polybar bottom > /dev/null 2>&1 &
+done

@@ -1,0 +1,139 @@
+# Starship config
+
+add_newline=false
+command_timeout=2000
+
+[battery]
+disabled=true
+
+[username]
+style_user = "bold cyan"
+style_root = "bold red"
+show_always=true
+
+[character]
+# success_symbol = "[➜](bold blue)"
+success_symbol = "[ ](bold blue)"
+error_symbol="[✗ ](bright-red)"
+vimcmd_symbol='[ ](bold cyan)'
+
+[directory]
+style = "bold purple"
+truncation_length = 10
+truncate_to_repo = false
+format = "[$path]($style)[$lock_symbol]($lock_style) "
+read_only = " "
+
+[hostname]
+ssh_only=true
+style = "bold bright-blue"
+
+[cmd_duration]
+min_time=500
+show_milliseconds = false
+disabled = false
+style = "cyan"
+
+[memory_usage]
+disabled = true
+threshold = 10
+symbol = " "
+
+[time]
+disabled = false
+format = '[\[ $time \] ]($style)'
+
+[git_branch]
+disabled = false
+symbol = " "
+truncation_length = 100
+truncation_symbol = ""
+style = "bold purple"
+always_show_remote = true
+
+[git_status]
+disabled = false
+ahead = "(⇡${count} )"
+diverged = "(⇡${ahead_count}⇣${behind_count} )"
+behind = "(⇣${count} )"
+format = '[$ahead_behind]($style)([\[$all_status\] ]($style))'
+style = "blue bold"
+untracked = "U$count"
+staged = "A$count"
+modified = "M$count"
+
+[aws]
+symbol = "  "
+
+[buf]
+symbol = " "
+
+[c]
+symbol = " "
+
+[conda]
+symbol = " "
+
+[dart]
+symbol = " "
+
+[docker_context]
+symbol = " "
+
+[elixir]
+symbol = " "
+
+[elm]
+symbol = " "
+
+[golang]
+symbol = " "
+
+[haskell]
+symbol = " "
+
+[hg_branch]
+symbol = " "
+
+[java]
+symbol = " "
+
+[julia]
+symbol = " "
+
+[lua]
+symbol = " "
+
+[meson]
+symbol = "喝 "
+
+[nim]
+symbol = " "
+
+[nix_shell]
+symbol = " "
+
+[nodejs]
+symbol = " "
+
+[package]
+symbol = " "
+
+[python]
+symbol = " "
+
+[rlang]
+symbol = "ﳒ "
+
+[ruby]
+symbol = " "
+
+[rust]
+symbol = " "
+
+[scala]
+symbol = " "
+
+[spack]
+symbol = "🅢 "
+
