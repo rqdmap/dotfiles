@@ -6,7 +6,7 @@
 	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
 [submodule "nvim/.config/nvim"]
 	path = nvim/.config/nvim
-	url = git@github.com:rqdmap/neovim-dotfiles.git
+	url = https://github.com/rqdmap/neovim-dotfiles.git
 [submodule "rime/.local/share/fcitx5/rime"]
 	path = rime/.local/share/fcitx5/rime
 	url = https://github.com/rqdmap/rime
