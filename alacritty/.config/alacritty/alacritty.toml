@@ -108,3 +108,6 @@ hide_when_typing = true
 [window.padding]
 x = 20
 y = 20
+
+[window]
+decorations = "None"
