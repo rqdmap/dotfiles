@@ -1,0 +1,2 @@
+# 默认复制到 PRIMARY, 额外复制到 CLIPBOARD
+set selection-clipboard clipboard
