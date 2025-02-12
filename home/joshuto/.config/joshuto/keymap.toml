@@ -81,6 +81,9 @@ keymap = [
   { keys = ["y", "p"], commands = ["copy_filepath"] },
   { keys = ["y", "d"], commands = ["copy_dirpath"] },
 
+  # 将图片复制到剪贴板, 需要安装 xclip
+  { keys = ["y", "i"], commands = ["shell xclip -selection clipboard -target image/png -i %s"] },
+
   { keys = ["p", "l"], commands = ["symlink_files --relative=false"] },
   { keys = ["p", "L"], commands = ["symlink_files --relative=true"] },
 

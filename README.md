@@ -26,8 +26,11 @@ dotfiles 配置相关:
 
 - aw 套件
 
+- /usr/local/bin/Xsetup 与 bspwmrc
+
 脚本相关:
 
 - aw
 
 - 其他一堆使用的脚本
+
