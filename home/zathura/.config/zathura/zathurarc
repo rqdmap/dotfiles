@@ -1,2 +1,23 @@
+# Zathura configuration file
+# See man `man zathurarc'
+
+# Open document in fit-width mode by default
+set adjust-open "width"
+
+# One page per row by default
+set pages-per-row 1
+
+#stop at page boundries
+set scroll-page-aware "true"
+
+#zoom settings
+set zoom-min 10
+
 # 默认复制到 PRIMARY, 额外复制到 CLIPBOARD
 set selection-clipboard clipboard
+set selection-notification false
+
+#(to open an external link in a browser)
+# https://git.pwmt.org/pwmt/zathura/-/issues/151
+# https://unix.stackexchange.com/a/625597
+set sandbox none
