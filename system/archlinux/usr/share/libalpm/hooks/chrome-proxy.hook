@@ -1,0 +1,11 @@
+# /usr/share/libalpm/hooks/chrome-proxy.hook
+[Trigger]
+Type = Package
+Operation = Install
+Operation = Upgrade
+Target = google-chrome
+
+[Action]
+Description = Adding proxy settings to Google Chrome desktop entry
+When = PostTransaction
+Exec = /usr/bin/sed -i 's/^Exec=\/usr\/bin\/google-chrome-stable/Exec=\/usr\/bin\/google-chrome-stable --proxy-server="http:\/\/127.0.0.1:7890"/' /usr/share/applications/google-chrome.desktop
