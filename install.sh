@@ -16,6 +16,7 @@ HOME_DIRS=(
     "sxhkd"
     "zathura"
     "zsh"
+    "fontconfig"
 )
 
 SYSTEM_DIRS=(

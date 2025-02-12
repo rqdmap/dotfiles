@@ -1,18 +1,18 @@
-[submodule "home/zsh/.zsh/zsh-autosuggestions"]
-	path = home/zsh/.zsh/zsh-autosuggestions
-	url = https://github.com/zsh-users/zsh-autosuggestions
-[submodule "home/zsh/.zsh/zsh-syntax-highlighting"]
-	path = home/zsh/.zsh/zsh-syntax-highlighting
-	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
-# [submodule "home/nvim/.config/nvim"]
-# 	path = home/nvim/.config/nvim
-# 	url = https://github.com/rqdmap/neovim-dotfiles.git
-# [submodule "home/rime/.local/share/fcitx5/rime"]
-# 	path = home/rime/.local/share/fcitx5/rime
-# 	url = https://github.com/rqdmap/rime.git
+; [submodule "home/zsh/.zsh/zsh-autosuggestions"]
+; 	path = home/zsh/.zsh/zsh-autosuggestions
+; 	url = https://github.com/zsh-users/zsh-autosuggestions
+; [submodule "home/zsh/.zsh/zsh-syntax-highlighting"]
+; 	path = home/zsh/.zsh/zsh-syntax-highlighting
+; 	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
 [submodule "home/nvim/.config/nvim"]
 	path = home/nvim/.config/nvim
 	url = https://github.com/rqdmap/neovim-dotfiles.git
 [submodule "home/rime/.local/share/fcitx5/rime"]
 	path = home/rime/.local/share/fcitx5/rime
 	url = https://github.com/rqdmap/rime.git
+[submodule "home/zsh/.zsh/zsh-autosuggestions"]
+	path = home/zsh/.zsh/zsh-autosuggestions
+	url = https://github.com/zsh-users/zsh-autosuggestions
+[submodule "home/zsh/.zsh/zsh-syntax-highlighting"]
+	path = home/zsh/.zsh/zsh-syntax-highlighting
+	url = https://github.com/zsh-users/zsh-syntax-highlighting.git

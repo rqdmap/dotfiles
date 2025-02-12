@@ -16,6 +16,7 @@ video_default = [
 text_default = [
   { command = "nvim" },
   { command = "libreoffice", fork = true },
+  { command = "gnumeric", fork = true },
 ]
 
 reader_default = [
