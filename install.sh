@@ -1,5 +1,15 @@
 #!/bin/bash
 
+# 颜色定义
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+BLUE='\033[0;34m'
+MAGENTA='\033[0;35m'
+CYAN='\033[0;36m'
+BOLD='\033[1m'
+NC='\033[0m' # No Color
+
 # 配置数组
 HOME_DIRS=(
     "alacritty"
@@ -18,10 +28,10 @@ HOME_DIRS=(
     "zsh"
     "fontconfig"
 )
-
 SYSTEM_DIRS=(
-    "common"
-    "archlinux"
+    "chrome-proxy-alpm-hook"
+    "docker-service-proxy"
+    "enable-drawio-plugins-alpm-hook"
 )
 
 # 安装 $HOME 配置
@@ -29,17 +39,21 @@ install_home() {
     local category=$1
     cd home
     if [ -z "$category" ]; then
+        echo -e "${BOLD}${BLUE}Installing all home configurations...${NC}"
         for dir in "${HOME_DIRS[@]}"; do
-            echo "Installing $HOME/$dir configurations..."
+            echo -e "${GREEN}Installing $HOME/$dir configurations...${NC}"
             stow --restow -t $HOME $dir
         done
     else
         if [[ " ${HOME_DIRS[@]} " =~ " $category " ]]; then
-            echo "Installing $HOME/$category configurations..."
+            echo -e "${GREEN}Installing $HOME/$category configurations...${NC}"
             stow --restow -t $HOME $category
         else
-            echo "Invalid $HOME category: $category"
-            echo "Available $HOME categories: ${HOME_DIRS[@]}"
+            echo -e "${RED}Invalid $HOME category: $category${NC}"
+            echo -e "${YELLOW}Available $HOME categories:${NC}"
+            for dir in "${HOME_DIRS[@]}"; do
+                echo -e "  ${CYAN}$dir${NC}"
+            done
         fi
     fi
     cd ..
@@ -49,31 +63,40 @@ install_home() {
 install_system() {
     local category=$1
     # 检查root权限
-    if [ "$EUID" -ne 0 ]; then 
-        echo "Please run with sudo for system configurations"
+    if [ "$EUID" -ne 0 ]; then
+        echo -e "${RED}Please run with sudo for system configurations${NC}"
         exit 1
     fi
-
+    
     cd system
+    
     if [ -z "$category" ]; then
-        # 安装通用配置
-        echo "Installing system/common configurations..."
-        stow --restow -t / common
-
-        # 在Arch Linux上安装特定配置
-        if [ -f /etc/arch-release ]; then
-            echo "Installing system/arch configurations..."
-            stow --restow -t / archlinux
-        fi
+        # 不再默认安装所有配置，而是显示可用选项
+        echo -e "${YELLOW}Please specify a category or use '${BOLD}all${NC}${YELLOW}' to install all configurations${NC}"
+        echo -e "${YELLOW}Available system categories:${NC}"
+        for dir in "${SYSTEM_DIRS[@]}"; do
+            echo -e "  ${CYAN}$dir${NC}"
+        done
+    elif [ "$category" = "all" ]; then
+        # 安装所有配置
+        echo -e "${BOLD}${BLUE}Installing all system configurations...${NC}"
+        for dir in "${SYSTEM_DIRS[@]}"; do
+            echo -e "${GREEN}Installing system/$dir configurations...${NC}"
+            stow --restow -t / $dir
+        done
     else
         if [[ " ${SYSTEM_DIRS[@]} " =~ " $category " ]]; then
-            echo "Installing system/$category configurations..."
+            echo -e "${GREEN}Installing system/$category configurations...${NC}"
             stow --restow -t / $category
         else
-            echo "Invalid system category: $category"
-            echo "Available system categories: ${SYSTEM_DIRS[@]}"
+            echo -e "${RED}Invalid system category: $category${NC}"
+            echo -e "${YELLOW}Available system categories:${NC}"
+            for dir in "${SYSTEM_DIRS[@]}"; do
+                echo -e "  ${CYAN}$dir${NC}"
+            done
         fi
     fi
+    
     cd ..
 }
 
@@ -81,39 +104,58 @@ install_system() {
 clean_configs() {
     local scope=$1
     local category=$2
-
     case "$scope" in
         "home")
             cd home
             if [ -z "$category" ]; then
+                echo -e "${BOLD}${BLUE}Cleaning all home configurations...${NC}"
                 for dir in "${HOME_DIRS[@]}"; do
-                    echo "Cleaning $HOME/$dir configurations..."
+                    echo -e "${MAGENTA}Cleaning $HOME/$dir configurations...${NC}"
                     stow -D -t $HOME $dir
                 done
             else
-                stow -D -t $HOME $category
+                if [[ " ${HOME_DIRS[@]} " =~ " $category " ]]; then
+                    echo -e "${MAGENTA}Cleaning $HOME/$category configurations...${NC}"
+                    stow -D -t $HOME $category
+                else
+                    echo -e "${RED}Invalid $HOME category: $category${NC}"
+                    echo -e "${YELLOW}Available $HOME categories:${NC}"
+                    for dir in "${HOME_DIRS[@]}"; do
+                        echo -e "  ${CYAN}$dir${NC}"
+                    done
+                fi
             fi
             cd ..
             ;;
         "system")
             if [ "$EUID" -ne 0 ]; then 
-                echo "Please run with sudo for system configurations"
+                echo -e "${RED}Please run with sudo for system configurations${NC}"
                 exit 1
             fi
             cd system
             if [ -z "$category" ]; then
+                echo -e "${BOLD}${BLUE}Cleaning all system configurations...${NC}"
                 for dir in "${SYSTEM_DIRS[@]}"; do
-                    echo "Cleaning system/$dir configurations..."
+                    echo -e "${MAGENTA}Cleaning system/$dir configurations...${NC}"
                     stow -D -t / $dir
                 done
             else
-                stow -D -t / $category
+                if [[ " ${SYSTEM_DIRS[@]} " =~ " $category " ]]; then
+                    echo -e "${MAGENTA}Cleaning system/$category configurations...${NC}"
+                    stow -D -t / $category
+                else
+                    echo -e "${RED}Invalid system category: $category${NC}"
+                    echo -e "${YELLOW}Available system categories:${NC}"
+                    for dir in "${SYSTEM_DIRS[@]}"; do
+                        echo -e "  ${CYAN}$dir${NC}"
+                    done
+                fi
             fi
             cd ..
             ;;
         *)
-            echo "Invalid scope: $scope"
-            echo "Usage: $0 clean {home|system} [category]"
+            echo -e "${RED}Invalid scope: $scope${NC}"
+            echo -e "${YELLOW}Usage: $0 clean {home|system} [category]${NC}"
             exit 1
             ;;
     esac
@@ -131,9 +173,15 @@ case "$1" in
         clean_configs "$2" "$3"
         ;;
     *)
-        echo "Usage: $0 {install-home|install-system|clean} [category]"
-        echo "Home categories: ${HOME_DIRS[@]}"
-        echo "System categories: ${SYSTEM_DIRS[@]}"
+        echo -e "${YELLOW}Usage: $0 {install-home|install-system|clean} [category]${NC}"
+        echo -e "${BOLD}${BLUE}Home categories:${NC}"
+        for dir in "${HOME_DIRS[@]}"; do
+            echo -e "  ${CYAN}$dir${NC}"
+        done
+        echo -e "${BOLD}${BLUE}System categories:${NC}"
+        for dir in "${SYSTEM_DIRS[@]}"; do
+            echo -e "  ${CYAN}$dir${NC}"
+        done
         exit 1
         ;;
 esac
