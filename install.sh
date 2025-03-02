@@ -27,6 +27,7 @@ HOME_DIRS=(
     "zathura"
     "zsh"
     "fontconfig"
+    "tmux"
 )
 SYSTEM_DIRS=(
     "chrome-proxy-alpm-hook"
