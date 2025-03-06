@@ -29,6 +29,7 @@ HOME_DIRS=(
     "fontconfig"
     "tmux"
     "wezterm"
+    "yazi"
 )
 
 SYSTEM_DIRS=(

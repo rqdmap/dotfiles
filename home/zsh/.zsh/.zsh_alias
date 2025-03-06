@@ -12,26 +12,34 @@ alias his='history -i 0'
 alias grep='rg --hidden'
 alias h='his | rg'
 alias top='htop -u `whoami`'
-# alias jo='joshuto'
 alias duu='du -d 1 -h | sort -hr'
 alias dc='docker-compose'
 alias lg='lazygit'
 
-function j {
-    local IFS=$'\t\n'
-    local tempfile="$(mktemp -t tmp.XXXXXX)"
-    local cmd=(
-		$HOME/.zsh/joshuto.sh
-		--output-file $tempfile
-	)
-    ${cmd[@]} "$@"
-    if [[ -f "$tempfile" ]] && [[ "$(cat -- "$tempfile")" != "$(echo -n `pwd`)" ]]; then
-        cd -- "$(cat "$tempfile")" || return
-    fi
-    command rm -f -- "$tempfile" 2>/dev/null
+# function j {
+#     local IFS=$'\t\n'
+#     local tempfile="$(mktemp -t tmp.XXXXXX)"
+#     local cmd=(
+# 		$HOME/.zsh/joshuto.sh
+# 		--output-file $tempfile
+# 	)
+#     ${cmd[@]} "$@"
+#     if [[ -f "$tempfile" ]] && [[ "$(cat -- "$tempfile")" != "$(echo -n `pwd`)" ]]; then
+#         cd -- "$(cat "$tempfile")" || return
+#     fi
+#     command rm -f -- "$tempfile" 2>/dev/null
+# }
+# function jo { j }
+
+function j() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
 }
 
-function jo { j }
 
 alias showpkg="expac --timefmt='%Y-%m-%d %T' '%l\t%n' | sort"
 
