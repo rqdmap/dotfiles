@@ -4,7 +4,7 @@
 
 # terminal emulator
 control + alt + t
-    wezterm
+	wezterm
 
 # program launcher
 alt + @space
@@ -102,6 +102,10 @@ super + ctrl + {m,x,y,z}
 # focus the node in the given direction
 super + {_,shift + }{h,j,k,l}
 	bspc node -{f,s} {west,south,north,east}
+
+# Switch focus between windows
+super + {_,shift + }e
+    bspc node -f next.local.window.!hidden
 
 # focus the node for the given path jump
 # super + {p,b,comma,period}
