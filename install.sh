@@ -37,6 +37,10 @@ SYSTEM_DIRS=(
     "enable-drawio-plugins-alpm-hook"
 )
 
+SCRIPTS=(
+    "frp-to-vps"
+)
+
 # 安装 $HOME 配置
 install_home() {
     local category=$1
@@ -103,6 +107,33 @@ install_system() {
     cd ..
 }
 
+# 安装脚本
+install_scripts() {
+    local category=$1
+    cd scripts
+
+    if [ -z "$category" -o "$category" = "all" ]; then
+        echo -e "${BOLD}${BLUE}Installing all scripts...${NC}"
+        for script in "${SCRIPTS[@]}"; do
+            echo -e "${GREEN}Installing script/$script...${NC}"
+            stow --restow -t $HOME $script
+        done
+    else
+        if [[ " ${SCRIPTS[@]} " =~ " $category " ]]; then
+            echo -e "${GREEN}Installing script/$category...${NC}"
+            stow --restow -t $HOME $category
+        else
+            echo -e "${RED}Invalid script category: $category${NC}"
+            echo -e "${YELLOW}Available script categories:${NC}"
+            for script in "${SCRIPTS[@]}"; do
+                echo -e "  ${CYAN}$script${NC}"
+            done
+        fi
+    fi
+
+    cd ..
+}
+
 # 清理配置
 clean_configs() {
     local scope=$1
@@ -156,9 +187,31 @@ clean_configs() {
             fi
             cd ..
             ;;
+        "scripts")
+            cd scripts
+            if [ -z "$category" ]; then
+                echo -e "${BOLD}${BLUE}Cleaning all scripts...${NC}"
+                for script in "${SCRIPTS[@]}"; do
+                    echo -e "${MAGENTA}Cleaning script/$script...${NC}"
+                    stow -D -t $HOME/ $script
+                done
+            else
+                if [[ " ${SCRIPTS[@]} " =~ " $category " ]]; then
+                    echo -e "${MAGENTA}Cleaning script/$category...${NC}"
+                    stow -D -t $HOME/ $category
+                else
+                    echo -e "${RED}Invalid script category: $category${NC}"
+                    echo -e "${YELLOW}Available script categories:${NC}"
+                    for script in "${SCRIPTS[@]}"; do
+                        echo -e "  ${CYAN}$script${NC}"
+                    done
+                fi
+            fi
+            cd ..
+            ;;
         *)
             echo -e "${RED}Invalid scope: $scope${NC}"
-            echo -e "${YELLOW}Usage: $0 clean {home|system} [category]${NC}"
+            echo -e "${YELLOW}Usage: $0 clean {home|system|scripts} [category]${NC}"
             exit 1
             ;;
     esac
@@ -172,11 +225,14 @@ case "$1" in
     "install-system")
         install_system "$2"
         ;;
+    "install-scripts")
+        install_scripts "$2"
+        ;;
     "clean")
         clean_configs "$2" "$3"
         ;;
     *)
-        echo -e "${YELLOW}Usage: $0 {install-home|install-system|clean} [category]${NC}"
+        echo -e "${YELLOW}Usage: $0 {install-home|install-system|install-scripts|clean} [category]${NC}"
         echo -e "${BOLD}${BLUE}Home categories:${NC}"
         for dir in "${HOME_DIRS[@]}"; do
             echo -e "  ${CYAN}$dir${NC}"
@@ -184,6 +240,10 @@ case "$1" in
         echo -e "${BOLD}${BLUE}System categories:${NC}"
         for dir in "${SYSTEM_DIRS[@]}"; do
             echo -e "  ${CYAN}$dir${NC}"
+        done
+        echo -e "${BOLD}${BLUE}Script categories:${NC}"
+        for script in "${SCRIPTS[@]}"; do
+            echo -e "  ${CYAN}$script${NC}"
         done
         exit 1
         ;;

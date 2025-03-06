@@ -1,0 +1,13 @@
+[Unit]
+Description=FRP Client Service, connect to Aliyun VPS
+After=network.target
+
+[Service]
+Type=simple
+Restart=on-failure
+RestartSec=5s
+EnvironmentFile=%h/.config/frp-to-vps/secret.env
+ExecStart=/usr/bin/env frpc -c %h/.config/frp-to-vps/aliyun.toml
+
+[Install]
+WantedBy=default.target

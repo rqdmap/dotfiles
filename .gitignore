@@ -1,2 +1,10 @@
 .bash_history
 .zsh_history
+
+
+# 忽略敏感文件但不忽略它们的模板
+*secret.env
+*private.env
+# 不忽略模板文件
+!*.template
+!*.example
