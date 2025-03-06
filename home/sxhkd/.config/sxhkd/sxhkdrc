@@ -4,7 +4,7 @@
 
 # terminal emulator
 control + alt + t
-	alacritty
+    wezterm
 
 # program launcher
 alt + @space

@@ -28,7 +28,9 @@ HOME_DIRS=(
     "zsh"
     "fontconfig"
     "tmux"
+    "wezterm"
 )
+
 SYSTEM_DIRS=(
     "chrome-proxy-alpm-hook"
     "docker-service-proxy"
