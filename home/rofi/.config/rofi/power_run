@@ -11,9 +11,8 @@ msg=$host
 
 opts=(
 "󱓞 Launcher:	rofi_run"
-"󰐥 关机:		systemctl poweroff"
-"󰒲 休眠:		systemctl suspend"
-"󰜉 重启:		systemctl reboot"
+" 关机:	systemctl poweroff"
+" 重启:	systemctl reboot"
 " 重启:    	sudo grub-reboot 3 && reboot"
 "󰥻 键盘切换:	switch_keyboard"
 " 禁用独显:	close_nouveau_nvidia"
@@ -22,7 +21,7 @@ opts=(
 " record窗口:	record -k -r"
 " record全屏:	record -k -f"
 " 键盘回显:	record -k"
-" Factorio:	/home/rqdmap/Games/factorio/bin/x64/factorio"
+" Factorio:	/home/rqdmap/Games/factorio/bin/x64/factorio &; /data/rqdmap/Codes/floating-notepad/dist/main"
 )
 
 
