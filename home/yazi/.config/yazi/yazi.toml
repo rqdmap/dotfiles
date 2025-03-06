@@ -59,6 +59,9 @@ play = [
 	{ run = 'mpv --force-window %*', orphan = true, for = "windows" },
 	{ run = '''mediainfo "$1"; echo "Press enter to exit"; read _''', block = true, desc = "Show media info", for = "unix" },
 ]
+pdf = [
+	{ run = 'zathura "$@"', desc = "zathura", block = true, for = "linux" },
+]
 
 [open]
 rules = [
@@ -77,6 +80,8 @@ rules = [
 	{ mime = "*/javascript", use = [ "edit", "reveal" ] },
 	# Empty file
 	{ mime = "inode/empty", use = [ "edit", "reveal" ] },
+  # PDF
+  { mime = "application/pdf", use = [ "pdf", "reveal" ] },
 	# Fallback
 	{ name = "*", use = [ "open", "reveal" ] },
 ]
