@@ -1,2 +1,41 @@
-[flavor]
-dark = "gruvbox-dark"
+# 文件类型颜色设置
+[filetype]
+rules = [
+  # 软链接 - 青色斜体，使其明显区分于普通文件
+  { name = "*", is = "link", fg = "#8ec07c", italic = true, bold = false},
+  { name = "*/", is = "link", fg = "#8ec07c", italic = true },
+
+  # 孤立的软链接 - 红色斜体
+  { name = "*", is = "orphan", fg = "red", italic = true },
+  { name = "*/", is = "orphan", fg = "red", italic = true },
+
+  # 可执行文件 - 绿色
+  { name = "*", is = "exec", fg = "green" },
+
+  # 文件夹 - 蓝色粗体
+  { name = "*/", fg = "blue", bold = true },
+
+  # 套接字
+  { name = "*", is = "sock", fg = "magenta", italic = true },
+
+  # 块设备
+  { name = "*", is = "block", fg = "yellow", bold = true },
+
+  # 字符设备
+  { name = "*", is = "char", fg = "yellow", italic = true },
+
+  # FIFO
+  { name = "*", is = "fifo", fg = "#fe8019", italic = true },
+
+  # 默认文件 - 使用白色
+  { name = "*", fg = "white" }
+]
+
+# 其他 UI 组件样式
+[manager]
+# 边框样式
+border_symbol = "│"
+border_style = { fg = "gray" }
+
+# 文件名高亮
+hovered = { fg = "black", bg = "white" }
