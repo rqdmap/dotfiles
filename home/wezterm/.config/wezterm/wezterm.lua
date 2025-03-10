@@ -3,7 +3,10 @@ local config = wezterm.config_builder()
 
 -- 字体配置
 config.font = wezterm.font_with_fallback({
-    'Iosevka Nerd Font',
+    {
+        family = 'Iosevka Nerd Font',
+        harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' },
+    },
     'Source Han Sans CN',
     'Noto Color Emoji',
 })
