@@ -190,3 +190,8 @@ super + v
 # unhide window
 super + shift + v
     bspc node {,$(bspc query -N -d -n .hidden | tail -n1)} -g hidden=off
+
+# 副屏切换
+super + b
+    $HOME/.config/bspwm/toggle-secondary-monitor.sh
+

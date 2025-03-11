@@ -1,6 +1,6 @@
 #!/bin/bash
 
-bspc monitor VGA-0 -d I II III IV V VI VII VII IX X
+$HOME/.config/bspwm/monitor-setup.sh
 
 function foo() {
     sudo_flag=""
