@@ -6,9 +6,6 @@
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 source "$SCRIPT_DIR/monitor-setup.sh"
 
-# 使用状态文件跟踪副屏状态
-TOGGLE_FILE="$HOME/.secondary_monitor_state"
-
 # 如果状态文件不存在，创建它并设置为"on"
 if [ ! -f "$TOGGLE_FILE" ]; then
     echo "on" > "$TOGGLE_FILE"
@@ -21,12 +18,10 @@ CURRENT_STATE=$(cat "$TOGGLE_FILE")
 if [ "$CURRENT_STATE" = "on" ]; then
     # 关闭副屏
     remove_secondary_monitor
-    echo "off" > "$TOGGLE_FILE"
     notify-send "副屏幕已关闭" -t 1500
 else
     # 启用副屏
     enable_secondary_monitor
-    echo "on" > "$TOGGLE_FILE"
     notify-send "副屏幕已启用" -t 1500
 
     # 确保BSPWM监视器顺序正确

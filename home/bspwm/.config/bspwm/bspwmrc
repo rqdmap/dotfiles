@@ -41,7 +41,8 @@ xset dpms 0 0 0
 #	After idle for <timeout> seconds, activate dimmer.
 #	After <cycle> seconds, activate xsecurelock.
 xset s on
-xset s 120 60
+# xset s 1200 600
+xset s 0 0
 foo xss-lock "-n /usr/lib/xsecurelock/dimmer -l -- xsecurelock"
 # 
 # # 打开词典
@@ -49,14 +50,10 @@ foo xss-lock "-n /usr/lib/xsecurelock/dimmer -l -- xsecurelock"
 # 
 # # 打开unclutter(隐藏非活跃鼠标)
 # foo unclutter -b
-# 
-foo aw-server-rust
 
-foo aw-watcher-afk
 
-foo aw-watcher-window
-
-foo aw-watcher-input
+# 使用 bundle 脚本, 以避免 watcher 直接成为 1 号进程的孩子
+foo ~/Applications/bundle_aw.sh
 
 # foo wired
 # foo dunst
