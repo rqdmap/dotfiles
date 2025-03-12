@@ -41,6 +41,7 @@ SYSTEM_DIRS=(
 SCRIPTS=(
     "frp-to-vps"
     "frp-to-local"
+    "blog-manager"
 )
 
 # 安装 $HOME 配置
