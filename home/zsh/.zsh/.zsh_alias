@@ -15,6 +15,7 @@ alias top='htop -u `whoami`'
 alias duu='du -d 1 -h | sort -hr'
 alias dc='docker-compose'
 alias lg='lazygit'
+alias E5='ssh -Y -C -p 60022 -o "Ciphers=aes128-ctr" -o "IPQoS=throughput" rqdmap@localhost'
 
 # function j {
 #     local IFS=$'\t\n'
