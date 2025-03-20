@@ -36,6 +36,7 @@ SYSTEM_DIRS=(
     "chrome-proxy-alpm-hook"
     "docker-service-proxy"
     "enable-drawio-plugins-alpm-hook"
+    "texlive-fandol-font"       # 依赖 texlive-langchinese 包
 )
 
 SCRIPTS=(
@@ -69,6 +70,63 @@ install_home() {
     cd ..
 }
 
+# 为 fandol 字体创建直接软链接而非使用 stow
+install_fandol_font() {
+    echo -e "${GREEN}Installing system/texlive-fandol-font configurations (using direct symlinks)...${NC}"
+
+    # 目标是创建 /usr/share/fonts/fandol -> /usr/share/texmf-dist/fonts/opentype/public/fandol
+
+    # 确保目标父目录存在
+    mkdir -p /usr/share/fonts
+
+    # 删除可能存在的旧链接或目录
+    if [ -L "/usr/share/fonts/fandol" ]; then
+        rm -f /usr/share/fonts/fandol
+    elif [ -d "/usr/share/fonts/fandol" ]; then
+        echo -e "${YELLOW}WARNING: /usr/share/fonts/fandol is a directory, backing it up to /usr/share/fonts/fandol.bak${NC}"
+        mv /usr/share/fonts/fandol /usr/share/fonts/fandol.bak
+    fi
+
+    # 创建软链接
+    ln -sf /usr/share/texmf-dist/fonts/opentype/public/fandol /usr/share/fonts/fandol
+    echo -e "${GREEN}Created symlink: /usr/share/fonts/fandol -> /usr/share/texmf-dist/fonts/opentype/public/fandol${NC}"
+}
+
+# 清除 fandol 字体的软链接
+clean_fandol_font() {
+    echo -e "${MAGENTA}Cleaning system/texlive-fandol-font configurations (direct symlinks)...${NC}"
+
+    # 删除软链接
+    if [ -L "/usr/share/fonts/fandol" ]; then
+        rm -f /usr/share/fonts/fandol
+        echo -e "${MAGENTA}Removed symlink: /usr/share/fonts/fandol${NC}"
+    else
+        echo -e "${YELLOW}No symlink found at /usr/share/fonts/fandol${NC}"
+    fi
+
+    # 如果有备份，提示但不自动恢复
+    if [ -d "/usr/share/fonts/fandol.bak" ]; then
+        echo -e "${YELLOW}Found backup directory at /usr/share/fonts/fandol.bak${NC}"
+        echo -e "${YELLOW}To restore it, run: mv /usr/share/fonts/fandol.bak /usr/share/fonts/fandol${NC}"
+    fi
+}
+
+# 安装单个系统配置
+install_single_system_config() {
+    local category=$1
+
+    if [ "$category" = "texlive-fandol-font" ]; then
+        # 退出 system 目录，因为 install_fandol_font 假设处于项目根目录
+        local current_dir=$(pwd)
+        cd $(dirname "$current_dir")
+        install_fandol_font
+        cd "$current_dir"
+    else
+        echo -e "${GREEN}Installing system/$category configurations...${NC}"
+        stow --restow -t / $category
+    fi
+}
+
 # 安装系统配置
 install_system() {
     local category=$1
@@ -77,9 +135,9 @@ install_system() {
         echo -e "${RED}Please run with sudo for system configurations${NC}"
         exit 1
     fi
-    
+
     cd system
-    
+
     if [ -z "$category" ]; then
         # 不再默认安装所有配置，而是显示可用选项
         echo -e "${YELLOW}Please specify a category or use '${BOLD}all${NC}${YELLOW}' to install all configurations${NC}"
@@ -91,13 +149,11 @@ install_system() {
         # 安装所有配置
         echo -e "${BOLD}${BLUE}Installing all system configurations...${NC}"
         for dir in "${SYSTEM_DIRS[@]}"; do
-            echo -e "${GREEN}Installing system/$dir configurations...${NC}"
-            stow --restow -t / $dir
+            install_single_system_config "$dir"
         done
     else
         if [[ " ${SYSTEM_DIRS[@]} " =~ " $category " ]]; then
-            echo -e "${GREEN}Installing system/$category configurations...${NC}"
-            stow --restow -t / $category
+            install_single_system_config "$category"
         else
             echo -e "${RED}Invalid system category: $category${NC}"
             echo -e "${YELLOW}Available system categories:${NC}"
@@ -106,7 +162,7 @@ install_system() {
             done
         fi
     fi
-    
+
     cd ..
 }
 
@@ -135,6 +191,22 @@ install_scripts() {
     fi
 
     cd ..
+}
+
+# 清理单个系统配置
+clean_single_system_config() {
+    local category=$1
+
+    if [ "$category" = "texlive-fandol-font" ]; then
+        # 退出 system 目录，因为 clean_fandol_font 假设处于项目根目录
+        local current_dir=$(pwd)
+        cd $(dirname "$current_dir")
+        clean_fandol_font
+        cd "$current_dir"
+    else
+        echo -e "${MAGENTA}Cleaning system/$category configurations...${NC}"
+        stow -D -t / $category
+    fi
 }
 
 # 清理配置
@@ -173,13 +245,11 @@ clean_configs() {
             if [ -z "$category" ]; then
                 echo -e "${BOLD}${BLUE}Cleaning all system configurations...${NC}"
                 for dir in "${SYSTEM_DIRS[@]}"; do
-                    echo -e "${MAGENTA}Cleaning system/$dir configurations...${NC}"
-                    stow -D -t / $dir
+                    clean_single_system_config "$dir"
                 done
             else
                 if [[ " ${SYSTEM_DIRS[@]} " =~ " $category " ]]; then
-                    echo -e "${MAGENTA}Cleaning system/$category configurations...${NC}"
-                    stow -D -t / $category
+                    clean_single_system_config "$category"
                 else
                     echo -e "${RED}Invalid system category: $category${NC}"
                     echo -e "${YELLOW}Available system categories:${NC}"
