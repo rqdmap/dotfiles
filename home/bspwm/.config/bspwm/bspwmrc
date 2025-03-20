@@ -41,9 +41,8 @@ xset dpms 0 0 0
 #	After idle for <timeout> seconds, activate dimmer.
 #	After <cycle> seconds, activate xsecurelock.
 xset s on
-# xset s 1200 600
-xset s 0 0
-foo xss-lock "-n /usr/lib/xsecurelock/dimmer -l -- xsecurelock"
+xset s 1200 600
+foo xss-lock "-n /usr/local/libexec/xsecurelock/dimmer -l -- xsecurelock"
 # 
 # # 打开词典
 # foo goldendict
