@@ -12,6 +12,7 @@ config.font = wezterm.font_with_fallback({
 })
 config.font_size = 13
 config.unicode_version = 14
+config.warn_about_missing_glyphs = false
 
 -- 自动使用暗色色调
 config.bold_brightens_ansi_colors = false
