@@ -1,0 +1,16 @@
+[Unit]
+Description=SSH Tunnel for %i
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+# 使用环境文件加载特定隧道的配置
+EnvironmentFile=%h/.config/ssh-tunnel/%i.conf
+# 使用专用脚本处理隧道连接
+ExecStart=%h/.config/ssh-tunnel/ssh-tunnel-connect.sh
+
+Restart=always
+RestartSec=30
+
+[Install]
+WantedBy=default.target

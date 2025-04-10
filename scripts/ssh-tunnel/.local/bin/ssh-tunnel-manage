@@ -1,0 +1,194 @@
+#!/bin/bash
+# ssh-tunnel-manage.sh - 简易SSH隧道管理工具，支持动态IP
+
+# 配置目录
+CONFIG_DIR="$HOME/.config/ssh-tunnel"
+
+# 确保配置目录存在
+mkdir -p "$CONFIG_DIR"
+
+# 查看所有隧道状态
+status() {
+    echo "SSH隧道状态:"
+    echo "------------------------------------"
+    
+    # 创建一个列表用于跟踪已检查的隧道
+    declare -A checked_tunnels
+    
+    # 先检查配置文件中的隧道
+    for conf in "$CONFIG_DIR"/*.conf; do
+        if [ -f "$conf" ] && [ "$(basename "$conf")" != "example.conf" ]; then
+            name=$(basename "$conf" .conf)
+            source "$conf"
+            status=$(systemctl --user is-active "ssh-tunnel@$name" 2>/dev/null)
+            enabled=$(systemctl --user is-enabled "ssh-tunnel@$name" 2>/dev/null)
+            
+            # 解析目标IP
+            if [ -n "$IP_SERVER" ]; then
+                target_server="$IP_SERVER (动态IP)"
+                current_ip=$(curl -s "$IP_SERVER")
+                if [ -n "$current_ip" ]; then
+                    target_server="$target_server -> $current_ip"
+                fi
+            else
+                target_server="$REMOTE_SERVER"
+                target_server="$target_server -> $current_ip"
+            fi
+            
+            echo "* $name: $status (自启动: $enabled)"
+            echo "  $REMOTE_USER@$target_server:$REMOTE_PORT -> $LOCAL_HOST:$LOCAL_PORT"
+            checked_tunnels["$name"]=1
+        fi
+    done
+    
+    # 检查正在运行但没有配置文件的隧道
+    echo ""
+    echo "活动的隧道服务 (无配置文件):"
+    echo "------------------------------------"
+    found_active=0
+    
+    for service in $(systemctl --user list-units --plain --no-legend "ssh-tunnel@*.service" | awk '{print $1}'); do
+        tunnel_name=${service#ssh-tunnel@}
+        tunnel_name=${tunnel_name%.service}
+        
+        if [ -z "${checked_tunnels[$tunnel_name]}" ]; then
+            status=$(systemctl --user is-active "$service" 2>/dev/null || echo "inactive")
+            enabled=$(systemctl --user is-enabled "$service" 2>/dev/null || echo "disabled")
+            echo "* $tunnel_name: $status (自启动: $enabled) - [配置文件缺失]"
+            found_active=1
+        fi
+    done
+    
+    if [ $found_active -eq 0 ]; then
+        echo "未发现无配置文件的活动隧道"
+    fi
+}
+
+# 启动所有隧道
+start_all() {
+    for conf in "$CONFIG_DIR"/*.conf; do
+        if [ -f "$conf" ] && [ "$(basename "$conf")" != "example.conf" ]; then
+            name=$(basename "$conf" .conf)
+            systemctl --user start "ssh-tunnel@$name"
+            echo "已启动: $name"
+        fi
+    done
+}
+
+# 停止所有隧道
+stop_all() {
+    for conf in "$CONFIG_DIR"/*.conf; do
+        if [ -f "$conf" ] && [ "$(basename "$conf")" != "example.conf" ]; then
+            name=$(basename "$conf" .conf)
+            systemctl --user stop "ssh-tunnel@$name"
+            echo "已停止: $name"
+        fi
+    done
+}
+
+# 启用所有隧道自启动
+enable_all() {
+    for conf in "$CONFIG_DIR"/*.conf; do
+        if [ -f "$conf" ] && [ "$(basename "$conf")" != "example.conf" ]; then
+            name=$(basename "$conf" .conf)
+            systemctl --user enable "ssh-tunnel@$name"
+            echo "已启用自启动: $name"
+        fi
+    done
+}
+
+# 禁用所有隧道自启动
+disable_all() {
+    for conf in "$CONFIG_DIR"/*.conf; do
+        if [ -f "$conf" ] && [ "$(basename "$conf")" != "example.conf" ]; then
+            name=$(basename "$conf" .conf)
+            systemctl --user disable "ssh-tunnel@$name"
+            echo "已禁用自启动: $name"
+        fi
+    done
+}
+
+# 启动单个隧道
+start() {
+    if [ -z "$1" ]; then
+        echo "错误: 请提供隧道名称"
+        echo "用法: $0 start 隧道名称"
+        return 1
+    fi
+    
+    name="$1"
+    conf_file="$CONFIG_DIR/$name.conf"
+    
+    if [ ! -f "$conf_file" ]; then
+        echo "错误: 隧道配置 '$name' 不存在"
+        return 1
+    fi
+    
+    systemctl --user start "ssh-tunnel@$name"
+    echo "已启动: $name"
+}
+
+# 停止单个隧道
+stop() {
+    if [ -z "$1" ]; then
+        echo "错误: 请提供隧道名称"
+        echo "用法: $0 stop 隧道名称"
+        return 1
+    fi
+    
+    name="$1"
+    conf_file="$CONFIG_DIR/$name.conf"
+    
+    if [ ! -f "$conf_file" ]; then
+        echo "错误: 隧道配置 '$name' 不存在"
+        return 1
+    fi
+    
+    systemctl --user stop "ssh-tunnel@$name"
+    echo "已停止: $name"
+}
+
+# 使用说明
+usage() {
+    echo "使用方法: $0 命令 [参数]"
+    echo "命令:"
+    echo "  status         - 查看所有隧道状态"
+    echo "  start [名称]   - 启动单个或所有隧道"
+    echo "  stop [名称]    - 停止单个或所有隧道"
+    echo "  enable         - 启用所有隧道自启动"
+    echo "  disable        - 禁用所有隧道自启动"
+}
+
+# 主函数
+main() {
+    case "$1" in
+        status)
+            status
+            ;;
+        start)
+            if [ -n "$2" ]; then
+                start "$2"
+            else
+                start_all
+            fi
+            ;;
+        stop)
+            if [ -n "$2" ]; then
+                stop "$2"
+            else
+                stop_all
+            fi
+            ;;
+        enable)
+            enable_all
+            ;;
+        disable)
+            disable_all
+            ;;
+        *)
+            usage
+            ;;
+    esac
+}
+
+main "$@"

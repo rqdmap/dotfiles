@@ -40,9 +40,8 @@ SYSTEM_DIRS=(
 )
 
 SCRIPTS=(
-    "frp-to-vps"
-    "frp-to-local"
     "blog-manager"
+    "ssh-tunnel"
 )
 
 # 安装 $HOME 配置
