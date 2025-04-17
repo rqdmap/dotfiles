@@ -15,6 +15,7 @@ alias top='htop -u `whoami`'
 alias duu='du -d 1 -h | sort -hr'
 alias dc='docker-compose'
 alias lg='lazygit'
+alias clip='xclip -selection clipboard'
 
 # function j {
 #     local IFS=$'\t\n'
