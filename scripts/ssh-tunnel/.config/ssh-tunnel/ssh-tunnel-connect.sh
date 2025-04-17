@@ -24,10 +24,20 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+# 设置基本SSH选项
+BASE_OPTIONS="-o ServerAliveInterval=60 -o ExitOnForwardFailure=yes"
+
+# 如果用户配置了额外的SSH选项，则添加它们
+if [ -n "$SSH_OPTIONS" ]; then
+    echo "使用自定义SSH选项: $SSH_OPTIONS"
+    ALL_OPTIONS="$BASE_OPTIONS $SSH_OPTIONS"
+else
+    ALL_OPTIONS="$BASE_OPTIONS"
+fi
+
 # 建立SSH隧道
 echo "建立隧道: ${REMOTE_USER}@${SERVER_IP}:${REMOTE_PORT} -> ${LOCAL_HOST}:${LOCAL_PORT}"
 exec ssh -R "${REMOTE_PORT}:${LOCAL_HOST}:${LOCAL_PORT}" \
     -N \
-    -o "ServerAliveInterval=60" \
-    -o "ExitOnForwardFailure=yes" \
+    $ALL_OPTIONS \
     "${REMOTE_USER}@${SERVER_IP}"

@@ -10,7 +10,7 @@ EnvironmentFile=%h/.config/ssh-tunnel/%i.conf
 ExecStart=%h/.config/ssh-tunnel/ssh-tunnel-connect.sh
 
 Restart=always
-RestartSec=30
+RestartSec=15
 
 [Install]
 WantedBy=default.target
