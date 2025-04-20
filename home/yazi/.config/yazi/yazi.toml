@@ -62,6 +62,7 @@ play = [
 pdf = [
 	{ run = 'zathura "$@"', desc = "zathura", block = false, for = "linux", orphan = true},
 	{ run = 'okular "$@"', desc = "okular", block = false, for = "linux", orphan = true},
+	{ run = 'foxitreader "$@"', desc = "foxitreader", block = false, for = "linux", orphan = true},
 ]
 
 [open]

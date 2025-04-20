@@ -37,6 +37,7 @@ SYSTEM_DIRS=(
     "docker-service-proxy"
     "enable-drawio-plugins-alpm-hook"
     "texlive-fandol-font"       # 依赖 texlive-langchinese 包
+    "wezterm-for-yazi"
 )
 
 SCRIPTS=(
