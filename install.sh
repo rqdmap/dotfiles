@@ -30,6 +30,9 @@ HOME_DIRS=(
     "tmux"
     "wezterm"
     "yazi"
+    "yabai"
+    "skhd"
+    "sketchybar"
 )
 
 SYSTEM_DIRS=(
