@@ -1,0 +1,19 @@
+-- Top-level nvim init managed by dotfiles repo
+-- This file will attempt to add the nvim submodule path (if present) to runtimepath,
+-- then load the canonical init from the submodule, and finally load host-specific overrides
+local uv = vim.loop
+local function safe_require(name)
+  local ok, _ = pcall(require, name)
+  return ok
+end
+
+-- If you keep nvim as a submodule, you can place it at ~/.config/nvim_submodule or similar.
+local submodule_path = vim.fn.expand("~/.config/nvim_submodule")
+if vim.fn.isdirectory(submodule_path) == 1 then
+  vim.opt.rtp:prepend(submodule_path)
+end
+
+-- Try to require the canonical init from the submodule (adjust name if needed)
+pcall(function() require('init') end)
+
+-- Load host overrides placed by chezmoi (e.g. ~/.config/nvim/hosts/

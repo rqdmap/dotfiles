@@ -1,0 +1,13 @@
+# ~/.zshrc.tmpl - minimal bootstrap for chezmoi
+export EDITOR="{{ .chezmoi.user.editor | default "vim" }}"
+alias ll='ls -la'
+
+# source shared zsh common if exists
+if [ -f "{{ .chezmoi.home }}/.config/zsh/common.zsh" ]; then
+  source "{{ .chezmoi.home }}/.config/zsh/common.zsh"
+fi
+
+# allow untracked local overrides
+if [ -f "{{ .chezmoi.home }}/.config/zsh/hosts/local.zsh" ]; then
+  source "{{ .chezmoi.home }}/.config/zsh/hosts/local.zsh"
+fi

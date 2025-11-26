@@ -1,0 +1,8 @@
+local wezterm = require 'wezterm'
+local config = {}
+
+-- shared defaults
+config.font = wezterm.font("FiraCode Nerd Font")
+config.font_size = {{ .chezmoi.data.config.wezterm_font_size | default 12.0 }}
+
+return config

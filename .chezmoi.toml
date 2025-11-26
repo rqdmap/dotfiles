@@ -1,0 +1,4 @@
+# Minimal .chezmoi.toml
+# See https://www.chezmoi.io/docs/ for options
+sourceDir = "."
+encryptTemplate = ""  # disabled for now; can be set to "gpg" or "age" later
