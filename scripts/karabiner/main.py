@@ -2,7 +2,6 @@ import copy
 import yaml
 import json
 
-
 # xxx + xxx + xxx
 def parse(desc: str, is_from=False):
     keys = [i.strip() for i in desc.split('+')]
@@ -56,29 +55,4 @@ for _rule in config["rules"]:
 
 json_str = json.dumps(result, indent=2)
 print(json_str)
-
-# with open('custom.json', 'r') as json_file:
-#     data = json.load(json_file)
-#     new_data = copy.deepcopy(data)
-#     new_data['rules'][0]['manipulators'] = []
-#     for item in data['rules'][0]['manipulators']:
-#         new_item = {}
-#         new_item['description'] = item['description']
-#         if item.get('conditions'):
-#             for condition in item['conditions']:
-#                 new_item['conditions'] = []
-#                 new_item['conditions'].append({
-#                     "type": condition['type'],
-#                     "identifiers": condition['bundle_identifiers']
-#                 })
-#             # new_item['conditions'] = {
-#             #     "type": item['conditions'][0]['type'],
-#             #     "identifiers": item['conditions'][0]['bundle_identifiers']
-#             # }
-#
-#         new_data['rules'][0]['manipulators'].append(new_item)
-
-
-# print(new_data)
-# yaml.dump(new_data, open('custom.yaml', 'w'), sort_keys=False)
 
