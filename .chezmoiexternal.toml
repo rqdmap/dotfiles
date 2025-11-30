@@ -3,11 +3,6 @@
     url = "https://github.com/rqdmap/neovim-dotfiles.git"
     refreshPeriod = "168h"
 
-[".local/share/fcitx5/rime"]
-    type = "git-repo"
-    url = "https://github.com/rqdmap/rime.git"
-    refreshPeriod = "168h"
-
 [".zsh/zsh-autosuggestions"]
     type = "git-repo"
     url = "https://github.com/zsh-users/zsh-autosuggestions"
