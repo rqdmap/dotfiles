@@ -3,12 +3,12 @@
     url = "https://github.com/rqdmap/neovim-dotfiles.git"
     refreshPeriod = "168h"
 
-[".zsh/zsh-autosuggestions"]
+[".zsh/plugins/zsh-autosuggestions"]
     type = "git-repo"
     url = "https://github.com/zsh-users/zsh-autosuggestions"
     refreshPeriod = "168h"
 
-[".zsh/zsh-syntax-highlighting"]
+[".zsh/plugins/zsh-syntax-highlighting"]
     type = "git-repo"
     url = "https://github.com/zsh-users/zsh-syntax-highlighting.git"
     refreshPeriod = "168h"
