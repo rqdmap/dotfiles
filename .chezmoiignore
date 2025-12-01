@@ -14,6 +14,8 @@
 # macOS-specific configuration
 {{ if ne .machine_type "work" }}
 .config/sketchybar
+.yabairc
+.skhdrc
 {{ end}}
 
 
