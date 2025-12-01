@@ -1,3 +1,28 @@
+# [colors.primary]
+# background = "#ffffff"  # 纯白色背景
+# foreground = "#000000"  # 纯黑色文字，确保最大清晰度
+#
+# [colors.normal]
+# black = "#000000"
+# red = "#404040"
+# green = "#505050"
+# yellow = "#606060"
+# blue = "#707070"
+# magenta = "#808080"
+# cyan = "#909090"
+# white = "#e0e0e0"
+#
+# [colors.bright]
+# black = "#303030"
+# red = "#484848"
+# green = "#585858"
+# yellow = "#686868"
+# blue = "#787878"
+# magenta = "#888888"
+# cyan = "#989898"
+# white = "#ffffff"
+
+
 [colors.primary]
 background = "#282828"
 bright_foreground = "#fbf1c7"
