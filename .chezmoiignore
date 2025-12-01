@@ -16,3 +16,9 @@
 
 
 {{ end}}
+
+
+# Archived(not in use) configurations
+.config/joshuto
+
+
