@@ -12,7 +12,9 @@ msg=$host
 opts=(
 "󱓞 Launcher:	rofi_run"
 "󰐥 关机:		systemctl poweroff"
+{{- if ne .machine_type "home" -}}
 "󰒲 休眠:		systemctl suspend"
+{{- end }}
 "󰜉 重启:		systemctl reboot"
 " 重启:    	sudo grub-reboot 3 && reboot"
 "󰥻 键盘切换:	switch_keyboard"
@@ -22,7 +24,9 @@ opts=(
 " record窗口:	record -k -r"
 " record全屏:	record -k -f"
 " 键盘回显:	record -k"
-" Factorio:	/home/rqdmap/Games/factorio/bin/x64/factorio"
+{{ if eq .machine_type "home" -}}
+" Factorio:	/home/rqdmap/Games/factorio/bin/x64/factorio &; /data/rqdmap/Codes/floating-notepad/dist/main"
+{{- end }}
 )
 
 
