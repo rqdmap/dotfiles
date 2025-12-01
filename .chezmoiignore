@@ -1,0 +1,17 @@
+# ~/.local/share/chezmoi/.chezmoiignore
+
+# Linux-specific configuration
+{{ if ne .machine_type "home" }}
+.config/bspwm
+.config/polybar
+.config/rofi
+.config/picom
+.config/sxhkd
+{{ end }}
+
+
+# macOS-specific configuration
+{{ if ne .machine_type "home" }}
+
+
+{{ end}}
