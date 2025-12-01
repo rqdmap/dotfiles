@@ -7,12 +7,21 @@ config.font = wezterm.font_with_fallback({
         family = 'Iosevka Nerd Font',
         harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' },
     },
+    {{ if eq .machine_type "work" -}}
     'Source Han Sans SC',
     'Noto Color Emoji',
     'Apple Color Emoji',
+    {{- else if eq .machine_type "home" -}}
+    'Source Han Sans CN',
+    'Noto Color Emoji',
+    {{- end }}
 })
 
+{{ if eq .machine_type "work" -}}
 config.font_size = 16
+{{- else if eq .machine_type "home" -}}
+config.font_size = 13
+{{- end }}
 config.unicode_version = 14
 config.warn_about_missing_glyphs = false
 
@@ -54,16 +63,13 @@ config.keys = {
     mods = 'CTRL',
     action = wezterm.action.SendString(string.char(0x1f)),
   },
+  {{ if eq .machine_type "work" -}}
   {
     key = 'w',
     mods = 'CMD',
     action = wezterm.action.CloseCurrentTab { confirm = false },
   },
- --   {
-  --   key = '.',
-  --   mods = 'CTRL',
-  --   action = wezterm.action.DisableDefaultAssignment,
-  -- },
+  {{- end }}
 }
 
 return config
