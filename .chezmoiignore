@@ -7,8 +7,9 @@
 .config/rofi
 .config/picom
 .config/sxhkd
-{{ end }}
 
+.config/fontconfig
+{{ end }}
 
 # macOS-specific configuration
 {{ if ne .machine_type "home" }}
