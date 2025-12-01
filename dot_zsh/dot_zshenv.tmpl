@@ -37,14 +37,11 @@ export no_proxy="localhost,127.0.0.0/8,10.0.0.0/8"
 # export no_proxy="localhost,127.0.0.0/8,10.0.0.0/8"
 {{- end }}
 
-{{ if eq .machine_type "home" -}}
+{{- if eq .machine_type "home" -}}
 export CHROME_EXECUTABLE="google-chrome-stable"
-{{- end }}
 
-{{ if eq .machine_type "home" -}}
 export ANTHROPIC_BASE_URL="{{ .zsh.anthropic_base_url }}"
 export ANTHROPIC_AUTH_TOKEN="{{ .zsh.anthropic_auth_token }}"
-{{- end }}
 
 # pnpm
 export PNPM_HOME="/home/rqdmap/.local/share/pnpm"
@@ -53,3 +50,22 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
+{{- end }}
+
+
+{{- if eq .machine_type "work" -}}
+export PATH=/opt/homebrew/bin/:$PATH
+
+export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+export JAVA_HOME="/opt/homebrew/opt/openjdk"
+export JAVA_HOME="/Library/Java/JavaVirtualMachines/zulu-8.jdk/Contents/Home"
+export PATH=$JAVA_HOME"/bin":$PATH
+
+export M2_HOME=/Users/rqdmap/Applications/apache-maven-3.9.11
+export PATH=$PATH:$M2_HOME/bin
+
+export PATH="/opt/homebrew/opt/mysql@8.0/bin:$PATH"
+export PATH="/opt/homebrew/Cellar/postgresql@15/15.14/bin:$PATH"
+
+
+{{- end}}
