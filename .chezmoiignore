@@ -12,9 +12,8 @@
 {{ end }}
 
 # macOS-specific configuration
-{{ if ne .machine_type "home" }}
-
-
+{{ if ne .machine_type "work" }}
+.config/sketchybar
 {{ end}}
 
 
