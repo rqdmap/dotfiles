@@ -37,7 +37,7 @@ export no_proxy="localhost,127.0.0.0/8,10.0.0.0/8"
 # export no_proxy="localhost,127.0.0.0/8,10.0.0.0/8"
 {{- end }}
 
-{{- if eq .machine_type "home" -}}
+{{ if eq .machine_type "home" -}}
 export CHROME_EXECUTABLE="google-chrome-stable"
 
 export ANTHROPIC_BASE_URL="{{ .zsh.anthropic_base_url }}"
