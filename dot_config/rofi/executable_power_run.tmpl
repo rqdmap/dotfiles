@@ -17,14 +17,16 @@ opts=(
 {{- end }}
 "󰜉 重启:		systemctl reboot"
 " 重启:    	sudo grub-reboot 3 && reboot"
+{{ if eq .machine_type "home" -}}
 "󰥻 键盘切换:	switch_keyboard"
 " 禁用独显:	close_nouveau_nvidia"
+{{- end }}
 " bspwm重启:	bspc wm -r"
 "󰥻 sxhkd重启:	pkill -USR1 -x sxhkd"
+{{ if eq .machine_type "home" -}}
 " record窗口:	record -k -r"
 " record全屏:	record -k -f"
 " 键盘回显:	record -k"
-{{ if eq .machine_type "home" -}}
 " Factorio:	/home/rqdmap/Games/factorio/bin/x64/factorio &; /data/rqdmap/Codes/floating-notepad/dist/main"
 {{- end }}
 )

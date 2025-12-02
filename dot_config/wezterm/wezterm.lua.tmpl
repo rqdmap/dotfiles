@@ -7,20 +7,21 @@ config.font = wezterm.font_with_fallback({
         family = 'Iosevka Nerd Font',
         harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' },
     },
-    {{ if eq .machine_type "work" -}}
+    {{ if .macos -}}
     'Source Han Sans SC',
-    'Noto Color Emoji',
     'Apple Color Emoji',
-    {{- else if eq .machine_type "home" -}}
+    {{- else if .bspwm -}}
     'Source Han Sans CN',
-    'Noto Color Emoji',
     {{- end }}
+    'Noto Color Emoji',
 })
 
 {{ if eq .machine_type "work" -}}
 config.font_size = 16
 {{- else if eq .machine_type "home" -}}
 config.font_size = 13
+{{- else -}}
+config.font_size = 13   -- 默认值
 {{- end }}
 config.unicode_version = 14
 config.warn_about_missing_glyphs = false
@@ -63,7 +64,8 @@ config.keys = {
     mods = 'CTRL',
     action = wezterm.action.SendString(string.char(0x1f)),
   },
-  {{ if eq .machine_type "work" -}}
+  {{ if .macos -}}
+  -- Mac 模拟 Super + W 关闭标签页
   {
     key = 'w',
     mods = 'CMD',

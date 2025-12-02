@@ -1,10 +1,8 @@
 # ~/.local/share/chezmoi/.chezmoiignore
 
-{{- $BspwmLinuxMachines := list "home" "bspwm" -}}
-{{- $MacOsMachines := list "work" "mac" -}}
 
-# Linux-specific configuration
-{{ if not (has .machine_type $BspwmLinuxMachines) }}
+# Linux-on-BSPWM configuration
+{{ if not .bspwm }}
 .config/bspwm
 .config/polybar
 .config/rofi
@@ -14,13 +12,12 @@
 .config/fontconfig
 {{ end }}
 
-# macOS-specific configuration
-{{ if not (has .machine_type $MacOsMachines) }}
+# MacOS-with-Tiling-Layout configuration
+{{ if not .macos }}
 .config/sketchybar
 .yabairc
 .skhdrc
-{{ end}}
-
+{{ end }}
 
 # Archived(not in use) configurations
 .config/joshuto

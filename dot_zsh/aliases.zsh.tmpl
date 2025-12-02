@@ -14,9 +14,9 @@ alias top='htop -u `whoami`'
 alias duu='du -d 1 -h | sort -hr'
 alias dc='docker-compose'
 alias lg='lazygit'
-{{ if eq .machine_type "home" -}}
+{{ if .bspwm -}}
 alias clip='xclip -selection clipboard'
-{{- else if eq .machine_type "work" -}}
+{{- else if .macos -}}
 alias clip='pbcopy'
 {{- end }}
 
@@ -69,10 +69,11 @@ function nvm_enable() {
 {{- end }}
 
 
-{{- if eq .machine_type "home" -}}
+{{ if eq .machine_type "home" -}}
 alias showpkg="expac --timefmt='%Y-%m-%d %T' '%l\t%n' | sort"
 alias logisim='_JAVA_AWT_WM_NONREPARENTING=1 nohup java -jar /home/rqdmap/Applications/Logisim-ITA.jar > /dev/null 2>&1 &!; exit'
 
+# archlinux 的 nvm 安装位置
 function nvm_enable() {
 	source /usr/share/nvm/init-nvm.sh
 }
