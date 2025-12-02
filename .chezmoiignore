@@ -1,7 +1,10 @@
 # ~/.local/share/chezmoi/.chezmoiignore
 
+{{- $BspwmLinuxMachines := list "home" "bspwm" -}}
+{{- $MacOsMachines := list "work" "mac" -}}
+
 # Linux-specific configuration
-{{ if ne .machine_type "home" }}
+{{ if not (has .machine_type $BspwmLinuxMachines) }}
 .config/bspwm
 .config/polybar
 .config/rofi
@@ -12,7 +15,7 @@
 {{ end }}
 
 # macOS-specific configuration
-{{ if ne .machine_type "work" }}
+{{ if not (has .machine_type $MacOsMachines) }}
 .config/sketchybar
 .yabairc
 .skhdrc

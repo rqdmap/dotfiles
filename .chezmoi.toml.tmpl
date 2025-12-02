@@ -1,12 +1,14 @@
 {{- writeToStdout "\n========================================\n" -}}
 {{- writeToStdout "  Machine Type Selection\n" -}}
 {{- writeToStdout "========================================\n" -}}
-{{- writeToStdout "  1. home - Dell ArchLinux\n" -}}
-{{- writeToStdout "  2. work - MacBook Pro\n" -}}
-{{- writeToStdout "  3. vps  - Debian VPS\n" -}}
+{{- writeToStdout "  1. home  - Personal Dell ArchLinux\n" -}}
+{{- writeToStdout "  2. work  - Personal MacBook Pro for work\n" -}}
+{{- writeToStdout "  3. vps   - Generic Debian VPS\n" -}}
+{{- writeToStdout "  4. bspwm - Generic Linux Desktop on BSPWM  \n" -}}
+{{- writeToStdout "  5. mac   - Generic MacOS with Tiling Layout \n" -}}
 {{- writeToStdout "========================================\n\n" -}}
 
-{{- $machine_type := promptChoiceOnce . "machine_type" "Select machine type" (list "home" "work" "vps") -}}
+{{- $machine_type := promptChoiceOnce . "machine_type" "Select machine type" (list "home" "work" "vps" "bspwm" "mac") -}}
 
 [data]
   machine_type = {{ $machine_type | quote }}
