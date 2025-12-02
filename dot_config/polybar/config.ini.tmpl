@@ -256,8 +256,8 @@ interval = 1
 
 format-connected = <label-connected> 
 format-disconnected = <label-disconnected>
-;label-connected = %{F#F0C674}%ifname%%{F-} %essid% | %upspeed:5% %{T2}祝%{T-}%{O10}%downspeed:5% %{T2}%{T-}
-label-connected = %{F#F0C674}%ifname%%{F-} %essid% %local_ip%
+label-connected = %{F#F0C674}%ifname%%{F-} %essid% | %{F#8ABEB7} U:%upspeed%%{F-} %{F#C5C8C6} D:%downspeed%%{F-}
+; label-connected = %{F#F0C674}%ifname%%{F-} %essid% %local_ip%
 label-disconnected = %{F#F0C674}%ifname%%{F#707880} %{T2}
 
 
@@ -331,8 +331,14 @@ label = %title:0:80:...%
 type = internal/fs
 interval = 30
 
+{{ if eq .machine_type "home" -}}
 mount-0 = /
-mount-1 = /Data
+mount-1 = /home
+mount-2 = /data
+{{- else if .bspwm -}}
+mount-0 = /
+mount-1 = /home/
+{{- end }}
 
 spacing = 4
 
