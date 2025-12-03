@@ -46,8 +46,20 @@ function j() {
 }
 
 
-alias activate="source ./venv/bin/activate"
-alias mkvenv="python3 -m venv venv"
+# Python 虚拟环境管理
+# alias mkvenv="python3 -m venv venv"
+alias mkvenv="uv venv"
+alias pip="uv pip"
+function activate() {
+    if [ -d ".venv" ]; then
+        source .venv/bin/activate
+    elif [ -d "venv" ]; then
+        source venv/bin/activate
+    else
+        echo "未找到虚拟环境目录 (.venv 或 venv)"
+        return 1
+    fi
+}
 
 # git 字数检查
 alias gitwa='git diff --word-diff=porcelain  | grep -e "^+[^+]" | wc -m | xargs'
@@ -66,6 +78,8 @@ function nvm_enable() {
     [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
     [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 }
+
+alias code="ccr code"
 {{- end }}
 
 
