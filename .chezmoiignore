@@ -3,13 +3,20 @@
 
 # Linux-on-BSPWM configuration
 {{ if not .bspwm }}
+# BSPWM-related configurations
 .config/bspwm
 .config/polybar
 .config/rofi
 .config/picom
 .config/sxhkd
 
+# Desktop environment configurations
 .config/fontconfig
+
+# SSH-Tunnel Systemd Tools
+.config/ssh-tunnel
+.config/systemd/
+.local/bin/ssh-tunnel-manage
 {{ end }}
 
 # MacOS-with-Tiling-Layout configuration
@@ -17,6 +24,12 @@
 .config/sketchybar
 .yabairc
 .skhdrc
+{{ end }}
+
+
+# Personal configurations
+{{ if .generic }}
+.local/bin/blog
 {{ end }}
 
 # Archived(not in use) configurations

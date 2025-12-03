@@ -1,0 +1,101 @@
+#!/bin/zsh
+
+function help(){
+	cat <<EOF
+usage:
+	blog [COMMAND] [FILE]
+
+Commands:
+  new				Create a new page-bundle.
+  remove			Move page-bundle folder to trash.
+  ls				List all posts ordered by time.
+  edit				Edit post content.
+  server			Start hugo server.
+  stop				Kill all hugo server.
+  help				Display help message.
+EOF
+	exit 0
+}
+
+HUGO=$HOME/hugo-blog
+
+if [ ! -d "$HUGO" ]; then
+    echo "错误: $HUGO 目录不存在。"
+    exit 1
+fi
+
+set -e
+pushd $HUGO > /dev/null
+
+if [ $# -eq 0 ]; then
+	help
+	exit 1
+fi
+
+while [ $# -gt 0 ]; do
+	case $1 in
+		new)
+			if [ -z "$2" ]; then
+                echo "用法: blog new <name>"
+                exit 1
+            fi
+			name="$2"
+			shift
+			if [[ "$name" == anime/* ]]; then
+				hugo new -k page-bundle-anime "$name"
+			else
+				hugo new -k page-bundle "$name"
+			fi
+			echo -ne "\033[32m[Open it?]\033[0m (y/n) "
+			read -r answer
+			if [ -z "$answer" -o "${answer:0:1}" = 'y' -o "${answer:0:1}" = 'Y' ]; then
+				${EDITOR:-vim} "$HUGO/content/$name/index.md"
+			fi
+			;;
+		remove)
+			if [ -z "$2" ]; then
+                echo "用法: blog remove <name>"
+                exit 1
+            fi
+			name="$2"
+			shift
+			if [ ! -d "$HUGO/content/$name" ]; then
+                echo "错误: 目录 $name 不存在"
+                exit 1
+            fi
+			trash "$HUGO/content/$name"
+			;;
+		ls)
+			ls -tlr --color=always content/posts
+			;;
+		edit)
+			if [ -z "$2" ]; then
+                echo "用法: blog edit <name>"
+                exit 1
+            fi
+			name="$2"
+			shift
+			if [ ! -f "$HUGO/content/$name/index.md" ]; then
+                echo "错误: 文件 $name/index.md 不存在"
+                exit 1
+            fi
+			${EDITOR:-vim} "content/$name/index.md"
+			;;
+		stop)
+			pkill hugo
+			;;
+		server)
+			hugo server --buildDrafts --disableFastRender --enableGitInfo
+			;;
+		help)
+			help
+			;;
+		*)
+			help
+			;;
+	esac
+	shift
+done
+
+popd > /dev/null
+set +e

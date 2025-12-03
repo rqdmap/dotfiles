@@ -11,11 +11,13 @@
 {{- $machine_type := promptChoiceOnce . "machine_type" "Select machine type" (list "home" "work" "vps" "bspwm" "mac") -}}
 {{- $bspwm := has $machine_type (list "home" "bspwm") -}}
 {{- $macos := has $machine_type (list "work" "mac") -}}
+{{- $generic := has $machine_type (list "vps" "bspwm" "mac") -}}
 
 [data]
   machine_type = {{ $machine_type | quote }}
   bspwm = {{ $bspwm }}
   macos = {{ $macos }}
+  generic = {{ $generic }}
 
 [data.zsh]
   anthropic_base_url = "https://www.88code.org/api"
