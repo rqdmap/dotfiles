@@ -1,6 +1,10 @@
 # ~/.local/share/chezmoi/.chezmoiignore
 
 
+# Chezmoi Project Files
+README.md
+
+
 # Linux-on-BSPWM configuration
 {{ if not .bspwm }}
 # BSPWM-related configurations
