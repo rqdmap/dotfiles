@@ -1,0 +1,71 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "tui": {
+    "scroll_speed": 5
+  },
+  "mcp": {
+    "tavily-mcp": {
+      "type": "remote",
+      "url": "https://mcp.tavily.com/mcp/?tavilyApiKey={{ .mcp.tavily.token }}",
+      "enabled": true
+    }
+  },
+  "tools": {
+    "bash": true,
+    "edit": true,
+    "write": true,
+    "read": true,
+    "grep": true,
+    "glob": true,
+    "list": true,
+    "patch": true,
+    "todowrite": true,
+    "todoread": true,
+    "webfetch": true
+  },
+  "theme": "gruvbox",
+  "keybinds": {
+    "leader": "ctrl+x",
+    "app_exit": "ctrl+c,<leader>q",
+    "editor_open": "<leader>e",
+    "theme_list": "none",
+    "sidebar_toggle": "<leader>b",
+    "username_toggle": "none",
+    "status_view": "<leader>s",
+    "session_export": "<leader>x",
+    "session_new": "<leader>n",
+    "session_list": "<leader>l",
+    "session_timeline": "<leader>g",
+    "session_share": "none",
+    "session_unshare": "none",
+    "session_interrupt": "escape",
+    "session_compact": "<leader>c",
+    "session_child_cycle": "none",
+    "session_child_cycle_reverse": "none",
+    "messages_page_up": "ctrl+b",
+    "messages_page_down": "ctrl+f",
+    "messages_half_page_up": "",
+    "messages_half_page_down": "",
+    "messages_first": "none",
+    "messages_last": "none",
+    "messages_copy": "<leader>y",
+    "messages_undo": "<leader>u",
+    "messages_redo": "<leader>r",
+    "messages_last_user": "none",
+    "messages_toggle_conceal": "<leader>h",
+    "model_list": "<leader>m",
+    "model_cycle_recent": "",
+    "model_cycle_recent_reverse": "",
+    "command_list": "ctrl+p",
+    "agent_list": "<leader>a",
+    "agent_cycle": "tab",
+    "agent_cycle_reverse": "shift+tab",
+    "input_clear": "none",
+    "input_forward_delete": "ctrl+d",
+    "input_paste": "none",
+    "input_submit": "enter",
+    "input_newline": "shift+enter,ctrl+j",
+    "history_previous": "up",
+    "history_next": "down"
+  }
+}
