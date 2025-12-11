@@ -131,10 +131,10 @@ export LESS_TERMCAP_ZV=$(tput rsubm)
 export LESS_TERMCAP_ZO=$(tput ssupm)
 export LESS_TERMCAP_ZW=$(tput rsupm)
 
-{{ if eq .machine_type "home" -}}
+{{ if eq .machine_profile "home" -}}
 export {http,https,ftp,socks}_proxy="http://127.0.0.1:7890"
 export no_proxy="localhost,127.0.0.0/8,10.0.0.0/8"
-{{- else if (or (eq .machine_type "work") (eq .machine_type "vps")) -}}
+{{- else -}}
 # export {http,https,ftp,socks}_proxy="http://127.0.0.1:7890"
 # export no_proxy="localhost,127.0.0.0/8,10.0.0.0/8"
 {{- end }}

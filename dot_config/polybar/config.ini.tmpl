@@ -331,11 +331,11 @@ label = %title:0:80:...%
 type = internal/fs
 interval = 30
 
-{{ if eq .machine_type "home" -}}
+{{ if eq .machine_profile "home" -}}
 mount-0 = /
 mount-1 = /home
 mount-2 = /data
-{{- else if .bspwm -}}
+{{- else -}}
 mount-0 = /
 mount-1 = /home/
 {{- end }}

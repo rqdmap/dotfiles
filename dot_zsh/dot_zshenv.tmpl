@@ -30,15 +30,15 @@ PATH=$PATH:$HOME/.local/bin
 PATH=$PATH:$HOME/.cargo/bin
 PATH=$PATH:$HOME/go/bin
 
-{{ if eq .machine_type "home" -}}
+{{ if eq .machine_profile "home" -}}
 export {http,https,ftp,socks}_proxy="http://127.0.0.1:7890"
 export no_proxy="localhost,127.0.0.0/8,10.0.0.0/8"
-{{- else if (or (eq .machine_type "work") (eq .machine_type "vps")) -}}
+{{- else -}}
 # export {http,https,ftp,socks}_proxy="http://127.0.0.1:7890"
 # export no_proxy="localhost,127.0.0.0/8,10.0.0.0/8"
 {{- end }}
 
-{{ if eq .machine_type "home" -}}
+{{ if eq .machine_profile "home" -}}
 export CHROME_EXECUTABLE="google-chrome-stable"
 
 export ANTHROPIC_BASE_URL="{{ .zsh.anthropic_base_url }}"
@@ -53,11 +53,13 @@ esac
 # pnpm end
 {{- end }}
 
-
-{{- if eq .machine_type "work" -}}
+{{ if .is_macos -}}
 export PATH=/opt/homebrew/bin/:$PATH
+export PATH="$HOME/.npm-global/bin:$PATH"
 
-export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+{{- end }}
+
+{{ if eq .machine_profile "work" -}}
 # export JAVA_HOME="/opt/homebrew/opt/openjdk"
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/zulu-8.jdk/Contents/Home"
 export PATH=$JAVA_HOME"/bin":$PATH
@@ -67,7 +69,5 @@ export PATH=$PATH:$M2_HOME/bin
 
 export PATH="/opt/homebrew/opt/mysql@8.0/bin:$PATH"
 export PATH="/opt/homebrew/Cellar/postgresql@15/15.14/bin:$PATH"
-
-export PATH="$HOME/.npm-global/bin:$PATH"
-
 {{- end}}
+

@@ -15,9 +15,9 @@ alias duu='du -d 1 -h | sort -hr'
 alias dc='docker-compose'
 alias lg='lazygit'
 alias oc='opencode'
-{{ if .bspwm -}}
+{{ if and .is_linux .is_gui -}}
 alias clip='xclip -selection clipboard'
-{{- else if .macos -}}
+{{- else if .is_macos -}}
 alias clip='pbcopy'
 {{- end }}
 
@@ -68,28 +68,33 @@ alias gitwd='git diff --word-diff=porcelain  | grep -e "^-[^-]" | wc -m | xargs'
 alias gitwdd='git diff --word-diff=porcelain | grep -e"^+[^+]" -e"^-[^-]"|sed -e's/.//'|sort|uniq -d|wc -m|xargs'
 alias gitw='echo $(($(gitwa) - $(gitwd)))'
 
-{{ if eq .machine_type "work" -}}
-alias day='cd ~/daily-note; vim main.md'
-function pkg() {
-    JAVA_HOME="/Users/rqdmap/Library/Java/JavaVirtualMachines/corretto-1.8.0_452/Contents/Home" PATH=$JAVA_HOME"/bin":$PATH mvn package -DskipTests
-}
-
+{{ if .is_macos -}}
 function nvm_enable() {
     export NVM_DIR="$HOME/.nvm"
     [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
     [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 }
+{{- end }}
+
+{{ if eq .machine_profile "work" -}}
+alias day='cd ~/daily-note; vim main.md'
+
+function pkg() {
+    JAVA_HOME="/Users/rqdmap/Library/Java/JavaVirtualMachines/corretto-1.8.0_452/Contents/Home" PATH=$JAVA_HOME"/bin":$PATH mvn package -DskipTests
+}
 
 alias code="ccr code"
 {{- end }}
 
-
-{{ if eq .machine_type "home" -}}
+{{ if .is_arch -}}
 alias showpkg="expac --timefmt='%Y-%m-%d %T' '%l\t%n' | sort"
-alias logisim='_JAVA_AWT_WM_NONREPARENTING=1 nohup java -jar /home/rqdmap/Applications/Logisim-ITA.jar > /dev/null 2>&1 &!; exit'
 
 # archlinux 的 nvm 安装位置
 function nvm_enable() {
 	source /usr/share/nvm/init-nvm.sh
 }
+{{- end }}
+
+{{ if eq .machine_profile "home" -}}
+alias logisim='_JAVA_AWT_WM_NONREPARENTING=1 nohup java -jar /home/rqdmap/Applications/Logisim-ITA.jar > /dev/null 2>&1 &!; exit'
 {{- end }}

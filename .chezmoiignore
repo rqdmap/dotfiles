@@ -27,6 +27,8 @@ README.md
 # Exclude GUI configs on headless systems
 {{ if .is_headless }}
 .config/fontconfig
+.config/wezterm
+.config/alacritty
 {{ end }}
 
 

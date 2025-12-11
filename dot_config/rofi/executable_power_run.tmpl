@@ -12,18 +12,18 @@ msg=$host
 opts=(
 "󱓞 Launcher:	rofi_run"
 "󰐥 关机:		systemctl poweroff"
-{{- if ne .machine_type "home" -}}
+{{- if ne .machine_profile "home" -}}
 "󰒲 休眠:		systemctl suspend"
 {{- end }}
 "󰜉 重启:		systemctl reboot"
 " 重启:    	sudo grub-reboot 3 && reboot"
-{{ if eq .machine_type "home" -}}
+{{ if eq .machine_profile "home" -}}
 "󰥻 键盘切换:	switch_keyboard"
 " 禁用独显:	close_nouveau_nvidia"
 {{- end }}
 " bspwm重启:	bspc wm -r"
 "󰥻 sxhkd重启:	pkill -USR1 -x sxhkd"
-{{ if eq .machine_type "home" -}}
+{{ if eq .machine_profile "home" -}}
 " record窗口:	record -k -r"
 " record全屏:	record -k -f"
 " 键盘回显:	record -k"
