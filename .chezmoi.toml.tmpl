@@ -1,23 +1,105 @@
 {{- writeToStdout "\n========================================\n" -}}
-{{- writeToStdout "  Machine Type Selection\n" -}}
+{{- writeToStdout "  Machine Profile Selection\n" -}}
 {{- writeToStdout "========================================\n" -}}
-{{- writeToStdout "  1. home  - Personal Dell ArchLinux\n" -}}
-{{- writeToStdout "  2. work  - Personal MacBook Pro for work\n" -}}
-{{- writeToStdout "  3. vps   - Generic Debian VPS\n" -}}
-{{- writeToStdout "  4. bspwm - Generic Linux Desktop on BSPWM  \n" -}}
-{{- writeToStdout "  5. mac   - Generic MacOS with Tiling Layout \n" -}}
+{{- writeToStdout "  Personal Machines:\n" -}}
+{{- writeToStdout "    1. home   - ArchLinux Desktop (Tiling WM)\n" -}}
+{{- writeToStdout "    2. work   - MacBook Pro Desktop (Tiling WM)\n" -}}
+{{- writeToStdout "    3. macPie - MacBook Pro Server (Headless)\n" -}}
+{{- writeToStdout "\n" -}}
+{{- writeToStdout "  Generic Machines:\n" -}}
+{{- writeToStdout "    4. vps    - Debian Server (Headless)\n" -}}
+{{- writeToStdout "    5. linux  - ArchLinux Desktop (Tiling WM)\n" -}}
+{{- writeToStdout "    6. mac    - MacOS Desktop (Tiling WM)\n" -}}
 {{- writeToStdout "========================================\n\n" -}}
 
-{{- $machine_type := promptChoiceOnce . "machine_type" "Select machine type" (list "home" "work" "vps" "bspwm" "mac") -}}
-{{- $bspwm := has $machine_type (list "home" "bspwm") -}}
-{{- $macos := has $machine_type (list "work" "mac") -}}
-{{- $generic := has $machine_type (list "vps" "bspwm" "mac") -}}
+{{- $choice := promptIntOnce . "machine_profile_choice" "Enter your choice (1-6)" -}}
+
+{{- $machine_profile := "" -}}
+{{- if eq $choice 1 -}}
+{{-   $machine_profile = "home" -}}
+{{- else if eq $choice 2 -}}
+{{-   $machine_profile = "work" -}}
+{{- else if eq $choice 3 -}}
+{{-   $machine_profile = "macpie" -}}
+{{- else if eq $choice 4 -}}
+{{-   $machine_profile = "vps" -}}
+{{- else if eq $choice 5 -}}
+{{-   $machine_profile = "linux" -}}
+{{- else if eq $choice 6 -}}
+{{-   $machine_profile = "mac" -}}
+{{- else -}}
+{{-   fail "Invalid choice. Please run 'chezmoi init' again and select 1-6." -}}
+{{- end -}}
+
+{{/* Derive system properties from machine profile */}}
+{{- $profile := "personal" -}}
+{{- $os := "unknown" -}}
+{{- $interface := "headless" -}}
+{{- $wm := "none" -}}
+
+{{- if eq $machine_profile "home" -}}
+{{-   $profile = "personal" -}}
+{{-   $os = "arch" -}}
+{{-   $interface = "gui" -}}
+{{-   $wm = "tiling" -}}
+{{- else if eq $machine_profile "work" -}}
+{{-   $profile = "personal" -}}
+{{-   $os = "macos" -}}
+{{-   $interface = "gui" -}}
+{{-   $wm = "tiling" -}}
+{{- else if eq $machine_profile "macpie" -}}
+{{-   $profile = "personal" -}}
+{{-   $os = "macos" -}}
+{{-   $interface = "headless" -}}
+{{-   $wm = "none" -}}
+{{- else if eq $machine_profile "vps" -}}
+{{-   $profile = "generic" -}}
+{{-   $os = "debian" -}}
+{{-   $interface = "headless" -}}
+{{-   $wm = "none" -}}
+{{- else if eq $machine_profile "linux" -}}
+{{-   $profile = "generic" -}}
+{{-   $os = "arch" -}}
+{{-   $interface = "gui" -}}
+{{-   $wm = "tiling" -}}
+{{- else if eq $machine_profile "mac" -}}
+{{-   $profile = "generic" -}}
+{{-   $os = "macos" -}}
+{{-   $interface = "gui" -}}
+{{-   $wm = "tiling" -}}
+{{- end -}}
+
+{{/* Convenience flags for templates */}}
+{{- $is_personal := eq $profile "personal" -}}
+{{- $is_generic := eq $profile "generic" -}}
+{{- $is_arch := eq $os "arch" -}}
+{{- $is_debian := eq $os "debian" -}}
+{{- $is_macos := eq $os "macos" -}}
+{{- $is_linux := or $is_arch $is_debian -}}
+{{- $is_gui := eq $interface "gui" -}}
+{{- $is_headless := eq $interface "headless" -}}
+{{- $has_tiling_wm := eq $wm "tiling" -}}
 
 [data]
-  machine_type = {{ $machine_type | quote }}
-  bspwm = {{ $bspwm }}
-  macos = {{ $macos }}
-  generic = {{ $generic }}
+  # Selected preset
+  machine_profile = {{ $machine_profile | quote }}
+  
+  # Primary dimensions
+  profile = {{ $profile | quote }}        # personal | generic
+  os = {{ $os | quote }}                  # arch | debian | macos
+  interface = {{ $interface | quote }}    # gui | headless
+  wm = {{ $wm | quote }}                  # tiling | none
+  
+  # Convenience flags for templates
+  is_personal = {{ $is_personal }}
+  is_generic = {{ $is_generic }}
+  is_arch = {{ $is_arch }}
+  is_debian = {{ $is_debian }}
+  is_macos = {{ $is_macos }}
+  is_linux = {{ $is_linux }}
+  is_gui = {{ $is_gui }}
+  is_headless = {{ $is_headless }}
+  has_tiling_wm = {{ $has_tiling_wm }}
 
 [data.zsh]
   anthropic_base_url = "https://www.88code.org/api"
@@ -25,3 +107,5 @@
 
 [data.mcp]
 	tavily.token = ""
+	context7.token = ""
+	github.token = ""

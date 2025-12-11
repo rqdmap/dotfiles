@@ -1,24 +1,31 @@
 # 🏠 rqdmap's Chezmoi Dotfiles
 
-一个功能丰富的跨平台 dotfiles 配置，支持 Linux BSPWM 桌面环境和 macOS 平铺布局。
+一个功能丰富的跨平台 dotfiles 配置，支持多种 Linux 和 macOS 环境，从桌面到服务器。
 
 ## ✨ 特性
 
-- 🖥️ **多平台支持**: Linux BSPWM 桌面环境 & macOS 平铺布局
+- 🖥️ **多平台支持**: ArchLinux / Debian / macOS，桌面与服务器
 - 🎨 **统一主题**: Gruvbox 配色方案，一致的视觉体验
+- 🪟 **平铺窗口管理**: 灵活支持不同平铺 WM（BSPWM、Yabai 等）
 - 🚀 **高性能配置**: 优化的 shell 和工具配置
-- 🔧 **模块化设计**: 按需加载配置，支持条件管理
+- 🔧 **模块化设计**: 多维度条件化配置，按需加载
 - 📦 **外部依赖**: 自动管理 git 仓库和插件
 
 ## 🏗️ 支持的机器类型
 
-| 类型 | 描述 | 窗口管理器 | 状态栏 |
-|------|------|------------|--------|
-| `home` | 个人 Dell ArchLinux | BSPWM | Polybar |
-| `work` | 工作用 MacBook Pro | Yabai | SketchyBar |
-| `vps` | 通用 Debian VPS | - | - |
-| `bspwm` | 通用 Linux BSPWM 桌面 | BSPWM | Polybar |
-| `mac` | 通用 macOS 平铺布局 | Yabai | SketchyBar |
+### Personal Machines（个人机器）
+| 预设 | 系统 | 类型 | 窗口管理 | 说明 |
+|------|------|------|----------|------|
+| `home` | ArchLinux | Desktop | Tiling WM | 个人桌面工作站 |
+| `work` | macOS| Desktop | Tiling WM | 个人工作笔记本 |
+| `macPie` | macOS| Server | Headless | 个人 Mac 服务器 |
+
+### Generic Machines（通用机器）
+| 预设 | 系统 | 类型 | 窗口管理 | 说明 |
+|------|------|------|----------|------|
+| `vps` | Debian | Server | Headless | 通用 VPS 服务器 |
+| `linux` | ArchLinux | Desktop | Tiling WM | 通用 Linux 桌面 |
+| `mac` | macOS | Desktop | Tiling WM | 通用 Mac 桌面 |
 
 ## 🚀 快速开始
 
@@ -81,15 +88,15 @@ chezmoi update
 - **Starship**: 跨平台提示符
 
 ### 终端工具
-- **Alacritty**: GPU 加速终端模拟器（主要）
-- **WezTerm**: 跨平台终端（macOS）
+- **Alacritty**: GPU 加速终端模拟器
+- **WezTerm**: 跨平台终端, 复杂渲染能力更强
 - **Yazi**: 现代文件管理器
 - **Joshuto**: 轻量级文件管理器
 - **Tmux**: 终端多路复用器
 
 ### 窗口管理
-#### Linux BSPWM
-- **BSPWM**: 平铺窗口管理器
+#### Linux 平铺桌面
+- **平铺 WM**: BSPWM
 - **Polybar**: 状态栏
 - **Rofi**: 应用启动器和工具菜单
 - **Picom**: 合成器
@@ -97,21 +104,20 @@ chezmoi update
 - **Dunst**: 通知服务
 - **xss-lock**: 屏幕锁定
 
-#### macOS
-- **Yabai**: 平铺窗口管理器
+#### macOS 平铺桌面
+- **平铺 WM**: Yabai
 - **SketchyBar**: 状态栏
 - **Skhd**: 快捷键管理
 
 ### 开发工具
-- **Neovim**: 通过外部 git 仓库管理
+- **Neovim**: 通过外部 git 仓库管理配置
 - **Git**: 全局配置
 - **HTop**: 系统监控
 - **Python 管理**: uv
 
 ### 其他工具
 - **Zathura**: PDF 阅读器（Linux）
-- **Clash**: 代理工具
-- **SSH 隧道**: systemd 服务管理
+- **SSH 隧道**: systemd 模板服务管理, 暴露内网服务
 
 ## 🏗️ 目录结构
 
@@ -139,27 +145,94 @@ chezmoi update
 
 ## 🔧 配置管理
 
+### 配置维度
+
+配置按四个核心维度组织：
+
+1. **Profile（配置档案）**
+   - `personal` - 个人使用，包含私人工具和配置
+   - `generic` - 通用配置，适合公共或临时机器
+
+2. **OS（操作系统）**
+   - `arch` - Arch Linux
+   - `debian` - Debian/Ubuntu
+   - `macos` - macOS
+
+3. **Interface（界面类型）**
+   - `gui` - 图形界面（带窗口管理器）
+   - `headless` - 纯命令行服务器
+
+4. **Window Manager（窗口管理器）**
+   - `tiling` - 平铺窗口管理器（Linux 用 BSPWM，macOS 用 Yabai）
+   - `none` - 无窗口管理器
+
 ### 模板变量
-配置使用以下模板变量：
-- `machine_type`: 机器类型
-- `bspwm`: 是否为 BSPWM 环境 (自动生成)
-- `macos`: 是否为 MacOS 环境 (自动生成)
-- `generic`: 是否是通用配置 (自动生成)
+
+所有可用的模板变量：
+
+**主要属性：**
+- `.profile` - 配置档案 (personal/generic)
+- `.os` - 操作系统 (arch/debian/macos)
+- `.interface` - 界面类型 (gui/headless)
+- `.wm` - 窗口管理器 (tiling/none)
+
+**便捷标志：**
+- `.is_personal` / `.is_generic` - Profile 判断
+- `.is_arch` / `.is_debian` / `.is_macos` - OS 判断
+- `.is_linux` - 任意 Linux
+- `.is_gui` / `.is_headless` - 界面判断
+- `.has_tiling_wm` - 是否使用平铺窗口管理器
+
+**查看当前机器的所有变量：**
+```bash
+chezmoi data
+```
 
 ### 条件管理
-通过 `.chezmoiignore` 实现条件配置：
+
+#### 在 `.chezmoiignore` 中排除文件：
 ```toml
-# BSPWM-Specific files
-{{ if not .bspwm }}
+# Linux 平铺 WM 配置（非 Linux 平铺环境排除）
+{{ if not (and .has_tiling_wm .is_linux) }}
 .config/bspwm
 .config/polybar
 {{ end }}
 
-# macOS-Specific files
-{{ if not .macos }}
+# macOS 平铺 WM 配置（非 macOS 平铺环境排除）
+{{ if not (and .has_tiling_wm .is_macos) }}
 .config/sketchybar
 .yabairc
-.skhdrc
+{{ end }}
+
+# 无头服务器排除所有 GUI 配置
+{{ if .is_headless }}
+.config/bspwm
+.config/polybar
+.config/sketchybar
+.yabairc
+{{ end }}
+```
+
+#### 在模板文件中使用条件：
+```bash
+# 单条件
+{{ if .is_macos }}
+export PATH="/opt/homebrew/bin:$PATH"
+{{ end }}
+
+# 平铺窗口管理器通用配置
+{{ if .has_tiling_wm }}
+# 适用于任何平铺 WM 的配置
+{{ end }}
+
+# 多条件
+{{ if and .is_gui .is_linux }}
+# Linux GUI 专属配置
+{{ end }}
+
+# Profile 判断
+{{ if .is_personal }}
+alias blog="/usr/local/bin/blog"
 {{ end }}
 ```
 
@@ -168,6 +241,26 @@ chezmoi update
 - `.config/nvim`: Neovim 配置
 - `.zsh/plugins/zsh-autosuggestions`: Zsh 自动建议
 - `.zsh/plugins/zsh-syntax-highlighting`: Zsh 语法高亮
+
+### 机器预设配置表
+
+| 预设   | Profile  | OS     | Interface | WM     | 使用场景 |
+|--------|----------|--------|-----------|--------|----------|
+| home   | personal | arch   | gui       | tiling | 个人 Arch 桌面 |
+| work   | personal | macos  | gui       | tiling | 个人 Mac 工作机 |
+| macpie | personal | macos  | headless  | none   | 个人 Mac 服务器 |
+| vps    | generic  | debian | headless  | none   | 通用 Debian 服务器 |
+| linux  | generic  | arch   | gui       | tiling | 通用 Linux 桌面 |
+| mac    | generic  | macos  | gui       | tiling | 通用 Mac 桌面 |
+
+### 文件组织原则
+
+- **核心配置**（所有机器）：zsh, tmux, git, starship, yazi
+- **平铺 WM 配置**（通过 .chezmoiignore 按系统排除）：
+  - Linux: bspwm, polybar, rofi, picom, sxhkd
+  - macOS: yabai, sketchybar, skhd
+- **系统特定**：systemd（Linux），brew 相关（macOS）
+- **个人工具**（generic 机器排除）：个人脚本如 blog
 
 ## 📝 使用示例
 
@@ -182,13 +275,18 @@ chezmoi edit --create ~/.newconfig.tmpl
 
 ### 条件化配置示例
 在模板文件中使用条件逻辑：
-```tmpl
-{{ if .macos }}
+```bash
+{{ if .is_macos }}
 # macOS specific configuration
 export PATH="/opt/homebrew/bin:$PATH"
 {{ else }}
 # Linux specific configuration
 export PATH="/usr/local/bin:$PATH"
+{{ end }}
+
+{{ if .has_tiling_wm }}
+# 通用平铺 WM 配置
+export TILING_WM=true
 {{ end }}
 ```
 

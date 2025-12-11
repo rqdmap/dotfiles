@@ -1,42 +1,62 @@
 # ~/.local/share/chezmoi/.chezmoiignore
 
-
 # Chezmoi Project Files
 README.md
 
+# ========================================
+# GUI Configuration Exclusions
+# ========================================
 
-# Linux-on-BSPWM configuration
-{{ if not .bspwm }}
-# BSPWM-related configurations
+# Linux tiling WM configs (bspwm, i3, dwm, etc.)
+{{ if not (and .has_tiling_wm .is_linux) }}
 .config/bspwm
 .config/polybar
 .config/rofi
 .config/picom
 .config/sxhkd
-
-# Desktop environment configurations
 .config/fontconfig
-
-# SSH-Tunnel Systemd Tools
-.config/ssh-tunnel
-.config/systemd/
-.local/bin/ssh-tunnel-manage
 {{ end }}
 
-# MacOS-with-Tiling-Layout configuration
-{{ if not .macos }}
+# macOS tiling WM configs (yabai, Amethyst, etc.)
+{{ if not (and .has_tiling_wm .is_macos) }}
 .config/sketchybar
 .yabairc
 .skhdrc
 {{ end }}
 
+# Exclude GUI configs on headless systems
+{{ if .is_headless }}
+.config/fontconfig
+{{ end }}
 
-# Personal configurations
-{{ if .generic }}
+
+# ========================================
+# System-Specific Exclusions
+# ========================================
+
+# Linux-only tools
+{{ if not .is_linux }}
+.config/ssh-tunnel
+.config/systemd/
+.local/bin/ssh-tunnel-manage
+{{ end }}
+
+
+# ========================================
+# Profile-Specific Exclusions
+# ========================================
+
+# Personal tools
+{{ if not .is_personal }}
 .local/bin/blog
 {{ end }}
 
+
+
+# ========================================
 # Archived(not in use) configurations
+# ========================================
+
 .config/joshuto
 
 
