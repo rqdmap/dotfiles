@@ -1,21 +1,44 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "autoupdate": false,
   "tui": {
     "scroll_speed": 5
   },
+{{ if eq .machine_profile "work" }}  "provider": {
+    "ideaLab": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "IdeaLab",
+      "options": {
+        "baseURL": "https://idealab.alibaba-inc.com/api/openai/v1",
+        "headers": {
+          "Authorization": "Bearer f249aae6771d629d2c00e77ffd103234"
+        }
+      },
+      "models": {
+        "qwen3-coder-plus": {
+          "name": "Qwen3-Coder-Plus"
+        },
+        "qwen3-max": {
+          "name": "Qwen3-Max"
+        }
+      }
+    }
+  },
+{{- end }}
   "mcp": {
     "tavily-mcp": {
       "type": "remote",
-      "url": "https://mcp.tavily.com/mcp/?tavilyApiKey={{ .mcp.tavily.token }}",
-      "enabled": true
+      "url": "https://mcp.tavily.com/mcp/?tavilyApiKey={{ .mcp.tavily.token }}"
     },
     "context7": {
-      "type": "remote",
-      "url": "https://mcp.context7.com/mcp",
-      "headers": {
-        "CONTEXT7_API_KEY": "{{ .mcp.context7.token }}"
-      },
-      "enabled": true
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@upstash/context7-mcp",
+        "--api-key",
+        "{{ .mcp.context7.token }}"
+      ]
     },
     "github": {
       "type": "remote",
@@ -50,6 +73,15 @@
       "environment": {
         "FIRECRAWL_API_KEY": "{{ .mcp.firecrawl.token }}"
       }
+    }
+  },
+  "command": {
+    "commit": {
+      "template": "!`cat ~/.config/opencode/opencode-config/command/commit.md`",
+      "description": "智能生成语义化 Git 提交信息",
+{{ if eq .machine_profile "work" }}      "model": "ideaLab/qwen3-coder-plus",
+{{- end }}
+      "agent": "build"
     }
   },
   "tools": {
@@ -108,7 +140,6 @@
     "agent_cycle": "tab",
     "agent_cycle_reverse": "shift+tab",
     "input_clear": "none",
-    "input_forward_delete": "ctrl+d",
     "input_paste": "none",
     "input_submit": "enter",
     "input_newline": "shift+enter,ctrl+j",
