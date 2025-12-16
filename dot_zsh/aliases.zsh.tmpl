@@ -80,7 +80,7 @@ function nvm_enable() {
 alias day='cd ~/daily-note; vim main.md'
 
 function pkg() {
-    JAVA_HOME="/Users/rqdmap/Library/Java/JavaVirtualMachines/corretto-1.8.0_452/Contents/Home" PATH=$JAVA_HOME"/bin":$PATH mvn package -DskipTests
+    JAVA_HOME="/Users/rqdmap/Library/Java/JavaVirtualMachines/corretto-1.8.0_452/Contents/Home" PATH=$JAVA_HOME"/bin":$PATH mvn clean package -DskipTests
 }
 
 alias code="ccr code"
