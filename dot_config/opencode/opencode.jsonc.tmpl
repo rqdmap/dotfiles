@@ -4,14 +4,32 @@
   "tui": {
     "scroll_speed": 5
   },
-{{ if eq .machine_profile "work" }}  "provider": {
+  "disabled_providers": ["claude-proxy"],
+  "provider": {
+    "claude-proxy": {
+      "npm": "@ai-sdk/anthropic",
+      "name": "Claude 中转",
+      "options": {
+        "baseURL": "{{ .provider.claudeProxy.base_url }}",
+        "apiKey": "{{ .provider.claudeProxy.api_key }}"
+      },
+      "models": {
+        "claude-sonnet-4-5-20250929": {
+          "name": "sonnet-4.5"
+        },
+        "claude-haiku-4-5-20251001": {
+          "name": "haiku-4.5"
+        }
+      }
+    }
+{{- if eq .machine_profile "work" }},
     "ideaLab": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "IdeaLab",
       "options": {
-        "baseURL": "https://idealab.alibaba-inc.com/api/openai/v1",
+        "baseURL": "{{ .provider.ideaLab.base_url }}",
         "headers": {
-          "Authorization": "Bearer f249aae6771d629d2c00e77ffd103234"
+          "Authorization": "Bearer {{ .provider.ideaLab.api_key }} "
         }
       },
       "models": {
@@ -23,8 +41,8 @@
         }
       }
     }
-  },
 {{- end }}
+  },
   "mcp": {
     "tavily-mcp": {
       "type": "remote",
