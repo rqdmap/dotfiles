@@ -101,7 +101,13 @@ shape = "Block"
 blinking = "Off"
 
 [font]
+{{ if eq .machine_profile "work" -}}
+size = 16
+{{- else if eq .machine_profile "home" -}}
 size = 13
+{{- else -}}
+size = 13   -- 默认值
+{{- end }}
 
 [font.normal]
 family = "Iosevka Nerd Font"
@@ -123,7 +129,6 @@ bindings = [
   { chars = "\u001F", key = "Slash", mods = "Control" },
   { action = "ScrollLineUp", key = "Key1", mods = "Control" },
   { action = "ScrollLineDown", key = "Key2", mods = "Control" },
-# Todo
 ]
 
 [mouse]

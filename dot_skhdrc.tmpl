@@ -77,7 +77,13 @@
 # ############################################################### #
 #
 # ctrl + alt - t: /Applications/Alacritty.app/Contents/MacOS/alacritty
+
+{{ if eq .machine_profile "work" -}}
+ctrl + alt - t: open -na alacritty
+{{- else -}}
 ctrl + alt - t: open -na wezterm
+{{- end }}
+
 alt - return: open -na "$(ls /Applications | choose)"
 
 # focus window
