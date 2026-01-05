@@ -68,6 +68,7 @@ alias gitwd='git diff --word-diff=porcelain  | grep -e "^-[^-]" | wc -m | xargs'
 alias gitwdd='git diff --word-diff=porcelain | grep -e"^+[^+]" -e"^-[^-]"|sed -e's/.//'|sort|uniq -d|wc -m|xargs'
 alias gitw='echo $(($(gitwa) - $(gitwd)))'
 
+{{/* MacOS */ -}}
 {{ if .is_macos -}}
 function nvm_enable() {
     export NVM_DIR="$HOME/.nvm"
@@ -76,6 +77,7 @@ function nvm_enable() {
 }
 {{- end }}
 
+{{/* 工作电脑 */ -}}
 {{ if eq .machine_profile "work" -}}
 alias day='cd ~/daily-note; vim main.md'
 
@@ -83,9 +85,25 @@ function pkg() {
     JAVA_HOME="/Users/rqdmap/Library/Java/JavaVirtualMachines/corretto-1.8.0_452/Contents/Home" PATH=$JAVA_HOME"/bin":$PATH mvn clean package -DskipTests
 }
 
-alias code="ccr code"
+n() {
+    "$@"
+    local code=$?
+    local cmd="$*"
+
+    if [ ${#cmd} -gt 40 ]; then
+        cmd="${cmd:0:37}..."
+    fi
+
+    if [ $code -eq 0 ]; then
+        terminal-notifier -message "✅ 命令执行成功" -title "\$ $cmd" -sound Funk
+    else
+        terminal-notifier -message "❌ 命令执行失败" -title "\$ $cmd" -sound Basso
+    fi
+    return $code
+}
 {{- end }}
 
+{{/* Arch Linux */ -}}
 {{ if .is_arch -}}
 alias showpkg="expac --timefmt='%Y-%m-%d %T' '%l\t%n' | sort"
 
@@ -95,6 +113,7 @@ function nvm_enable() {
 }
 {{- end }}
 
+{{/* 家用电脑 */ -}}
 {{ if eq .machine_profile "home" -}}
 alias logisim='_JAVA_AWT_WM_NONREPARENTING=1 nohup java -jar /home/rqdmap/Applications/Logisim-ITA.jar > /dev/null 2>&1 &!; exit'
 {{- end }}

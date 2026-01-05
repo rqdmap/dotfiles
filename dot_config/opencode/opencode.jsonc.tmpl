@@ -1,28 +1,12 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "autoupdate": false,
+  "autoupdate": true,
   "tui": {
     "scroll_speed": 5
   },
   "disabled_providers": ["claude-proxy"],
   "provider": {
-    "claude-proxy": {
-      "npm": "@ai-sdk/anthropic",
-      "name": "Claude 中转",
-      "options": {
-        "baseURL": "{{ .provider.claudeProxy.base_url }}",
-        "apiKey": "{{ .provider.claudeProxy.api_key }}"
-      },
-      "models": {
-        "claude-sonnet-4-5-20250929": {
-          "name": "sonnet-4.5"
-        },
-        "claude-haiku-4-5-20251001": {
-          "name": "haiku-4.5"
-        }
-      }
-    }
-{{- if eq .machine_profile "work" }},
+{{- if eq .machine_profile "work" }}
     "ideaLab": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "IdeaLab",
@@ -97,8 +81,7 @@
     "commit": {
       "template": "!`cat ~/.config/opencode/opencode-config/command/commit.md`",
       "description": "智能生成语义化 Git 提交信息",
-{{ if eq .machine_profile "work" }}      "model": "ideaLab/qwen3-coder-plus",
-{{- end }}
+      "model": "opencode/glm-4.7-free",
       "agent": "build"
     }
   },
@@ -132,7 +115,7 @@
     "session_export": "<leader>x",
     "session_new": "<leader>n",
     "session_list": "<leader>l",
-    "session_timeline": "<leader>g",
+    "session_timeline": "<leader>t",
     "session_share": "none",
     "session_unshare": "none",
     "session_interrupt": "escape",
@@ -143,7 +126,7 @@
     "messages_page_down": "ctrl+f",
     "messages_half_page_up": "",
     "messages_half_page_down": "",
-    "messages_first": "none",
+    "messages_first": "<leader>g",
     "messages_last": "none",
     "messages_copy": "<leader>y",
     "messages_undo": "<leader>u",
@@ -151,12 +134,12 @@
     "messages_last_user": "none",
     "messages_toggle_conceal": "<leader>h",
     "model_list": "<leader>m",
-    "model_cycle_recent": "",
-    "model_cycle_recent_reverse": "",
+    "model_cycle_recent": "tab",
+    "model_cycle_recent_reverse": "shift+tab",
     "command_list": "ctrl+p",
     "agent_list": "<leader>a",
-    "agent_cycle": "tab",
-    "agent_cycle_reverse": "shift+tab",
+    "agent_cycle": "]",
+    "agent_cycle_reverse": "[",
     "input_clear": "none",
     "input_paste": "none",
     "input_submit": "enter",
