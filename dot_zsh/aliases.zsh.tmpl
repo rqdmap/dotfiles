@@ -21,6 +21,13 @@ alias clip='xclip -selection clipboard'
 alias clip='pbcopy'
 {{- end }}
 
+ptree() {
+    local pid=$1
+    while [ "$pid" -ne 0 ]; do
+        ps -p "$pid" -o pid=,ppid=,command=
+        pid=$(ps -p "$pid" -o ppid= | tr -d ' ')
+    done
+}
 
 # function j {
 #     local IFS=$'\t\n'
