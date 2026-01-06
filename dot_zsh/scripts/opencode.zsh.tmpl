@@ -1,0 +1,62 @@
+# OpenCode 多工作目录管理
+
+# 每行一个目录(支持软连接)
+OC_DIRS=(
+{{- range .opencode.workspace_dirs  }}
+    {{ . }}
+{{- end }}
+)
+_OC_BASE_PORT={{ .opencode.base_port }}
+
+# 生成 Workspace 与 Port 的双向映射
+unset OC_WORKSPACES OC_PORT_DIR
+typeset -A OC_WORKSPACES OC_PORT_DIR
+_oc_port=$_OC_BASE_PORT
+for _dir in "${OC_DIRS[@]}"; do
+    OC_WORKSPACES[${_dir:A}]=$_oc_port
+    OC_PORT_DIR[$_oc_port]="${_dir:A}"
+    ((_oc_port++))
+done
+unset _oc_port _dir
+
+function oc-serve {
+    pkill -f "opencode serve" 2>/dev/null
+    mkdir -p ~/.log/opencode
+    for dir port in "${(@kv)OC_WORKSPACES}"; do
+        [[ -d $dir ]] || continue
+        (cd "$dir" && nohup opencode serve --port $port --print-logs --log-level WARN >> ~/.log/opencode/${dir:t}.log 2>&1 &)
+        echo "Started: port $port -> $dir"
+    done
+}
+
+function oc-stop {
+    pkill -f "opencode serve" 2>/dev/null
+    echo "All opencode servers stopped"
+}
+
+function oc-status {
+    echo "Running opencode servers:"
+    typeset -A port_mem
+    while read -r port mem; do
+        port_mem[$port]=$((${port_mem[$port]:-0} + mem / 1024))
+    done < <(ps aux | command grep "[o]pencode serve" | awk '{
+        for(i=1;i<=NF;i++) if($i=="--port") print $(i+1), $6
+    }')
+    for port in ${(kon)port_mem}; do
+        local dir=${OC_PORT_DIR[$port]/$HOME/\~}
+        echo "  PORT:$port\tMEM:${port_mem[$port]}MB\tWorkSpace: $dir"
+    done
+}
+
+function oc {
+    local real_pwd="${PWD:A}"
+    for dir port in "${(@kv)OC_WORKSPACES}"; do
+        if [[ "$real_pwd" == "$dir" ]]; then
+            echo "Matched workspace: $dir on port $port"
+            opencode attach "localhost:$port"
+            return
+        fi
+    done
+    opencode
+}
+

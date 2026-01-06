@@ -14,7 +14,6 @@ alias top='htop -u `whoami`'
 alias duu='du -d 1 -h | sort -hr'
 alias dc='docker-compose'
 alias lg='lazygit'
-alias oc='opencode'
 {{ if and .is_linux .is_gui -}}
 alias clip='xclip -selection clipboard'
 {{- else if .is_macos -}}
