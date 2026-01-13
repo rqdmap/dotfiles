@@ -4,24 +4,48 @@
   "tui": {
     "scroll_speed": 5
   },
-  "disabled_providers": ["claude-proxy"],
   "provider": {
-{{- if eq .machine_profile "work" }}
-    "ideaLab": {
-      "npm": "@ai-sdk/openai-compatible",
-      "name": "IdeaLab",
+    "claude-proxy-standard": {
+      "npm": "@ai-sdk/anthropic",
+      "name": "C1 青铜背带裤",
       "options": {
-        "baseURL": "{{ .provider.ideaLab.base_url }}",
-        "headers": {
-          "Authorization": "Bearer {{ .provider.ideaLab.api_key }} "
-        }
+        "baseURL": "{{ .provider.claude_proxy.base_url }}",
+        "apiKey": "{{ .provider.claude_proxy.api_key }}"
       },
       "models": {
-        "qwen3-coder-plus": {
-          "name": "Qwen3-Coder-Plus"
+        "claude-sonnet-4-5-20250929": {
+          "name": "claude-sonnet-4-5",
+          "limit": {
+              "context": 200000,
+              "output": 65536
+          }
         },
-        "qwen3-max": {
-          "name": "Qwen3-Max"
+        "claude-opus-4-5-20251101": {
+          "name": "claude-opus-4-5",
+          "limit": {
+              "context": 200000,
+              "output": 65536
+          }
+        },
+        "claude-haiku-4-5-20251001": {
+          "name": "claude-haiku-4-5",
+          "limit": {
+              "context": 200000,
+              "output": 65536
+          }
+        }
+      }
+    },
+{{- if eq .machine_profile "work" }}
+    "ducky": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Ducky",
+      "options": {
+        "baseURL": "{{ .provider.ducky.base_url }}"
+      },
+      "models": {
+        "ide-idealab/claude4.5-sonnet": {
+          "name": "ide-idealab/claude4.5-sonnet"
         }
       }
     }
@@ -31,16 +55,6 @@
     "tavily-mcp": {
       "type": "remote",
       "url": "https://mcp.tavily.com/mcp/?tavilyApiKey={{ .mcp.tavily.token }}"
-    },
-    "context7": {
-      "type": "local",
-      "command": [
-        "npx",
-        "-y",
-        "@upstash/context7-mcp",
-        "--api-key",
-        "{{ .mcp.context7.token }}"
-      ]
     },
     "github": {
       "type": "remote",
@@ -77,14 +91,6 @@
       }
     }
   },
-  "command": {
-    "commit": {
-      "template": "!`cat ~/.config/opencode/opencode-config/command/commit.md`",
-      "description": "智能生成语义化 Git 提交信息",
-      "model": "opencode/glm-4.7-free",
-      "agent": "build"
-    }
-  },
   "tools": {
     "bash": true,
     "edit": true,
@@ -109,33 +115,39 @@
     "app_exit": "ctrl+c,<leader>q",
     "editor_open": "<leader>e",
     "theme_list": "none",
-    "sidebar_toggle": "<leader>b",
+    "sidebar_toggle": "",
     "username_toggle": "none",
     "status_view": "<leader>s",
-    "session_export": "<leader>x",
+    "session_export": "",
     "session_new": "<leader>n",
     "session_list": "<leader>l",
     "session_timeline": "<leader>t",
     "session_share": "none",
     "session_unshare": "none",
     "session_interrupt": "escape",
-    "session_compact": "<leader>c",
-    "session_child_cycle": "none",
-    "session_child_cycle_reverse": "none",
+    "session_compact": "",
+    "session_child_cycle": "<leader>right",
+    "session_child_cycle_reverse": "<leader>left",
+    "session_parent": "<leader>up",
     "messages_page_up": "ctrl+b",
     "messages_page_down": "ctrl+f",
     "messages_half_page_up": "",
     "messages_half_page_down": "",
     "messages_first": "<leader>g",
-    "messages_last": "none",
-    "messages_copy": "<leader>y",
-    "messages_undo": "<leader>u",
-    "messages_redo": "<leader>r",
+    "messages_last": "<leader>G",
+    "messages_next": "none",
+    "messages_previous": "none",
+    "messages_copy": "",
+    "messages_undo": "",
+    "messages_redo": "",
     "messages_last_user": "none",
-    "messages_toggle_conceal": "<leader>h",
-    "model_list": "<leader>m",
-    "model_cycle_recent": "tab",
-    "model_cycle_recent_reverse": "shift+tab",
+    "messages_toggle_conceal": "",
+    "model_list": "<leader>m,ctrl+m",
+    "model_cycle_recent": "none",
+    "model_cycle_recent_reverse": "none",
+    "model_cycle_favorite": "tab",
+    "model_cycle_favorite_reverse": "shift+tab",
+    "variant_cycle": "none",
     "command_list": "ctrl+p",
     "agent_list": "<leader>a",
     "agent_cycle": "]",
@@ -145,6 +157,7 @@
     "input_submit": "enter",
     "input_newline": "shift+enter,ctrl+j",
     "history_previous": "up",
-    "history_next": "down"
+    "history_next": "down",
+    "terminal_suspend": "ctrl+z"
   }
 }

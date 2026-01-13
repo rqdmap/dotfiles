@@ -53,7 +53,13 @@ function oc {
     for dir port in "${(@kv)OC_WORKSPACES}"; do
         if [[ "$real_pwd" == "$dir" ]]; then
             echo "Matched workspace: $dir on port $port"
-            opencode attach "localhost:$port"
+            # 检查端口是否在监听
+            if nc -z localhost $port 2>/dev/null; then
+                opencode attach "localhost:$port"
+            else
+                echo "Warning: Server not running on port $port, falling back to default opencode"
+                opencode
+            fi
             return
         fi
     done
