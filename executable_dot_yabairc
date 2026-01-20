@@ -9,6 +9,11 @@
 yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
 sudo yabai --load-sa
 
+yabai -m config window_animation_duration 0.0
+
+# 当切换 space 时自动聚焦第一个窗口
+# yabai -m signal --add event=space_changed action="yabai -m window --focus \$(yabai -m query --windows --space | jq '.[0].id') 2>/dev/null || true"
+
 # yabai -m space --create
 # yabai -m space --create
 # yabai -m space --create
