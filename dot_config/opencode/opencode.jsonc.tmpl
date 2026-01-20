@@ -14,7 +14,7 @@
         "baseURL": "{{ $provider.base_url }}",
         "apiKey": "{{ $provider.api_key }}"
       },
-	  "models": {
+      "models": {
         {{- range $mIndex, $model := $provider.models }}
         {{- if $mIndex }},{{ end }}
         "{{ $model.id }}": {
@@ -95,6 +95,9 @@
     }
   },
   "theme": "gruvbox",
+  "plugin": [
+    "oh-my-opencode@beta"
+  ],
   "keybinds": {
     "leader": "ctrl+x",
     "app_exit": "ctrl+c,<leader>q",

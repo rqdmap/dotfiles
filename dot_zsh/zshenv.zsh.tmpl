@@ -32,6 +32,13 @@ PATH=$PATH:$HOME/go/bin
 
 export OPENCODE_DISABLE_AUTOCOMPACT=true
 
+# bun completions
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
 {{ if eq .machine_profile "home" -}}
 export {http,https,ftp,socks}_proxy="http://127.0.0.1:7890"
 export no_proxy="localhost,127.0.0.0/8,10.0.0.0/8"

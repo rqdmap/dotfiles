@@ -1,0 +1,55 @@
+{
+  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-opencode/refs/heads/dev/assets/oh-my-opencode.schema.json",
+  "sisyphus_agent": {
+    "disabled": false,
+    "default_builder_enabled": false,
+    "planner_enabled": true,
+    "replace_plan": true
+  },
+  "agents": {
+    // 默认编排者 - 负责规划、委派和执行复杂任务
+    "Sisyphus": {
+      "model": "{{ .opencode.agents.sisyphus }}"
+    },
+    // 架构顾问 - 专注于架构决策、代码审查和调试, 擅长逻辑推理和深度分析
+    "oracle": {
+      "model": "{{ .opencode.agents.oracle }}"
+    },
+    // 知识管理员 - 负责多仓库分析、文档查找, 提供基于证据的答案
+    "librarian": {
+      "model": "{{ .opencode.agents.librarian }}"
+    },
+    // 代码探索者 - 快速代码库探索和上下文搜索
+    "explore": {
+      "model": "{{ .opencode.agents.explore }}"
+    },
+    // 视觉专家 - 分析 PDF、图片、图表, 提取视觉信息, 支持多模态内容理解
+    "multimodal-looker": {
+      "model": "{{ .opencode.agents.multimodal_looker }}"
+    },
+    // 前端 UI/UX 工程师 - 负责视觉设计和前端开发
+    "frontend-ui-ux-engineer": {
+      "model": "{{ .opencode.agents.frontend_ui_ux_engineer }}"
+    },
+    // 文档写作专家 - 负责 README、API 文档等
+    "document-writer": {
+      "model": "{{ .opencode.agents.document_writer }}"
+    },
+    // 战略规划师 - 通过迭代提问创建详细工作计划, 支持访谈模式, 负责任务的战略性规划
+    "Prometheus (Planner)": {
+      "model": "{{ .opencode.agents.prometheus_planner }}"
+    },
+    // 计划顾问 - 预规划分析, 识别隐藏意图和模糊点, 在规划阶段提供专业建议
+    "Metis (Plan Consultant)": {
+      "model": "{{ .opencode.agents.metis_plan_consultant }}"
+    },
+    // 计划审查员 - 验证计划的清晰度和完整性, 确保规划质量和可执行性
+    "Momus (Plan Reviewer)": {
+      "model": "{{ .opencode.agents.momus_plan_reviewer }}"
+    },
+    // 不直接执行, 通过委派协调
+    "atlas": {
+      "model": "{{ .opencode.agents.atlas }}"
+    }
+  }
+}
