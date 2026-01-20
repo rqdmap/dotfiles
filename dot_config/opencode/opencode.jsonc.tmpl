@@ -5,48 +5,28 @@
     "scroll_speed": 5
   },
   "provider": {
-    "claude-proxy-standard": {
-      "npm": "@ai-sdk/anthropic",
-      "name": "C1 青铜背带裤",
+{{- range $pIndex, $provider := .opencode.providers }}
+  {{- if $pIndex }},{{ end }}
+    "{{ $provider.id }}": {
+      "npm": "{{ $provider.type }}",
+      "name": "{{ $provider.name }}",
       "options": {
-        "baseURL": "{{ .provider.claude_proxy.base_url }}",
-        "apiKey": "{{ .provider.claude_proxy.api_key }}"
+        "baseURL": "{{ $provider.base_url }}",
+        "apiKey": "{{ $provider.api_key }}"
       },
-      "models": {
-        "claude-sonnet-4-5-20250929": {
-          "name": "claude-sonnet-4-5",
+	  "models": {
+        {{- range $mIndex, $model := $provider.models }}
+        {{- if $mIndex }},{{ end }}
+        "{{ $model.id }}": {
+          "name": "{{ $model.name }}"
+          {{- if and (hasKey $model "context") (hasKey $model "output") }},
           "limit": {
-              "context": 200000,
-              "output": 65536
+            "context": {{ $model.context }},
+            "output": {{ $model.output }}
           }
-        },
-        "claude-opus-4-5-20251101": {
-          "name": "claude-opus-4-5",
-          "limit": {
-              "context": 200000,
-              "output": 65536
-          }
-        },
-        "claude-haiku-4-5-20251001": {
-          "name": "claude-haiku-4-5",
-          "limit": {
-              "context": 200000,
-              "output": 65536
-          }
+          {{- end }}
         }
-      }
-    },
-{{- if eq .machine_profile "work" }}
-    "ducky": {
-      "npm": "@ai-sdk/openai-compatible",
-      "name": "Ducky",
-      "options": {
-        "baseURL": "{{ .provider.ducky.base_url }}"
-      },
-      "models": {
-        "ide-idealab/claude4.5-sonnet": {
-          "name": "ide-idealab/claude4.5-sonnet"
-        }
+        {{- end }}
       }
     }
 {{- end }}
@@ -57,6 +37,11 @@
       "url": "https://mcp.tavily.com/mcp/?tavilyApiKey={{ .mcp.tavily.token }}"
     },
     "github": {
+{{- if eq .machine_profile "work" }}
+      "enabled": false,
+{{- else }}
+      "enabled": true,
+{{- end }}
       "type": "remote",
       "url": "https://api.githubcopilot.com/mcp",
       "headers": {
