@@ -50,9 +50,6 @@ export no_proxy="localhost,127.0.0.0/8,10.0.0.0/8"
 {{ if eq .machine_profile "home" -}}
 export CHROME_EXECUTABLE="google-chrome-stable"
 
-export ANTHROPIC_BASE_URL="{{ .provider.claudeProxy.base_url }}"
-export ANTHROPIC_AUTH_TOKEN="{{ .provider.claudeProxy.api_key }}"
-
 # pnpm
 export PNPM_HOME="/home/rqdmap/.local/share/pnpm"
 case ":$PATH:" in
