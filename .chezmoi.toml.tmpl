@@ -112,7 +112,7 @@
 # 多个 Provider 直接复制下方的块即可
 [[data.opencode.providers]]
   id = "provider-unique-id"                 # 唯一标识符
-  type = "provider-type"                    # 接口协议(["@ai-sdk/anthropic", "@ai-sdk/openai-compatible"])
+  type = "@ai-sdk/openai-compatible"        # 接口协议(["@ai-sdk/anthropic", "@ai-sdk/openai-compatible"])
   name = "Provider Display Name"            # 显示名称(不能有括号)
   base_url = "https://api.example.com/v1"   # API 基础地址
   api_key = "your-api-key-here"             # API 密钥
