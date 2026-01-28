@@ -101,6 +101,10 @@
   is_headless = {{ $is_headless }}
   has_tiling_wm = {{ $has_tiling_wm }}
 
+[merge]
+  command = "nvim"
+  args = ["-d", "{{ `{{ .Destination }}` }}", "{{ `{{ .Source }}` }}", "{{ `{{ .Target }}` }}"]
+
 [data.opencode.server]
   workspace_dirs = [ "~/Codes" ]
   base_port = 64601
