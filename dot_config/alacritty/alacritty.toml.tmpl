@@ -130,6 +130,9 @@ bindings = [
   { key = "Key1", mods = "Control", action = "ScrollLineUp" },
   { key = "Key2", mods = "Control", action = "ScrollLineDown" },
 
+  # 将 Ctrl+Backspace 映射为发送 Alt+Backspace 的底层字符序列 (Esc + DEL)
+  { key = "Back", mods = "Control", chars = "\u001B\u007F" },
+
   { key = "C", mods = "Control|Shift", action = "Copy" },
   { key = "V", mods = "Control|Shift", action = "Paste" },
 

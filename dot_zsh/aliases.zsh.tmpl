@@ -75,6 +75,23 @@ alias gitwd='git diff --word-diff=porcelain  | grep -e "^-[^-]" | wc -m | xargs'
 alias gitwdd='git diff --word-diff=porcelain | grep -e"^+[^+]" -e"^-[^-]"|sed -e's/.//'|sort|uniq -d|wc -m|xargs'
 alias gitw='echo $(($(gitwa) - $(gitwd)))'
 
+# Ctrl + W: 精细删除（遇到 / 会停下）
+backward-kill-word() {
+    local WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
+    zle .backward-kill-word
+}
+zle -N backward-kill-word
+bindkey '^W' backward-kill-word
+
+# Ctrl + Backspace: 一口气删到空格为止, 默认的 Zsh 行为
+backward-kill-whole-word() {
+    local WORDCHARS='*?_-.[]~=/&;!#$%^(){}<>'
+    zle .backward-kill-word
+}
+zle -N backward-kill-whole-word
+# 绑定一个特殊的序列, 与 alacritty 配合
+bindkey '^[^?' backward-kill-whole-word
+
 {{/* MacOS */ -}}
 {{ if .is_macos -}}
 function nvm_enable() {
