@@ -4,7 +4,8 @@
 
 # terminal emulator
 control + alt + t
-	wezterm
+    /usr/bin/alacritty
+	# wezterm
 
 # program launcher
 alt + @space
