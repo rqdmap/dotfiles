@@ -105,10 +105,17 @@
   command = "nvim"
   args = ["-d", "{{ `{{ .Destination }}` }}", "{{ `{{ .Source }}` }}", "{{ `{{ .Target }}` }}"]
 
+# ========================================
+# OpenCode 配置
+# ========================================
+
 [data.opencode.server]
   workspace_dirs = [ "~/Codes" ]
   base_port = 64601
 
+# ----------------------------------------
+# OpenCode Provider 配置
+# ----------------------------------------
 # 多个 Provider 直接复制下方的块即可
 [[data.opencode.providers]]
   id = "provider-unique-id"                 # 唯一标识符
@@ -121,23 +128,51 @@
     { id = "claude-sonnet-4-5-20250929", name = "Claude Sonnet 4.5", context = 200000, output = 65536 }
   ]
 
-# OpenCode Agent 模型配置
-[data.opencode.agents]
-  sisyphus = ""
-  oracle = ""
-  librarian = ""
-  explore = ""
-  multimodal_looker = ""
-  frontend_ui_ux_engineer = ""
-  document_writer = ""
-  prometheus_planner = ""
-  metis_plan_consultant = ""
-  momus_plan_reviewer = ""
-  atlas = ""
+# ----------------------------------------
+# OpenCode Model Profile 配置
+# ----------------------------------------
+[data.opencode.model_profiles]
+  active = "github-copilot"
+
+[data.opencode.model_profiles.extreme]
+  default_model = "github-copilot/claude-sonnet-4-6"
+
+  # === Agent Profiles ===
+  # Communicators → Claude / Kimi / GLM
+  sisyphus        = "github-copilot/claude-sonnet-4.6"
+  sisyphus_junior = "github-copilot/claude-sonnet-4.6"
+  metis           = "github-copilot/claude-sonnet-4.6"
+
+  # Dual-Prompt Agents → Claude preferred, GPT supported
+  prometheus      = "github-copilot/claude-sonnet-4.6"
+  atlas           = "github-copilot/claude-sonnet-4.6"
+
+  # Deep Specialists → GPT
+  hephaestus      = "github-copilot/gpt-5.2-codex"
+  oracle          = "github-copilot/gpt-5.2-codex"
+  momus           = "github-copilot/gpt-5.2-codex"
+
+  # Utility Runners - speed over intelligence
+  explore         = "github-copilot/claude-haiku-4-5"
+  librarian       = "github-copilot/claude-haiku-4-5"
+
+  # === Categories ===
+  # Visual/Creative - Gemini excels
+  visual_engineering = "github-copilot/gemini-3-pro"
+  artistry           = "github-copilot/gemini-3-pro"
+  # Deep reasoning - GPT-5.2 (best available in idealab)
+  ultrabrain         = "github-copilot/gpt-5.3-codex"
+  deep               = "github-copilot/gpt-5.2-codex"
+  # General tasks - Kimi for cost-efficiency
+  unspecified_low    = "github-copilot/claude-haiku-4-5"
+  unspecified_high   = "github-copilot/claude-sonnet-4-6"
+  writing            = "github-copilot/claude-sonnet-4.6"
+  # Quick tasks - Haiku is cheapest/fastest
+  quick              = "github-copilot/claude-haiku-4-5"
+
 
 [data.mcp]
   tavily.token = ""
   context7.token = ""
   github.token = ""
   firecrawl.token = ""
-

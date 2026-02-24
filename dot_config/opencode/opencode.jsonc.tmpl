@@ -1,9 +1,18 @@
+{{- $active := .opencode.model_profiles.active -}}
+{{- $profile := index .opencode.model_profiles $active -}}
 {
   "$schema": "https://opencode.ai/config.json",
   "autoupdate": true,
   "tui": {
     "scroll_speed": 5
   },
+  "default_agent": "scout",
+  "agent": {
+    "build": {
+      "disable": true
+    }
+  },
+  "model": "{{ $profile.default_model }}",
   "provider": {
 {{- range $pIndex, $provider := .opencode.providers }}
   {{- if $pIndex }},{{ end }}
@@ -31,72 +40,26 @@
     }
 {{- end }}
   },
-  "mcp": {
-    "tavily-mcp": {
-      "type": "remote",
-      "url": "https://mcp.tavily.com/mcp/?tavilyApiKey={{ .mcp.tavily.token }}"
-    },
-    "github": {
-{{- if eq .machine_profile "work" }}
-      "enabled": false,
-{{- else }}
-      "enabled": true,
-{{- end }}
-      "type": "remote",
-      "url": "https://api.githubcopilot.com/mcp",
-      "headers": {
-        "Authorization": "Bearer {{ .mcp.github.token }}"
-      }
-    },
-    "desktop-commander": {
-      "type": "local",
-      "command": [
-        "npx",
-        "-y",
-        "@wonderwhy-er/desktop-commander@latest"
-      ]
-    },
-    "sequential-thinking": {
-      "type": "local",
-      "command": [
-        "npx",
-        "-y",
-        "@modelcontextprotocol/server-sequential-thinking"
-      ]
-    },
-    "firecrawl-mcp": {
-      "type": "local",
-      "command": [
-        "npx",
-        "-y",
-        "firecrawl-mcp"
-      ],
-      "environment": {
-        "FIRECRAWL_API_KEY": "{{ .mcp.firecrawl.token }}"
-      }
-    }
-  },
-  "tools": {
-    "bash": true,
-    "edit": true,
-    "write": true,
-    "read": true,
-    "grep": true,
-    "glob": true,
-    "list": true,
-    "patch": true,
-    "todowrite": true,
-    "todoread": true,
-    "webfetch": true
-  },
   "permission": {
     "bash": {
-      "git commit": "ask"
-    }
+      "*": "allow",
+      "git *": "allow",
+    },
+    "edit": "allow",
+    "write": "allow",
+    "read": "allow",
+    "grep": "allow",
+    "glob": "ask",
+    "list": "allow",
+    "patch": "allow",
+    "skill": "ask",
+    "todowrite": "allow",
+    "todoread": "allow",
+    "webfetch": "allow"
   },
   "theme": "gruvbox",
   "plugin": [
-    "oh-my-opencode@beta"
+    "oh-my-opencode@latest"
   ],
   "keybinds": {
     "leader": "ctrl+x",
@@ -135,7 +98,7 @@
     "model_cycle_recent_reverse": "none",
     "model_cycle_favorite": "tab",
     "model_cycle_favorite_reverse": "shift+tab",
-    "variant_cycle": "none",
+    "variant_cycle": "ctrl+t",
     "command_list": "ctrl+p",
     "agent_list": "<leader>a",
     "agent_cycle": "]",
