@@ -28,11 +28,14 @@
         {{- if $mIndex }},{{ end }}
         "{{ $model.id }}": {
           "name": "{{ $model.name }}"
-          {{- if and (hasKey $model "context") (hasKey $model "output") }},
-          "limit": {
-            "context": {{ $model.context }},
-            "output": {{ $model.output }}
-          }
+          {{- if hasKey $model "limit" }},
+          "limit": {{ $model.limit | toPrettyJson | indent 10 | trim }}
+          {{- end }}
+          {{- if hasKey $model "modalities" }},
+          "modalities": {{ $model.modalities | toPrettyJson | indent 10 | trim }}
+          {{- end }}
+          {{- if hasKey $model "options" }},
+          "options": {{ $model.options | toPrettyJson | indent 10 | trim }}
           {{- end }}
         }
         {{- end }}
@@ -43,7 +46,7 @@
   "permission": {
     "bash": {
       "*": "allow",
-      "git *": "allow",
+      "git *": "allow"
     },
     "edit": "allow",
     "write": "allow",
