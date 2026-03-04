@@ -1,0 +1,21 @@
+#!/bin/bash
+# remote HEAD: {{ output "git" "ls-remote" "https://github.com/rqdmap/mimir" "HEAD" | trim }}
+
+set -euo pipefail
+
+REPO="https://github.com/rqdmap/mimir.git"
+SRC_DIR="{{ .chezmoi.homeDir }}/.local/src/mimir"
+BIN_DIR="{{ .chezmoi.homeDir }}/.local/bin"
+
+mkdir -p "$SRC_DIR" "$BIN_DIR"
+
+if [ -d "$SRC_DIR/.git" ]; then
+    git -C "$SRC_DIR" pull --ff-only
+else
+    git clone "$REPO" "$SRC_DIR"
+fi
+
+cd "$SRC_DIR"
+go build -ldflags="-s -w" -o "$BIN_DIR/mimir" ./cmd/ocm/
+
+echo "✅ mimir built → $BIN_DIR/mimir"
