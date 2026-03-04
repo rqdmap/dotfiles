@@ -3,6 +3,16 @@
 # monitor-setup.sh - BSPWM显示器配置模块
 
 # 显示器定义
+{{ if eq .machine_profile "home" -}}
+PRIMARY_MONITOR=$(xrandr | grep -i hdmi | grep -w connected  | cut -d ' ' -f 1)
+PRIMARY_MODE="2560x1080"
+PRIMARY_RATE="74.99"
+
+SECONDARY_MONITOR=$(xrandr | grep -i edp | grep -w connected  | cut -d ' ' -f 1)
+SECONDARY_MODE="1920x1080"
+SECONDARY_RATE="165.01"
+
+{{- else -}}
 PRIMARY_MONITOR="VGA-0"
 PRIMARY_MODE="1920x1080"
 PRIMARY_RATE="60.00"
@@ -10,6 +20,7 @@ PRIMARY_RATE="60.00"
 SECONDARY_MONITOR="DVI-I-0"
 SECONDARY_MODE="1920x1080"
 SECONDARY_RATE="60.00"
+{{- end }}
 
 # 使用状态文件跟踪副屏状态
 TOGGLE_FILE="$HOME/.secondary_monitor_state"
@@ -43,7 +54,7 @@ remove_secondary_monitor() {
 enable_secondary_monitor() {
     echo "启用副显示器: $SECONDARY_MONITOR"
     setup_secondary_monitor
-    # 重要: 确保BSPWM监视器顺序正确
+    # 确保BSPWM监视器顺序正确
     bspc wm --reorder-monitors "$PRIMARY_MONITOR" "$SECONDARY_MONITOR"
     echo "on" > "$TOGGLE_FILE"
 }

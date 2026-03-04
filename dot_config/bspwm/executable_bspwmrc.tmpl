@@ -1,0 +1,136 @@
+#!/bin/bash
+
+"{{ .chezmoi.homeDir }}/.config/bspwm/monitor-setup.sh"
+
+# 递归杀死进程树
+function kill_tree() {
+    local pid=$1
+    for child in $(pgrep -P "$pid" 2>/dev/null); do
+        kill_tree "$child"
+    done
+    kill -TERM "$pid" 2>/dev/null
+}
+
+# Execute a binary executable, restart it if it is running
+function foo() {
+    local sudo_flag=""
+    if [ "$1" = "sudo" ]; then
+        sudo_flag="sudo"
+        shift
+    fi
+
+    # 杀掉已有实例的完整进程树
+    for pid in $(pgrep -f "$1" 2>/dev/null); do
+        kill_tree "$pid"
+    done
+
+    # 等待旧进程完全退出(最多 3 秒), 避免新旧实例并存
+    local deadline=$(($(date +%s) + 3))
+    while pgrep -f "$1" > /dev/null 2>&1 && [ "$(date +%s)" -lt "$deadline" ]; do
+        sleep 0.1
+    done
+    # 超时仍未退出则强制 SIGKILL
+    if pgrep -f "$1" > /dev/null 2>&1; then
+        pgrep -f "$1" | xargs -r kill -KILL
+    fi
+
+    local cmd=()
+    [ -n "$sudo_flag" ] && cmd+=(sudo)
+    cmd+=("$1")
+    nohup "${cmd[@]}" "${@:2}" >> "$HOME/.log/$(basename "$1").log" 2>&1 &
+}
+
+
+PATH="$HOME/.local/bin:$PATH"
+foo polybar_run
+
+# 打开中文输入法
+foo fcitx5
+
+# 设置键盘灵敏度(xxx ms, 50 Hz)
+xset r rate 250 50
+
+# feh配置桌面
+. {{ .chezmoi.homeDir }}/.fehbg
+
+{{ if eq .machine_profile "home" -}}
+# 配置Miku Cursor
+xsetroot -cursor_name left_ptr
+{{- end }}
+
+# 禁止屏幕休眠
+xset dpms 0 0 0
+
+# 启用定时锁屏
+# https://askubuntu.com/questions/509507/please-explain-the-parameters-noexpose-and-cycle-in-xset
+# xset s <timeout> <cycle>:
+#	After idle for <timeout> seconds, activate dimmer.
+#	After <cycle> seconds, activate xsecurelock.
+xset s on
+xset s 120 60
+foo xss-lock -n /usr/local/libexec/xsecurelock/dimmer -l -- xsecurelock
+ 
+# # 打开词典
+# foo goldendict
+
+# 打开unclutter(隐藏非活跃鼠标)
+foo unclutter -b
+
+# 使用 bundle 脚本, 以避免 watcher 直接成为 1 号进程的孩子
+foo {{ .chezmoi.homeDir }}/Applications/aw/bundle_aw.sh
+
+# foo wired
+# foo dunst
+foo lxqt-notificationd
+
+foo picom
+
+foo sudo mihomo -d {{ .chezmoi.homeDir }}/.config/mihomo
+
+foo sxhkd
+
+# foo /data/rqdmap/Applications/frp/frps.sh
+
+# foo sudo /data/rqdmap/Applications/frp/auto_proxy.sh
+
+# pushd ~/Documents/moneybook/
+# foo fava main.bean
+# popd
+
+# foo syncthing
+
+# # Swap Ctrl and CapsLock
+# setxkbmap -option ctrl:swapcaps
+# Make CapsLock an additional Ctrl
+setxkbmap -option ctrl:nocaps
+
+# 默认设置Speaker音量为100%, 通过Master整体调节音量
+amixer -c 1 set Speaker 100 > /dev/null
+amixer -c 1 set Master 50 > /dev/null
+amixer -c 1 set Headphone 30 > /dev/null
+
+# #############
+# BSPC Rules  #
+# #############
+bspc config border_width				3
+bspc config focused_border_color	"#00FF00"
+# bspc config presel_feedback_color	"#76628A"
+bspc config window_gap				10
+bspc config split_ratio				0.52
+bspc config borderless_monocle		true
+bspc config gapless_monocle			true
+
+bspc rule -a "*:Figure:*" state=floating
+bspc rule -a Tk state=floating
+bspc rule -a Zathura state=tiled
+bspc rule -a TelegramDesktop state=floating rectangle=1200x900+0+0 center=on
+bspc rule -a vlc state=floating rectangle=1200x900+0+0 center=on
+bspc rule -a "*:*:screenkey" layer=above
+bspc rule -a wemeetapp state=floating center=on
+bspc rule -a obs state=floating center=on
+bspc rule -a gnome-font-viewer state=floating center=on
+bspc rule -a "Blueman-manager:blueman-manager:Bluetooth Devices" state=floating rectangle=1200x900+0+0 center=on
+bspc rule -a "GParted" state=floating rectangle=1200x900+0+0 center=on
+bspc rule -a Xmind state=tiled
+bspc rule -a Bitwarden state=floating
+bspc rule -a zotero state=tiled
