@@ -5,8 +5,8 @@
 # 显示器定义
 {{ if eq .machine_profile "home" -}}
 PRIMARY_MONITOR=$(xrandr | grep -i hdmi | grep -w connected  | cut -d ' ' -f 1)
-PRIMARY_MODE="2560x1080"
-PRIMARY_RATE="74.99"
+PRIMARY_MODE="2560x1440"
+PRIMARY_RATE="120.00"
 
 SECONDARY_MONITOR=$(xrandr | grep -i edp | grep -w connected  | cut -d ' ' -f 1)
 SECONDARY_MODE="1920x1080"
@@ -36,6 +36,18 @@ setup_primary_monitor() {
 setup_secondary_monitor() {
     echo "设置副显示器: $SECONDARY_MONITOR"
     xrandr --output "$SECONDARY_MONITOR" --mode "$SECONDARY_MODE" --rate "$SECONDARY_RATE" --left-of "$PRIMARY_MONITOR"
+
+    # xrandr 触发 X11 事件后 bspwm 异步处理，需等待其注册新显示器
+    # 否则后续 bspc 命令会因 monitor 未知而静默失败，留下默认的 "Desktop" 桌面
+    local deadline=$(($(date +%s) + 5))
+    until bspc query -M --names 2>/dev/null | grep -qx "$SECONDARY_MONITOR"; do
+        if [[ $(date +%s) -ge $deadline ]]; then
+            echo "警告: bspwm 超时未识别 $SECONDARY_MONITOR，跳过桌面配置"
+            return 1
+        fi
+        sleep 0.1
+    done
+
     bspc monitor "$SECONDARY_MONITOR" -d -
 
     # 确保显示器顺序正确
@@ -62,16 +74,29 @@ enable_secondary_monitor() {
 # 检测并初始化显示器
 detect_and_setup_monitors() {
     # 检查显示器连接状态
-    PRIMARY_CONNECTED=$(xrandr | grep "$PRIMARY_MONITOR" | grep -w "connected")
-    SECONDARY_CONNECTED=$(xrandr | grep "$SECONDARY_MONITOR" | grep -w "connected")
+    # 注意: 若 PRIMARY_MONITOR 为空（动态检测时未找到），需避免 grep "" 匹配所有行
+    if [[ -n "$PRIMARY_MONITOR" ]]; then
+        PRIMARY_CONNECTED=$(xrandr | grep -w "$PRIMARY_MONITOR" | grep -w "connected")
+    else
+        PRIMARY_CONNECTED=""
+    fi
+    if [[ -n "$SECONDARY_MONITOR" ]]; then
+        SECONDARY_CONNECTED=$(xrandr | grep -w "$SECONDARY_MONITOR" | grep -w "connected")
+    else
+        SECONDARY_CONNECTED=""
+    fi
 
     # 根据连接状态设置显示器
     if [[ -n "$PRIMARY_CONNECTED" ]]; then
         setup_primary_monitor
 
         if [[ -n "$SECONDARY_CONNECTED" ]]; then
-            setup_secondary_monitor
-            echo "on" > "$TOGGLE_FILE"
+            # 读取用户上次保存的副屏状态，默认为 on
+            SAVED_STATE=$(cat "$TOGGLE_FILE" 2>/dev/null || echo "on")
+            if [[ "$SAVED_STATE" != "off" ]]; then
+                setup_secondary_monitor
+                echo "on" > "$TOGGLE_FILE"
+            fi
         fi
     elif [[ -n "$SECONDARY_CONNECTED" ]]; then
         # 如果只有副显示器连接，则将其设置为主显示器
