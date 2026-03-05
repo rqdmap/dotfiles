@@ -7,6 +7,9 @@ control + alt + t
     /usr/bin/alacritty
 	# wezterm
 
+control + alt + m
+	/usr/bin/alacritty -e {{ .chezmoi.homeDir }}/.local/bin/mimir
+
 # program launcher
 alt + @space
 	flameshot gui
