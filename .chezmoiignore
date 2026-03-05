@@ -17,6 +17,7 @@ README.md
 .config/fontconfig
 .fehbg
 .config/wallpapers
+.Xresources
 {{ end }}
 
 # macOS tiling WM configs (yabai, Amethyst, etc.)
