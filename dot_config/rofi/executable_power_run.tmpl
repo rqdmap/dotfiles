@@ -85,3 +85,5 @@ chosen="$(run_rofi)"
 cmd=$(echo $chosen | cut -d ':' -f 2 | sed -e 's/^[ 	]*//g' | sed -e 's/[ 	]*$//g')
 
 eval $cmd
+
+{{- /* vim: set ft=zsh: */}}
