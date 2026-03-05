@@ -80,8 +80,12 @@
 
 {{ if eq .machine_profile "work" -}}
 ctrl + alt - t: open -na alacritty
+
+ctrl + alt - m: alacritty -e /Users/rqdmap/.local/bin/mimir
 {{- else -}}
 ctrl + alt - t: open -na wezterm
+
+ctrl + alt - m: wezterm start /Users/rqdmap/.local/bin/mimir
 {{- end }}
 
 alt - return: open -na "$(ls /Applications | choose)"
