@@ -1,0 +1,24 @@
+{{- if .is_arch -}}
+#!/bin/bash
+# vim: set ft=bash:
+#
+# 系统文件安装脚本
+# system 目录下 hash {{ output "sh" "-c" (printf "find %q -type f | sort | xargs sha256sum | sha256sum" (joinPath .chezmoi.sourceDir "system")) | trim }}
+
+set -euo pipefail
+
+SRCDIR="{{ .chezmoi.sourceDir }}/system"
+
+echo "Installing system files..."
+
+find "$SRCDIR" -type f | sort | while IFS= read -r src; do
+    dst="/${src#"$SRCDIR/"}"
+    sudo install -Dm644 "$src" "$dst"
+    echo "  ✓ $dst"
+done
+
+echo "Done."
+{{- else }}
+#!/bin/bash
+echo "Skipping system files installation (not Arch Linux)"
+{{- end }}

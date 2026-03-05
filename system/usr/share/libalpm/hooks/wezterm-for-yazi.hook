@@ -1,0 +1,11 @@
+# /usr/share/libalpm/hooks/wezterm-for-yazi.hook
+[Trigger]
+Type = Package
+Operation = Install
+Operation = Upgrade
+Target = yazi
+
+[Action]
+Description = 设置 Yazi 使用 WezTerm 终端
+When = PostTransaction
+Exec = /usr/bin/sed -i 's/Exec=yazi %u/Exec=wezterm start -- yazi/' /usr/share/applications/yazi.desktop

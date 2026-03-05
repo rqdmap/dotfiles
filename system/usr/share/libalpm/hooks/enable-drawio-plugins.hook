@@ -1,0 +1,11 @@
+# /usr/share/libalpm/hooks/enable-drawio-plugins.hook
+[Trigger]
+Type = Package
+Operation = Install
+Operation = Upgrade
+Target = drawio-desktop
+
+[Action]
+Description = Enabling plugins for Draw.io Desktop
+When = PostTransaction
+Exec = /usr/bin/sed -i 's/Exec=\/usr\/bin\/drawio/Exec=\/usr\/bin\/drawio --enable-plugins/' /usr/share/applications/drawio.desktop

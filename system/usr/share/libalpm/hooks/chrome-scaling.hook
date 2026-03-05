@@ -1,0 +1,12 @@
+# /usr/share/libalpm/hooks/chrome-scaling.hook
+[Trigger]
+Type = Package
+Operation = Install
+Operation = Upgrade
+Target = google-chrome
+
+[Action]
+Description = Adding 1.1x scaling factor to Google Chrome desktop entry
+When = PostTransaction
+Exec = /usr/bin/sed -i 's|^Exec=/usr/bin/google-chrome-stable|Exec=/usr/bin/google-chrome-stable --force-device-scale-factor=1.1|' /usr/share/applications/google-chrome.desktop
+
