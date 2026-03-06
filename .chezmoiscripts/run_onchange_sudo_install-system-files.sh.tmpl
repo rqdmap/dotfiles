@@ -1,7 +1,7 @@
-{{- if .is_arch -}}
 #!/bin/bash
 # vim: set ft=bash:
-#
+
+{{- if eq .machine_profile "home" -}}
 # 系统文件安装脚本
 # system 目录下 hash {{ output "sh" "-c" (printf "find %q -type f | sort | xargs sha256sum | sha256sum" (joinPath .chezmoi.sourceDir "system")) | trim }}
 
@@ -19,6 +19,5 @@ done
 
 echo "Done."
 {{- else }}
-#!/bin/bash
-echo "Skipping system files installation (not Arch Linux)"
+echo "Skipping archlinux system files installation"
 {{- end }}
