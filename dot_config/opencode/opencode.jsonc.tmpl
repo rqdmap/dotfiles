@@ -3,9 +3,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "autoupdate": true,
-  "tui": {
-    "scroll_speed": 5
-  },
   "default_agent": "scout",
   "agent": {
     "build": {
@@ -60,60 +57,9 @@
     "todoread": "allow",
     "webfetch": "allow"
   },
-  "theme": "gruvbox",
   "plugin": [
     "oh-my-opencode@latest"
-  ],
-  "keybinds": {
-    "leader": "ctrl+x",
-    "app_exit": "ctrl+c,<leader>q",
-    "editor_open": "<leader>e",
-    "theme_list": "none",
-    "sidebar_toggle": "<leader>b",
-    "username_toggle": "none",
-    "status_view": "<leader>s",
-    "session_export": "",
-    "session_new": "<leader>n",
-    "session_list": "<leader>l",
-    "session_timeline": "<leader>t",
-    "session_share": "none",
-    "session_unshare": "none",
-    "session_interrupt": "escape",
-    "session_compact": "",
-    "session_child_cycle": "<leader>right",
-    "session_child_cycle_reverse": "<leader>left",
-    "session_parent": "<leader>up",
-    "messages_page_up": "ctrl+b",
-    "messages_page_down": "ctrl+f",
-    "messages_half_page_up": "",
-    "messages_half_page_down": "",
-    "messages_first": "<leader>g",
-    "messages_last": "<leader>G",
-    "messages_next": "none",
-    "messages_previous": "none",
-    "messages_copy": "",
-    "messages_undo": "",
-    "messages_redo": "",
-    "messages_last_user": "none",
-    "messages_toggle_conceal": "",
-    "model_list": "<leader>m,ctrl+m",
-    "model_cycle_recent": "none",
-    "model_cycle_recent_reverse": "none",
-    "model_cycle_favorite": "tab",
-    "model_cycle_favorite_reverse": "shift+tab",
-    "variant_cycle": "ctrl+t",
-    "command_list": "ctrl+p",
-    "agent_list": "<leader>a",
-    "agent_cycle": "]",
-    "agent_cycle_reverse": "[",
-    "input_clear": "none",
-    "input_paste": "none",
-    "input_submit": "enter",
-    "input_newline": "shift+enter,ctrl+j",
-    "history_previous": "up",
-    "history_next": "down",
-    "terminal_suspend": "ctrl+z"
-  }
+  ]
 }
 
 {{- /* vim: set ft=jsonc: */}}
