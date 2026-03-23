@@ -1,0 +1,12 @@
+{
+  "listen_port": {{ .ikun_proxy.listen_port }},
+  "upstream_base": "https://api.ikuncode.cc",
+  "status_url": "https://status.ikuncode.cc/api/status",
+  "health_check_interval": {{ .ikun_proxy.health_check_interval }},
+  "channels": [
+{{- range $i, $ch := .ikun_proxy.channels }}
+    {{- if $i }},{{ end }}
+    { "slug": "{{ $ch.slug }}", "key": "{{ $ch.key }}" }
+{{- end }}
+  ]
+}
