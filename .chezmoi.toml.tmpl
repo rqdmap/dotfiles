@@ -123,9 +123,9 @@
   name = "Provider Display Name"            # 显示名称(不能有括号)
   base_url = "https://api.example.com/v1"   # API 基础地址
   api_key = "your-api-key-here"             # API 密钥
-  models = [                                # 支持的模型列表, 支持嵌套 limit, modalities, options 字段
+  models = [                                # 支持的模型列表, 支持嵌套 limit, modalities, options, variants 字段
     { id = "model-id", name = "Model Name"},
-    { id = "claude-sonnet-4-5-20250929", name = "Claude Sonnet 4.5", limit = { context = 200000, output = 65536 }},
+    { id = "claude-sonnet-4-5-20250929", name = "Claude Sonnet 4.5", limit = { context = 200000, output = 65536 }, variants = { high = { thinking = { type = "enabled", budgetTokens = 32000 } }, max = { thinking = { type = "enabled", budgetTokens = 128000 } } } },
     { id = "kimi-k2.5", name = "Kimi K2.5", modalities = {input = ["text", "image"], output = ["text"]}, options = {thinking = {type = "enabled", budgetTokens = 81920}} },
   ]
 
