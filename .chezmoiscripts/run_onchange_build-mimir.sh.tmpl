@@ -1,6 +1,7 @@
 #!/bin/bash
 # remote HEAD: {{ output "git" "ls-remote" "https://github.com/rqdmap/mimir" "HEAD" | trim }}
 
+{{- if .is_personal -}}
 set -euo pipefail
 
 REPO="https://github.com/rqdmap/mimir.git"
@@ -19,5 +20,9 @@ cd "$SRC_DIR"
 go build -ldflags="-s -w" -o "$BIN_DIR/mimir" ./cmd/ocm/
 
 echo "✅ mimir built → $BIN_DIR/mimir"
+
+{{- else }}
+echo "Skipping OpenCode Mimir installation"
+{{- end }}
 
 {{- /* vim: set ft=bash: */}}
