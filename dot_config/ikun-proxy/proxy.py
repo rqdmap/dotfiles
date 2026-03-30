@@ -162,7 +162,7 @@ class ChannelManager:
 
 # ─── Request Proxy ─────────────────────────────────────────────────────────────
 
-RETRIABLE_STATUS = {429, 500, 502, 503, 504}
+RETRIABLE_STATUS = {424, 429, 500, 502, 503, 504}
 
 
 async def proxy_handler(
