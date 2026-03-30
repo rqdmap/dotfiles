@@ -17,7 +17,7 @@ else
 fi
 
 cd "$SRC_DIR"
-go build -ldflags="-s -w" -o "$BIN_DIR/mimir" ./cmd/ocm/
+go build -ldflags="-s -w" -o "$BIN_DIR/mimir" ./cmd/mimir/
 
 echo "✅ mimir built → $BIN_DIR/mimir"
 
