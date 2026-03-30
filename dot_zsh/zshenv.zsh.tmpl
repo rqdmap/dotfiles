@@ -31,7 +31,6 @@ PATH=$PATH:$HOME/.cargo/bin
 PATH=$PATH:$HOME/go/bin
 
 # opencode
-export PATH=/Users/rqdmap/.opencode/bin:$PATH
 # export OPENCODE_DISABLE_AUTOCOMPACT=true
 
 # bun completions
@@ -64,6 +63,7 @@ esac
 {{ if .is_macos -}}
 export PATH=/opt/homebrew/bin/:$PATH
 export PATH="$HOME/.npm-global/bin:$PATH"
+export PATH="$HOME/.opencode/bin:$PATH"
 
 {{- end }}
 
