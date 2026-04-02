@@ -172,6 +172,31 @@
   quick              = "github-copilot/claude-haiku-4.5"
 
 
+# ----------------------------------------
+# MCP 配置
+# ----------------------------------------
+# Remote - 仅特定 Profile, 带 headers 鉴权
+[data.mcps.example-remote-auth]
+profile = "work"
+type    = "remote"
+url     = "https://mcp.example.com/mcp"
+enabled = false
+headers = { Authorization = "Bearer EXAMPLE_TOKEN" }
+
+# Remote - 所有环境通用, 无鉴权
+[data.mcps.example-remote-common]
+type    = "remote"
+url     = "https://mcp.public-example.com/mcp"
+enabled = true
+
+# Local - 带环境变量
+[data.mcps.example-local-auth]
+type    = "local"
+enabled = true
+command = ["npx", "-y", "example-mcp-package"]
+environment = { NODE_ENV = "production", MY_VAR = "some_value" }
+
+
 # ========================================
 # IKun Proxy 聚合配置
 # ========================================
@@ -186,13 +211,6 @@
 [[data.ikun_proxy.channels]]
   slug = "channel-2"
   key = ""
-
-[data.mcp]
-  tavily.token = ""
-  context7.token = ""
-  github.token = ""
-  firecrawl.token = ""
-
 
 [data.trilium]
   url = "https://trilium.your.domain"

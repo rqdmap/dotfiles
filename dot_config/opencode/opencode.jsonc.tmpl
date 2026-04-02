@@ -43,6 +43,40 @@
     }
 {{- end }}
   },
+  "mcp": {
+{{- range $name, $cfg := .mcps }}
+{{- $type := index $cfg "type" }}
+{{- if not (or (eq $type "remote") (eq $type "local")) }}
+{{- fail (printf "mcp '%s': type must be 'remote' or 'local', got '%s'" $name $type) }}
+{{- end }}
+{{- $profile := index $cfg "profile" }}
+{{- if or (not $profile) (eq $profile $.machine_profile) }}
+    "{{ $name }}": {
+      "type": "{{ $type }}",
+{{- if eq $type "remote" }}
+      "url": "{{ index $cfg "url" }}",
+{{- if index $cfg "headers" }}
+      "headers": {
+{{- range $k, $v := index $cfg "headers" }}
+        "{{ $k }}": "{{ $v }}",
+{{- end }}
+      },
+{{- end }}
+{{- else }}
+      "command": [{{ range $i, $v := index $cfg "command" }}{{ if $i }}, {{ end }}"{{ $v }}"{{ end }}],
+{{- if index $cfg "environment" }}
+      "environment": {
+{{- range $k, $v := index $cfg "environment" }}
+        "{{ $k }}": "{{ $v }}",
+{{- end }}
+      },
+{{- end }}
+{{- end }}
+      "enabled": {{ index $cfg "enabled" }},
+    },
+{{- end }}
+{{- end }}
+  },
   "permission": {
     "bash": {
       "*": "allow",
