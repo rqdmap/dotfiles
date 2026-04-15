@@ -1,0 +1,167 @@
+title: macOS Linux-style Hotkeys
+version: 1.0.0
+maintainers:
+  - rqdmap
+author: rqdmap(rqdmap@gmail.com)
+
+outputs:
+  karabiner: linux-style-hotkeys.json
+
+app_groups:
+  browsers:
+    - com.google.Chrome
+    - org.mozilla.firefox
+  terminals:
+    - com.github.wez.wezterm
+    - org.alacritty
+
+
+rules:
+  - description: Linux-style desktop remaps
+    manipulators:
+      # --- Global (no conditions) ---
+      - description: Lock screen
+        map: left_control + left_option + l = left_control + left_command + q
+
+      - description: Save all
+        map: left_control + left_shift + s = left_command + left_shift + s
+
+      - description: Word delete backward
+        map: left_control + delete_or_backspace = left_option + delete_or_backspace
+
+      - description: Word delete forward
+        map: left_control + delete_forward = left_option + delete_forward
+
+      - description: Word jump left
+        map: left_control + left_arrow = left_option + left_arrow
+
+      - description: Word jump right
+        map: left_control + right_arrow = left_option + right_arrow
+
+      # Karabiner 需要启用 Mouse Modify
+      # 渲染脚本会自动识别 Button1 为点击事件
+      - description: Ctrl-click to Cmd-click
+        map: left_control + button1 = left_command + button1
+
+      # --- Browser-only ---
+      - description: Save in browsers
+        map: left_control + s = left_command + s
+        conditions:
+          - type: frontmost_application_if
+            app_group: browsers
+
+      - description: New tab
+        map: left_control + t = left_command + t
+        conditions:
+          - type: frontmost_application_if
+            app_group: browsers
+
+      - description: Refresh
+        map: left_control + r = left_command + r
+        conditions:
+          - type: frontmost_application_if
+            app_group: browsers
+
+      - description: Close tab
+        map: left_control + w = left_command + w
+        conditions:
+          - type: frontmost_application_if
+            app_group: browsers
+
+      - description: Reopen closed tab
+        map: left_control + left_shift + t = left_command + left_shift + t
+        conditions:
+          - type: frontmost_application_if
+            app_group: browsers
+
+      - description: New window
+        map: left_control + n = left_command + n
+        conditions:
+          - type: frontmost_application_if
+            app_group: browsers
+
+      - description: Bookmark
+        map: left_control + d = left_command + d
+        conditions:
+          - type: frontmost_application_if
+            app_group: browsers
+
+      - description: History
+        map: left_control + h = left_command + y
+        conditions:
+          - type: frontmost_application_if
+            app_group: browsers
+
+      - description: Zoom in
+        map: left_control + equal_sign = left_command + equal_sign
+        conditions:
+          - type: frontmost_application_if
+            app_group: browsers
+
+      - description: Zoom out
+        map: left_control + hyphen = left_command + hyphen
+        conditions:
+          - type: frontmost_application_if
+            app_group: browsers
+
+      # --- GUI-style editing except terminals ---
+      - description: Copy
+        map: left_control + c = left_command + c
+        conditions:
+          - type: frontmost_application_unless
+            app_group: terminals
+
+      - description: Paste
+        map: left_control + v = left_command + v
+        conditions:
+          - type: frontmost_application_unless
+            app_group: terminals
+
+      - description: Select all
+        map: left_control + a = left_command + a
+        conditions:
+          - type: frontmost_application_unless
+            app_group: terminals
+
+      - description: Find
+        map: left_control + f = left_command + f
+        conditions:
+          - type: frontmost_application_unless
+            app_group: terminals
+
+      - description: Undo
+        map: left_control + z = left_command + z
+        conditions:
+          - type: frontmost_application_unless
+            app_group: terminals
+
+      - description: Cut
+        map: left_control + x = left_command + x
+        conditions:
+          - type: frontmost_application_unless
+            app_group: terminals
+
+      - description: Bold
+        map: left_control + b = left_command + b
+        conditions:
+          - type: frontmost_application_unless
+            app_group: terminals
+
+      - description: Italic
+        map: left_control + i = left_command + i
+        conditions:
+          - type: frontmost_application_unless
+            app_group: terminals
+
+      # --- Terminal-only ---
+      - description: Terminal copy
+        map: left_control + left_shift + c = left_command + c
+        conditions:
+          - type: frontmost_application_if
+            app_group: terminals
+
+      - description: Terminal paste
+        map: left_control + left_shift + v = left_command + v
+        conditions:
+          - type: frontmost_application_if
+            app_group: terminals

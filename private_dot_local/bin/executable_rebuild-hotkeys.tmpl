@@ -1,0 +1,11 @@
+#!/bin/bash
+set -euo pipefail
+
+SCRIPT="{{ joinPath .chezmoi.sourceDir ".chezmoiscripts/run_onchange_after_build-hotkeys.sh.tmpl" }}"
+
+if ! command -v chezmoi >/dev/null 2>&1; then
+    echo "chezmoi is required to rebuild hotkeys" >&2
+    exit 1
+fi
+
+chezmoi execute-template < "$SCRIPT" | bash

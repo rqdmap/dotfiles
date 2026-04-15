@@ -3,6 +3,9 @@
 # Chezmoi Project Files
 README.md
 
+# Repo-internal build sources
+tools/
+
 # Archlinux System config
 system
 
@@ -23,11 +26,14 @@ system
 .Xresources
 {{ end }}
 
-# macOS tiling WM configs (yabai, Amethyst, etc.)
-{{ if not (and .has_tiling_wm .is_macos) }}
+# macOS tiling stack (yabai, sketchybar, skhd entrypoint, etc.)
+{{- $uses_macos_tiling_stack := and .has_tiling_wm .is_macos -}}
+{{ if not $uses_macos_tiling_stack }}
+.config/skhd
 .config/sketchybar
 .yabairc
 .skhdrc
+.local/bin/rebuild-hotkeys
 {{ end }}
 
 # Exclude GUI configs on headless systems
@@ -67,5 +73,3 @@ system
 # ========================================
 
 .config/joshuto
-
-
