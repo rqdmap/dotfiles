@@ -197,21 +197,6 @@ command = ["npx", "-y", "example-mcp-package"]
 environment = { NODE_ENV = "production", MY_VAR = "some_value" }
 
 
-# ========================================
-# IKun Proxy 聚合配置
-# ========================================
-[data.ikun_proxy]
-  listen_port = 8787
-  health_check_interval = 60
-
-[[data.ikun_proxy.channels]]
-  slug = "channel-1"
-  key = ""
-
-[[data.ikun_proxy.channels]]
-  slug = "channel-2"
-  key = ""
-
 [data.trilium]
   url = "https://trilium.your.domain"
   token = "your-trilium-api-token"

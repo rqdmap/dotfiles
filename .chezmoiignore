@@ -64,7 +64,6 @@ system
 # Personal tools
 {{ if not .is_personal }}
 .local/bin/blog
-.config/ikun-proxy/
 {{ end }}
 
 
