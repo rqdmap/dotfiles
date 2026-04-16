@@ -1,0 +1,208 @@
+#!/usr/bin/env sh
+
+# yabai-spacectl
+#
+# A small controller layer for space-oriented yabai workflows.
+#
+# Why this exists
+# ---------------
+# We previously kept two pieces of space logic inline in hotkey config:
+#
+#   1. `focus <space>`
+#      Read a per-space cache, try to focus the cached window, then fall back
+#      to `first-window`, then finally `space --focus`.
+#
+#   2. `send <space>`
+#      Move the focused window to another space.
+#
+# After a lot of iteration, the main lessons were:
+#
+# - Pure `space --focus N` is not always reliable for landing on a real window.
+#   yabai/macOS has known focus quirks, so it is useful to keep a lightweight
+#   cache that remembers a preferred window per space.
+#
+# - Source-space stale cache is a real bug: if a window was cached for space A
+#   and later explicitly sent to space B, space A must not keep pointing at the
+#   moved window.
+#
+# - Destination seeding is useful: even if a later `window_focused` signal does
+#   not arrive in the exact way we hope, we still want the next `focus <space>`
+#   to have a strong target candidate in the destination space.
+#
+# - We do NOT want to rely on a broad `window_moved` signal to write the
+#   destination cache. Signal ordering can be annoying, and generic move events
+#   are less aligned with intent. Instead, destination cache is seeded only on
+#   the explicit `send <space>` command path.
+#
+# - We still keep `record-focus <window_id>` as the normal/authoritative write
+#   path for actual focus transitions.
+#
+# - We are intentionally NOT solving sticky / floating special cases here.
+#   This controller is scoped to the ordinary BSP workflow discussed during
+#   design. If those need to be handled in the future, extend the validation
+#   rules in one place here.
+#
+# Practical protocol
+# ------------------
+# - `focus <space>` is synchronous. User is waiting for the result.
+# - `send <space>` keeps the actual window move synchronous, but performs cache
+#   file maintenance asynchronously in a tiny background subshell so the skhd
+#   hotkey path stays fast.
+# - `record-focus <window_id>` writes the cache for the window's current space.
+# - `purge-window <window_id>` is kept for future invalidation hooks
+#   (minimize/destroy/hide) even if not all of them are wired today.
+#
+# Cache semantics
+# ---------------
+# Treat /tmp/yabai-last-win-<space> as:
+#   "the preferred window to try first when entering this space"
+# rather than a strict historical audit log.
+#
+# That definition matches both:
+# - explicit send -> proactively seed destination cache
+# - actual focus  -> update cache naturally via window_focused signal
+
+set -u
+
+MODE="${1:-}"
+ARG="${2:-}"
+
+cache_file() {
+  printf '/tmp/yabai-last-win-%s\n' "$1"
+}
+
+read_cache() {
+  cat "$(cache_file "$1")" 2>/dev/null || true
+}
+
+write_cache() {
+  SPACE_ID="$1"
+  WINDOW_ID="$2"
+  [ -n "$SPACE_ID" ] || return 0
+  [ -n "$WINDOW_ID" ] || return 0
+  printf '%s\n' "$WINDOW_ID" > "$(cache_file "$SPACE_ID")"
+}
+
+purge_window_refs() {
+  WINDOW_ID="$1"
+  [ -n "$WINDOW_ID" ] || return 0
+
+  for FILE in /tmp/yabai-last-win-*; do
+    [ -f "$FILE" ] || continue
+    read -r CACHED < "$FILE" || CACHED=""
+    [ "$CACHED" = "$WINDOW_ID" ] && rm -f "$FILE"
+  done
+}
+
+window_json() {
+  yabai -m query --windows --window "$1" 2>/dev/null
+}
+
+focused_window_json() {
+  yabai -m query --windows --window 2>/dev/null
+}
+
+window_space() {
+  printf '%s' "$1" | jq -r '.space // empty'
+}
+
+window_id() {
+  printf '%s' "$1" | jq -r '.id // empty'
+}
+
+window_matches_space() {
+  WINDOW_ID="$1"
+  SPACE_ID="$2"
+  window_json "$WINDOW_ID" | jq -e ".space == ${SPACE_ID}" >/dev/null 2>&1
+}
+
+space_first_window() {
+  yabai -m query --spaces --space "$1" 2>/dev/null | jq -r '."first-window" // empty'
+}
+
+cmd_focus() {
+  SPACE_ID="$1"
+  [ -n "$SPACE_ID" ] || exit 0
+
+  WIN="$(read_cache "$SPACE_ID")"
+  if [ -n "$WIN" ] && window_matches_space "$WIN" "$SPACE_ID"; then
+    yabai -m window --focus "$WIN" 2>/dev/null && exit 0
+  fi
+
+  WIN="$(space_first_window "$SPACE_ID")"
+  if [ -n "$WIN" ]; then
+    yabai -m window --focus "$WIN" 2>/dev/null && exit 0
+  fi
+
+  yabai -m space --focus "$SPACE_ID"
+}
+
+cmd_send() {
+  DST="$1"
+  [ -n "$DST" ] || exit 0
+
+  INFO="$(focused_window_json)" || exit 0
+  WID="$(window_id "$INFO")"
+  SRC="$(window_space "$INFO")"
+
+  [ -n "$WID" ] || exit 0
+  [ -n "$SRC" ] || exit 0
+
+  yabai -m window --space "$DST" || exit 0
+
+  (
+    CACHE_SRC="$(cache_file "$SRC")"
+    if [ -f "$CACHE_SRC" ]; then
+      read -r CACHED < "$CACHE_SRC" || CACHED=""
+      [ "$CACHED" = "$WID" ] && rm -f "$CACHE_SRC"
+    fi
+
+    write_cache "$DST" "$WID"
+  ) >/dev/null 2>&1 &
+
+  exit 0
+}
+
+cmd_record_focus() {
+  WID="$1"
+  [ -n "$WID" ] || exit 0
+
+  INFO="$(window_json "$WID")" || exit 0
+  SID="$(window_space "$INFO")"
+  [ -n "$SID" ] || exit 0
+
+  write_cache "$SID" "$WID"
+}
+
+cmd_purge_window() {
+  purge_window_refs "$1"
+}
+
+usage() {
+  cat <<'EOF'
+Usage:
+  yabai-spacectl focus <space>
+  yabai-spacectl send <space>
+  yabai-spacectl record-focus <window_id>
+  yabai-spacectl purge-window <window_id>
+EOF
+}
+
+case "$MODE" in
+  focus)
+    cmd_focus "$ARG"
+    ;;
+  send)
+    cmd_send "$ARG"
+    ;;
+  record-focus)
+    cmd_record_focus "$ARG"
+    ;;
+  purge-window)
+    cmd_purge_window "$ARG"
+    ;;
+  *)
+    usage >&2
+    exit 1
+    ;;
+esac
