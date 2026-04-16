@@ -44,6 +44,7 @@
 {{- end }}
   },
   "mcp": {
+{{- if hasKey . "mcps" }}
 {{- range $name, $cfg := .mcps }}
 {{- $type := index $cfg "type" }}
 {{- if not (or (eq $type "remote") (eq $type "local")) }}
@@ -74,6 +75,7 @@
 {{- end }}
       "enabled": {{ index $cfg "enabled" }},
     },
+{{- end }}
 {{- end }}
 {{- end }}
   },
