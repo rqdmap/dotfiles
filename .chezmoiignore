@@ -34,6 +34,7 @@ system
 .yabairc
 .skhdrc
 .local/bin/rebuild-hotkeys
+.local/bin/yabai-spacectl
 {{ end }}
 
 # Exclude GUI configs on headless systems
