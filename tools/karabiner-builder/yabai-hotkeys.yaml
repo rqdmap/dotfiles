@@ -70,18 +70,18 @@ actions:
   wm_swap_north: yabai -m window --swap north
   wm_swap_east: yabai -m window --swap east
 
-  # fast focus desktop
-  wm_space_1: yabai -m space --focus 1
-  wm_space_2: yabai -m space --focus 2
-  wm_space_3: yabai -m space --focus 3
-  wm_space_4: yabai -m space --focus 4
-  wm_space_5: yabai -m space --focus 5
-  wm_space_6: yabai -m space --focus 6
-  wm_space_7: yabai -m space --focus 7
-  wm_space_8: yabai -m space --focus 8
-  wm_space_9: yabai -m space --focus 9
-  wm_space_10: yabai -m space --focus 10
-  wm_space_11: yabai -m space --focus 11
+  # fast focus desktop (cached last-window → first-window → space focus)
+  wm_space_1: WIN=$(cat /tmp/yabai-last-win-1 2>/dev/null); ([ -n "$WIN" ] && yabai -m window --focus "$WIN" 2>/dev/null) || WIN=$(yabai -m query --spaces --space 1 | jq -r '."first-window" // empty') && ([ -n "$WIN" ] && yabai -m window --focus "$WIN" || yabai -m space --focus 1)
+  wm_space_2: WIN=$(cat /tmp/yabai-last-win-2 2>/dev/null); ([ -n "$WIN" ] && yabai -m window --focus "$WIN" 2>/dev/null) || WIN=$(yabai -m query --spaces --space 2 | jq -r '."first-window" // empty') && ([ -n "$WIN" ] && yabai -m window --focus "$WIN" || yabai -m space --focus 2)
+  wm_space_3: WIN=$(cat /tmp/yabai-last-win-3 2>/dev/null); ([ -n "$WIN" ] && yabai -m window --focus "$WIN" 2>/dev/null) || WIN=$(yabai -m query --spaces --space 3 | jq -r '."first-window" // empty') && ([ -n "$WIN" ] && yabai -m window --focus "$WIN" || yabai -m space --focus 3)
+  wm_space_4: WIN=$(cat /tmp/yabai-last-win-4 2>/dev/null); ([ -n "$WIN" ] && yabai -m window --focus "$WIN" 2>/dev/null) || WIN=$(yabai -m query --spaces --space 4 | jq -r '."first-window" // empty') && ([ -n "$WIN" ] && yabai -m window --focus "$WIN" || yabai -m space --focus 4)
+  wm_space_5: WIN=$(cat /tmp/yabai-last-win-5 2>/dev/null); ([ -n "$WIN" ] && yabai -m window --focus "$WIN" 2>/dev/null) || WIN=$(yabai -m query --spaces --space 5 | jq -r '."first-window" // empty') && ([ -n "$WIN" ] && yabai -m window --focus "$WIN" || yabai -m space --focus 5)
+  wm_space_6: WIN=$(cat /tmp/yabai-last-win-6 2>/dev/null); ([ -n "$WIN" ] && yabai -m window --focus "$WIN" 2>/dev/null) || WIN=$(yabai -m query --spaces --space 6 | jq -r '."first-window" // empty') && ([ -n "$WIN" ] && yabai -m window --focus "$WIN" || yabai -m space --focus 6)
+  wm_space_7: WIN=$(cat /tmp/yabai-last-win-7 2>/dev/null); ([ -n "$WIN" ] && yabai -m window --focus "$WIN" 2>/dev/null) || WIN=$(yabai -m query --spaces --space 7 | jq -r '."first-window" // empty') && ([ -n "$WIN" ] && yabai -m window --focus "$WIN" || yabai -m space --focus 7)
+  wm_space_8: WIN=$(cat /tmp/yabai-last-win-8 2>/dev/null); ([ -n "$WIN" ] && yabai -m window --focus "$WIN" 2>/dev/null) || WIN=$(yabai -m query --spaces --space 8 | jq -r '."first-window" // empty') && ([ -n "$WIN" ] && yabai -m window --focus "$WIN" || yabai -m space --focus 8)
+  wm_space_9: WIN=$(cat /tmp/yabai-last-win-9 2>/dev/null); ([ -n "$WIN" ] && yabai -m window --focus "$WIN" 2>/dev/null) || WIN=$(yabai -m query --spaces --space 9 | jq -r '."first-window" // empty') && ([ -n "$WIN" ] && yabai -m window --focus "$WIN" || yabai -m space --focus 9)
+  wm_space_10: WIN=$(cat /tmp/yabai-last-win-10 2>/dev/null); ([ -n "$WIN" ] && yabai -m window --focus "$WIN" 2>/dev/null) || WIN=$(yabai -m query --spaces --space 10 | jq -r '."first-window" // empty') && ([ -n "$WIN" ] && yabai -m window --focus "$WIN" || yabai -m space --focus 10)
+  wm_space_11: WIN=$(cat /tmp/yabai-last-win-11 2>/dev/null); ([ -n "$WIN" ] && yabai -m window --focus "$WIN" 2>/dev/null) || WIN=$(yabai -m query --spaces --space 11 | jq -r '."first-window" // empty') && ([ -n "$WIN" ] && yabai -m window --focus "$WIN" || yabai -m space --focus 11)
 
   # send window to desktop
   wm_send_space_1: yabai -m window --space 1

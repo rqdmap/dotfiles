@@ -77,4 +77,8 @@ yabai -m rule --add app="Karabiner-Elements" manage=off
 yabai -m rule --add app="Python" manage=off
 yabai -m rule --add app="IntelliJ IDEA" manage=off
 
+# 记录每个 space 最近聚焦的 window id
+yabai -m signal --add event=window_focused \
+    action='SID=$(yabai -m query --windows --window "$YABAI_WINDOW_ID" 2>/dev/null | jq -r ".space // empty"); [ -n "$SID" ] && echo "$YABAI_WINDOW_ID" > "/tmp/yabai-last-win-$SID"'
+
 echo "yabai configuration loaded.."
