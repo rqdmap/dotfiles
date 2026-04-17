@@ -116,18 +116,52 @@
 # ----------------------------------------
 # OpenCode Provider 配置
 # ----------------------------------------
-# 多个 Provider 直接复制下方的块即可
-[[data.opencode.providers]]
-  id = "provider-unique-id"                 # 唯一标识符
-  type = "@ai-sdk/openai-compatible"        # 接口协议(["@ai-sdk/anthropic", "@ai-sdk/openai-compatible"])
-  name = "Provider Display Name"            # 显示名称(不能有括号)
-  base_url = "https://api.example.com/v1"   # API 基础地址
-  api_key = "your-api-key-here"             # API 密钥
-  models = [                                # 支持的模型列表, 支持嵌套 limit, modalities, options, variants 字段
-    { id = "model-id", name = "Model Name"},
-    { id = "claude-sonnet-4-5-20250929", name = "Claude Sonnet 4.5", limit = { context = 200000, output = 65536 }, variants = { high = { thinking = { type = "enabled", budgetTokens = 32000 } }, max = { thinking = { type = "enabled", budgetTokens = 128000 } } } },
-    { id = "kimi-k2.5", name = "Kimi K2.5", modalities = {input = ["text", "image"], output = ["text"]}, options = {thinking = {type = "enabled", budgetTokens = 81920}} },
-  ]
+# 如果你主要通过 `/connect` 使用内置 provider，这一段可以留空。
+# 下面保留 3 组常见示例：Anthropic、Google Gemini、OpenAI / OpenAI-compatible。
+# 使用方式：复制对应块，取消注释后替换 `base_url`、`api_key` 与 `models`。
+# 注意：
+# - `id` 是 provider 唯一标识；模型引用格式为 `provider_id/model_id`
+# - `type` 对应 AI SDK provider 包
+# - `name` 仅用于展示
+# - `models` 支持 `limit`、`modalities`、`options`、`variants` 等字段
+
+# 示例 1：Anthropic 或 Anthropic 代理
+# [[data.opencode.providers]]
+#   id = "anthropic-proxy"
+#   type = "@ai-sdk/anthropic"
+#   name = "Anthropic Proxy"
+#   base_url = "https://api.example.com/v1"
+#   api_key = "YOUR_ANTHROPIC_API_KEY"
+#   models = [
+#     { id = "claude-opus-4-6", name = "Opus 4.6", modalities = { input = ["text", "image"], output = ["text"] }, limit = { context = 200000, output = 32000 }, variants = { high = { thinking = { type = "adaptive" }, output_config = { effort = "high" } }, max = { thinking = { type = "adaptive" }, output_config = { effort = "max" } } } },
+#     { id = "claude-sonnet-4-6", name = "Sonnet 4.6", modalities = { input = ["text", "image"], output = ["text"] }, limit = { context = 200000, output = 32000 }, variants = { high = { thinking = { type = "adaptive" }, output_config = { effort = "high" } }, max = { thinking = { type = "adaptive" }, output_config = { effort = "max" } } } },
+#     { id = "claude-haiku-4-5-20251001", name = "Haiku 4.5", limit = { context = 200000, output = 65536 } },
+#   ]
+
+# 示例 2：Google Gemini 或 Gemini 代理
+# [[data.opencode.providers]]
+#   id = "google-proxy"
+#   type = "@ai-sdk/google"
+#   name = "Google Gemini Proxy"
+#   base_url = "https://api.example.com/v1"
+#   api_key = "YOUR_GOOGLE_API_KEY"
+#   models = [
+#     { id = "gemini-3.1-pro-preview", name = "Gemini 3.1 Pro Preview", modalities = { input = ["text", "image"], output = ["text"] }, limit = { context = 1048576, output = 65536 } },
+#     { id = "gemini-3-flash-preview", name = "Gemini 3 Flash Preview", modalities = { input = ["text", "image"], output = ["text"] }, limit = { context = 1048576, output = 65536 } },
+#   ]
+
+# 示例 3：OpenAI 或 OpenAI-compatible 网关
+# [[data.opencode.providers]]
+#   id = "openai-proxy"
+#   type = "@ai-sdk/openai"
+#   name = "OpenAI Gateway"
+#   base_url = "https://api.openai.com/v1"
+#   api_key = "YOUR_OPENAI_API_KEY"
+#   models = [
+#     { id = "gpt-5.4", name = "GPT-5.4", modalities = { input = ["text", "image"], output = ["text"] }, limit = { context = 1050000, output = 128000 }, variants = { xhigh = { reasoningEffort = "xhigh", reasoningSummary = "auto", textVerbosity = "low", include = ["reasoning.encrypted_content"] } } },
+#     { id = "gpt-5.4-mini", name = "GPT-5.4 Mini", modalities = { input = ["text", "image"], output = ["text"] }, limit = { context = 400000, input = 272000, output = 128000 } },
+#   ]
+
 
 # ----------------------------------------
 # OpenCode Model Profile 配置
