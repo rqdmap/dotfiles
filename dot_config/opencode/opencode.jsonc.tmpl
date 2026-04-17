@@ -1,14 +1,82 @@
 {{- $active := .opencode.model_profiles.active -}}
 {{- $profile := index .opencode.model_profiles $active -}}
+
+{{- /* ----------------------------------------
+      Build MCP config
+---------------------------------------- */ -}}
+{{- $mcps := dict -}}
+{{- if hasKey . "mcps" -}}
+{{- range $name, $cfg := .mcps -}}
+  {{- $type := index $cfg "type" -}}
+  {{- if not (or (eq $type "remote") (eq $type "local")) -}}
+    {{- fail (printf "mcp '%s': type must be 'remote' or 'local', got '%s'" $name $type) -}}
+  {{- end -}}
+  {{- $mcpProfile := index $cfg "profile" -}}
+  {{- if or (not $mcpProfile) (eq $mcpProfile $.machine_profile) -}}
+    {{- $entry := dict "type" $type "enabled" (index $cfg "enabled") -}}
+    {{- if eq $type "remote" -}}
+      {{- $_ := set $entry "url" (index $cfg "url") -}}
+      {{- if index $cfg "headers" -}}
+        {{- $_ := set $entry "headers" (index $cfg "headers") -}}
+      {{- end -}}
+    {{- else -}}
+      {{- $_ := set $entry "command" (index $cfg "command") -}}
+      {{- if index $cfg "environment" -}}
+        {{- $_ := set $entry "environment" (index $cfg "environment") -}}
+      {{- end -}}
+    {{- end -}}
+    {{- $_ := set $mcps $name $entry -}}
+  {{- end -}}
+{{- end -}}
+{{- end -}}
+{{- /* ----------------------------------------
+      Build global tools config
+---------------------------------------- */ -}}
+{{- $tools := dict -}}
+{{- if hasKey .opencode "tools" -}}
+{{- range $cfg := .opencode.tools -}}
+  {{- $toolProfile := index $cfg "profile" -}}
+  {{- if or (not $toolProfile) (eq $toolProfile $.machine_profile) -}}
+    {{- $_ := set $tools (index $cfg "pattern") (index $cfg "enabled") -}}
+  {{- end -}}
+{{- end -}}
+{{- end -}}
+{{- /* ----------------------------------------
+      Build base agents config
+---------------------------------------- */ -}}
+{{- $agents := dict -}}
+{{- if hasKey .opencode "agents" -}}
+{{- range $name, $cfg := .opencode.agents -}}
+  {{- $_ := set $agents $name $cfg -}}
+{{- end -}}
+{{- end -}}
+{{- /* ----------------------------------------
+      Merge agent_tools into agent.<name>.tools
+---------------------------------------- */ -}}
+{{- if hasKey .opencode "agent_tools" -}}
+{{- range $cfg := .opencode.agent_tools -}}
+  {{- $ruleProfile := index $cfg "profile" -}}
+  {{- if or (not $ruleProfile) (eq $ruleProfile $.machine_profile) -}}
+    {{- $agentName := index $cfg "agent" -}}
+    {{- $agentEntry := dict -}}
+    {{- if hasKey $agents $agentName -}}
+      {{- $agentEntry = index $agents $agentName -}}
+    {{- end -}}
+    {{- $agentToolMap := dict -}}
+    {{- if hasKey $agentEntry "tools" -}}
+      {{- $agentToolMap = index $agentEntry "tools" -}}
+    {{- end -}}
+    {{- $_ := set $agentToolMap (index $cfg "pattern") (index $cfg "enabled") -}}
+    {{- $_ := set $agentEntry "tools" $agentToolMap -}}
+    {{- $_ := set $agents $agentName $agentEntry -}}
+  {{- end -}}
+{{- end -}}
+{{- end -}}
+
 {
   "$schema": "https://opencode.ai/config.json",
   "autoupdate": true,
   "default_agent": "scout",
-  "agent": {
-    "build": {
-      "disable": true
-    }
-  },
   "model": "{{ $profile.default_model }}",
   "provider": {
 {{- range $pIndex, $provider := .opencode.providers }}
@@ -43,42 +111,9 @@
     }
 {{- end }}
   },
-  "mcp": {
-{{- if hasKey . "mcps" }}
-{{- range $name, $cfg := .mcps }}
-{{- $type := index $cfg "type" }}
-{{- if not (or (eq $type "remote") (eq $type "local")) }}
-{{- fail (printf "mcp '%s': type must be 'remote' or 'local', got '%s'" $name $type) }}
-{{- end }}
-{{- $profile := index $cfg "profile" }}
-{{- if or (not $profile) (eq $profile $.machine_profile) }}
-    "{{ $name }}": {
-      "type": "{{ $type }}",
-{{- if eq $type "remote" }}
-      "url": "{{ index $cfg "url" }}",
-{{- if index $cfg "headers" }}
-      "headers": {
-{{- range $k, $v := index $cfg "headers" }}
-        "{{ $k }}": "{{ $v }}",
-{{- end }}
-      },
-{{- end }}
-{{- else }}
-      "command": [{{ range $i, $v := index $cfg "command" }}{{ if $i }}, {{ end }}"{{ $v }}"{{ end }}],
-{{- if index $cfg "environment" }}
-      "environment": {
-{{- range $k, $v := index $cfg "environment" }}
-        "{{ $k }}": "{{ $v }}",
-{{- end }}
-      },
-{{- end }}
-{{- end }}
-      "enabled": {{ index $cfg "enabled" }},
-    },
-{{- end }}
-{{- end }}
-{{- end }}
-  },
+  "agent": {{ $agents | toPrettyJson | indent 2 | trim }},
+  "mcp": {{ $mcps | toPrettyJson | indent 2 | trim }},
+  "tools": {{ $tools | toPrettyJson | indent 2 | trim }},
   "permission": {
     "bash": {
       "*": "allow",

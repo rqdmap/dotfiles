@@ -173,39 +173,84 @@
 
 
 # ----------------------------------------
-# MCP 配置
+# OpenCode MCP 配置
 # ----------------------------------------
 # Remote - 仅特定 Profile, 带 headers 鉴权
 [data.mcps.example-remote-auth]
-profile = "work"
-type    = "remote"
-url     = "https://mcp.example.com/mcp"
-enabled = false
-headers = { Authorization = "Bearer EXAMPLE_TOKEN" }
+  profile = "work"
+  type    = "remote"
+  url     = "https://mcp.example.com/mcp"
+  enabled = false
+  headers = { Authorization = "Bearer EXAMPLE_TOKEN" }
 
 # Remote - 所有环境通用, 无鉴权
 [data.mcps.example-remote-common]
-type    = "remote"
-url     = "https://mcp.public-example.com/mcp"
-enabled = true
+  type    = "remote"
+  url     = "https://mcp.public-example.com/mcp"
+  enabled = true
 
 # Local - 带环境变量
 [data.mcps.example-local-auth]
-type    = "local"
-enabled = true
-command = ["npx", "-y", "example-mcp-package"]
-environment = { NODE_ENV = "production", MY_VAR = "some_value" }
+  type        = "local"
+  enabled     = true
+  command     = ["npx", "-y", "example-mcp-package"]
+  environment = { NODE_ENV = "production", MY_VAR = "some_value" }
 
+# ----------------------------------------
+# OpenCode 全局 tools 配置
+# ----------------------------------------
+# 每条规则：
+# - pattern: 对应 opencode 里的工具匹配模式
+# - enabled: true / false
+# - profile: 可选；不写表示所有机器都生效
+[[data.opencode.tools]]
+  profile = "work"
+  pattern = "example-internal_*"
+  enabled = false
 
-[data.trilium]
-  url = "https://trilium.your.domain"
-  token = "your-trilium-api-token"
-  parent_note_id = "root-note-id"
+[[data.opencode.tools]]
+  pattern = "context7_*"
+  enabled = false
+
+# ----------------------------------------
+# OpenCode agent 静态配置
+# ----------------------------------------
+# 放不需要按 profile 切换的 agent 基础配置。
+[data.opencode.agents.build]
+  disable = true
+
+# 示例：
+# [data.opencode.agents.oracle]
+#   reasoningEffort = "high"
+
+# ----------------------------------------
+# OpenCode agent 专属 tools 覆盖
+# ----------------------------------------
+# 用于给某个 agent 单独放开全局默认关闭的工具。
+[[data.opencode.agent_tools]]
+  agent   = "iris"
+  profile = "work"
+  pattern = "example-internal_*"
+  enabled = true
+
+# 示例：
+# [[data.opencode.agent_tools]]
+#   agent   = "librarian"
+#   pattern = "context7_*"
+#   enabled = true
 
 # ----------------------------------------
 # MCP 工具 API Key 配置
 # ----------------------------------------
 [data.mcp-env]
   EXA_API_KEY = ""
+
+# ========================================
+# Trilium 配置
+# ========================================
+[data.trilium]
+  url = "https://trilium.your.domain"
+  token = "your-trilium-api-token"
+  parent_note_id = "root-note-id"
 
 {{- /* vim: set ft=toml: */}}
