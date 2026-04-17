@@ -116,16 +116,16 @@
 # ----------------------------------------
 # OpenCode Provider 配置
 # ----------------------------------------
-# 如果你主要通过 `/connect` 使用内置 provider，这一段可以留空。
-# 下面保留 3 组常见示例：Anthropic、Google Gemini、OpenAI / OpenAI-compatible。
-# 使用方式：复制对应块，取消注释后替换 `base_url`、`api_key` 与 `models`。
-# 注意：
-# - `id` 是 provider 唯一标识；模型引用格式为 `provider_id/model_id`
+# 如果你主要通过 `/connect` 使用内置 provider, 这一段可以留空
+# 下面保留 3 组常见示例: Anthropic, Google Gemini, OpenAI / OpenAI-compatible
+# 使用方式: 复制对应块, 取消注释后替换 `base_url`, `api_key` 与 `models`
+# 注意:
+# - `id` 是 provider 唯一标识; 模型引用格式为 `provider_id/model_id`
 # - `type` 对应 AI SDK provider 包
 # - `name` 仅用于展示
-# - `models` 支持 `limit`、`modalities`、`options`、`variants` 等字段
+# - `models` 支持 `limit`, `modalities`, `options`, `variants` 等字段
 
-# 示例 1：Anthropic 或 Anthropic 代理
+# 示例 1: Anthropic 或 Anthropic 代理
 # [[data.opencode.providers]]
 #   id = "anthropic-proxy"
 #   type = "@ai-sdk/anthropic"
@@ -138,7 +138,7 @@
 #     { id = "claude-haiku-4-5-20251001", name = "Haiku 4.5", limit = { context = 200000, output = 65536 } },
 #   ]
 
-# 示例 2：Google Gemini 或 Gemini 代理
+# 示例 2: Google Gemini 或 Gemini 代理
 # [[data.opencode.providers]]
 #   id = "google-proxy"
 #   type = "@ai-sdk/google"
@@ -150,7 +150,7 @@
 #     { id = "gemini-3-flash-preview", name = "Gemini 3 Flash Preview", modalities = { input = ["text", "image"], output = ["text"] }, limit = { context = 1048576, output = 65536 } },
 #   ]
 
-# 示例 3：OpenAI 或 OpenAI-compatible 网关
+# 示例 3: OpenAI 或 OpenAI-compatible 网关
 # [[data.opencode.providers]]
 #   id = "openai-proxy"
 #   type = "@ai-sdk/openai"
@@ -220,65 +220,75 @@
 # ----------------------------------------
 # OpenCode MCP 配置
 # ----------------------------------------
-# Remote - 仅特定 Profile, 带 headers 鉴权
-[data.mcps.example-remote-auth]
-  profile = "work"
-  type    = "remote"
-  url     = "https://mcp.example.com/mcp"
-  enabled = false
-  headers = { Authorization = "Bearer EXAMPLE_TOKEN" }
+# 使用方式: 复制对应块, 取消注释后替换名称, url, headers, command 与 environment
+# 注意:
+# - table 名字会成为最终 `mcp` 配置里的 key
+# - `profile` 可选; 不写表示所有机器都生效
+# - `enabled` 建议先设为 false, 确认联通后再开启
 
-# Remote - 所有环境通用, 无鉴权
-[data.mcps.example-remote-common]
-  type    = "remote"
-  url     = "https://mcp.public-example.com/mcp"
-  enabled = true
+# 示例 1: 仅特定 profile 生效的 remote MCP (带鉴权 header)
+# [data.mcps.my-remote-auth]
+#   profile = "work"
+#   type    = "remote"
+#   url     = "https://mcp.example.com/mcp"
+#   enabled = false
+#   headers = { Authorization = "Bearer YOUR_TOKEN" }
 
-# Local - 带环境变量
-[data.mcps.example-local-auth]
-  type        = "local"
-  enabled     = true
-  command     = ["npx", "-y", "example-mcp-package"]
-  environment = { NODE_ENV = "production", MY_VAR = "some_value" }
+# 示例 2: 所有机器通用的 remote MCP
+# [data.mcps.my-remote-common]
+#   type    = "remote"
+#   url     = "https://mcp.public-example.com/mcp"
+#   enabled = false
+
+# 示例 3: 本地命令型 MCP (可带环境变量)
+# [data.mcps.my-local-mcp]
+#   type        = "local"
+#   enabled     = false
+#   command     = ["npx", "-y", "example-mcp-package"]
+#   environment = { NODE_ENV = "production", MY_VAR = "some_value" }
+
+
+# ----------------------------------------
+# OpenCode agent 静态配置
+# ----------------------------------------
+[data.opencode.agents.build]
+  disable = true
+
+# 示例:
+# [data.opencode.agents.oracle]
+#   reasoningEffort = "high"
+
 
 # ----------------------------------------
 # OpenCode 全局 tools 配置
 # ----------------------------------------
-# 每条规则：
+# 每条规则:
 # - pattern: 对应 opencode 里的工具匹配模式
 # - enabled: true / false
-# - profile: 可选；不写表示所有机器都生效
-[[data.opencode.tools]]
-  profile = "work"
-  pattern = "example-internal_*"
-  enabled = false
+# - profile: 可选; 不写表示所有机器都生效
 
 [[data.opencode.tools]]
   pattern = "context7_*"
   enabled = false
 
-# ----------------------------------------
-# OpenCode agent 静态配置
-# ----------------------------------------
-# 放不需要按 profile 切换的 agent 基础配置。
-[data.opencode.agents.build]
-  disable = true
-
-# 示例：
-# [data.opencode.agents.oracle]
-#   reasoningEffort = "high"
+# 示例: 仅某个 profile 下关闭内部工具
+# [[data.opencode.tools]]
+#   profile = "work"
+#   pattern = "example-internal_*"
+#   enabled = false
 
 # ----------------------------------------
 # OpenCode agent 专属 tools 覆盖
 # ----------------------------------------
-# 用于给某个 agent 单独放开全局默认关闭的工具。
-[[data.opencode.agent_tools]]
-  agent   = "iris"
-  profile = "work"
-  pattern = "example-internal_*"
-  enabled = true
+# 用于给某个 agent 单独放开全局默认关闭的工具
+# 示例 1: 仅某个 profile 下放开内部工具, 与全局禁用规则配合, 实现白名单能力
+# [[data.opencode.agent_tools]]
+#   agent   = "scout"
+#   profile = "work"
+#   pattern = "example-internal_*"
+#   enabled = true
 
-# 示例：
+# 示例 2: 单独给 librarian 放开 context7
 # [[data.opencode.agent_tools]]
 #   agent   = "librarian"
 #   pattern = "context7_*"
@@ -287,15 +297,17 @@
 # ----------------------------------------
 # MCP 工具 API Key 配置
 # ----------------------------------------
+# 这里保留可选环境变量槽位; 为空时不会被 zshenv 导出
 [data.mcp-env]
-  EXA_API_KEY = ""
+  EXA_API_KEY = ""                      # 可选; 用于 Exa / web search MCP
 
 # ========================================
 # Trilium 配置
 # ========================================
-[data.trilium]
-  url = "https://trilium.your.domain"
-  token = "your-trilium-api-token"
-  parent_note_id = "root-note-id"
+# 如果未使用 Trilium, 这一段可以保持注释状态
+# [data.trilium]
+#   url = "https://trilium.example.com"
+#   token = "YOUR_TRILIUM_API_TOKEN"
+#   parent_note_id = "root-note-id"
 
 {{- /* vim: set ft=toml: */}}
