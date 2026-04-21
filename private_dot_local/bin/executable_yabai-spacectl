@@ -10,7 +10,7 @@
 #
 #   1. `focus <space>`
 #      Read a per-space cache, try to focus the cached window, then fall back
-#      to `first-window`, then finally `space --focus`.
+#      to the first focusable window, then finally `space --focus`.
 #
 #   2. `send <space>`
 #      Move the focused window to another space.
@@ -116,25 +116,92 @@ window_matches_space() {
   window_json "$WINDOW_ID" | jq -e ".space == ${SPACE_ID}" >/dev/null 2>&1
 }
 
-space_first_window() {
-  yabai -m query --spaces --space "$1" 2>/dev/null | jq -r '."first-window" // empty'
+display_index() {
+  yabai -m query --displays --display "$1" 2>/dev/null | jq -r '.index // empty'
+}
+
+display_visible_space() {
+  DISPLAY_ID="$1"
+  [ -n "$DISPLAY_ID" ] || return 0
+
+  yabai -m query --spaces 2>/dev/null | jq -r --argjson did "$DISPLAY_ID" '
+    map(select(.display == $did and ."is-visible" == true))[0].index // empty
+  '
+}
+
+space_windows() {
+  yabai -m query --spaces --space "$1" 2>/dev/null | jq -r '.windows[]?'
+}
+
+window_is_focusable() {
+  window_json "$1" | jq -e '."is-hidden" == false and ."is-minimized" == false' >/dev/null 2>&1
+}
+
+window_is_local_to_space() {
+  WINDOW_ID="$1"
+  SPACE_ID="$2"
+  [ -n "$WINDOW_ID" ] || return 1
+  [ -n "$SPACE_ID" ] || return 1
+
+  window_matches_space "$WINDOW_ID" "$SPACE_ID"
+}
+
+space_focus_candidate() {
+  SPACE_ID="$1"
+  [ -n "$SPACE_ID" ] || return 0
+
+  WIN="$(read_cache "$SPACE_ID")"
+  if [ -n "$WIN" ] && window_matches_space "$WIN" "$SPACE_ID" && window_is_focusable "$WIN"; then
+    printf '%s\n' "$WIN"
+    return 0
+  fi
+
+  OLD_IFS=$IFS
+  IFS='
+'
+  for WID in $(space_windows "$SPACE_ID"); do
+    [ -n "$WID" ] || continue
+    window_is_local_to_space "$WID" "$SPACE_ID" || continue
+    window_is_focusable "$WID" || continue
+    printf '%s\n' "$WID"
+    IFS=$OLD_IFS
+    return 0
+  done
+  IFS=$OLD_IFS
+}
+
+focus_window_in_space() {
+  SPACE_ID="$1"
+  [ -n "$SPACE_ID" ] || return 1
+
+  WIN="$(space_focus_candidate "$SPACE_ID")"
+  [ -n "$WIN" ] || return 1
+
+  yabai -m window --focus "$WIN" 2>/dev/null
 }
 
 cmd_focus() {
   SPACE_ID="$1"
   [ -n "$SPACE_ID" ] || exit 0
 
-  WIN="$(read_cache "$SPACE_ID")"
-  if [ -n "$WIN" ] && window_matches_space "$WIN" "$SPACE_ID"; then
-    yabai -m window --focus "$WIN" 2>/dev/null && exit 0
-  fi
-
-  WIN="$(space_first_window "$SPACE_ID")"
-  if [ -n "$WIN" ]; then
-    yabai -m window --focus "$WIN" 2>/dev/null && exit 0
-  fi
+  focus_window_in_space "$SPACE_ID" && exit 0
 
   yabai -m space --focus "$SPACE_ID"
+}
+
+cmd_focus_dir() {
+  DIR="$1"
+  [ -n "$DIR" ] || exit 0
+
+  yabai -m window --focus "$DIR" 2>/dev/null && exit 0
+
+  DISPLAY_ID="$(display_index "$DIR")"
+  [ -n "$DISPLAY_ID" ] || exit 0
+
+  SPACE_ID="$(display_visible_space "$DISPLAY_ID")"
+  [ -n "$SPACE_ID" ] || exit 0
+
+  focus_window_in_space "$SPACE_ID" || exit 0
 }
 
 cmd_send() {
@@ -181,6 +248,7 @@ cmd_purge_window() {
 usage() {
   cat <<'EOF'
 Usage:
+  yabai-spacectl focus-dir <west|south|north|east>
   yabai-spacectl focus <space>
   yabai-spacectl send <space>
   yabai-spacectl record-focus <window_id>
@@ -189,6 +257,9 @@ EOF
 }
 
 case "$MODE" in
+  focus-dir)
+    cmd_focus_dir "$ARG"
+    ;;
   focus)
     cmd_focus "$ARG"
     ;;

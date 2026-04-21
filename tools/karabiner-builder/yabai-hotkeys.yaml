@@ -58,11 +58,11 @@ events:
   - wm_resize_right_shrink
 
 actions:
-  # focus window (with cross-display fallback)
-  wm_focus_west: yabai -m window --focus west || yabai -m display --focus west
-  wm_focus_south: yabai -m window --focus south || yabai -m display --focus south
-  wm_focus_north: yabai -m window --focus north || yabai -m display --focus north
-  wm_focus_east: yabai -m window --focus east || yabai -m display --focus east
+  # focus window, then strictly fall back to a real window on the visible space of the adjacent display
+  wm_focus_west: $HOME/.local/bin/yabai-spacectl focus-dir west
+  wm_focus_south: $HOME/.local/bin/yabai-spacectl focus-dir south
+  wm_focus_north: $HOME/.local/bin/yabai-spacectl focus-dir north
+  wm_focus_east: $HOME/.local/bin/yabai-spacectl focus-dir east
 
   # swap managed window
   wm_swap_west: yabai -m window --swap west
@@ -70,7 +70,7 @@ actions:
   wm_swap_north: yabai -m window --swap north
   wm_swap_east: yabai -m window --swap east
 
-  # fast focus desktop (cached preferred window → first-window → space focus)
+  # fast focus desktop (cached preferred window → first focusable window → space focus)
   wm_space_1: $HOME/.local/bin/yabai-spacectl focus 1
   wm_space_2: $HOME/.local/bin/yabai-spacectl focus 2
   wm_space_3: $HOME/.local/bin/yabai-spacectl focus 3
