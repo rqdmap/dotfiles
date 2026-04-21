@@ -43,6 +43,9 @@ rules:
       - description: Ctrl-click to Cmd-click
         map: left_control + button1 = left_command + button1
 
+      - description: Disable native hide on right Cmd+H
+        map: right_command + h = vk_none
+
       # --- Browser-only ---
       - description: Save in browsers
         map: left_control + s = left_command + s
