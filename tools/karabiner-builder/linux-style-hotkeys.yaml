@@ -46,6 +46,12 @@ rules:
       - description: Disable native hide on right Cmd+H
         map: right_command + h = vk_none
 
+      - description: Zoom in
+        map: left_control + equal_sign = left_command + equal_sign
+
+      - description: Zoom out
+        map: left_control + hyphen = left_command + hyphen
+
       # --- Browser-only ---
       - description: Save in browsers
         map: left_control + s = left_command + s
@@ -91,18 +97,6 @@ rules:
 
       - description: History
         map: left_control + h = left_command + y
-        conditions:
-          - type: frontmost_application_if
-            app_group: browsers
-
-      - description: Zoom in
-        map: left_control + equal_sign = left_command + equal_sign
-        conditions:
-          - type: frontmost_application_if
-            app_group: browsers
-
-      - description: Zoom out
-        map: left_control + hyphen = left_command + hyphen
         conditions:
           - type: frontmost_application_if
             app_group: browsers
@@ -165,18 +159,6 @@ rules:
 
       - description: Terminal paste
         map: left_control + left_shift + v = left_command + v
-        conditions:
-          - type: frontmost_application_if
-            app_group: terminals
-
-      - description: Terminal zoom in
-        map: left_control + equal_sign = left_command + equal_sign
-        conditions:
-          - type: frontmost_application_if
-            app_group: terminals
-
-      - description: Terminal zoom out
-        map: left_control + hyphen = left_command + hyphen
         conditions:
           - type: frontmost_application_if
             app_group: terminals
