@@ -12,7 +12,7 @@
     "status_view": "<leader>s",
     "session_export": "",
     "session_new": "<leader>n",
-    "session_list": "<leader>l",
+    "session_list": "<leader>l,ctrl+l",
     "session_timeline": "<leader>t",
     "session_share": "none",
     "session_unshare": "none",
