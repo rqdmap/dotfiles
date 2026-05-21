@@ -69,8 +69,15 @@
     {{- $_ := set $agentToolMap (index $cfg "pattern") (index $cfg "enabled") -}}
     {{- $_ := set $agentEntry "tools" $agentToolMap -}}
     {{- $_ := set $agents $agentName $agentEntry -}}
-  {{- end -}}
 {{- end -}}
+{{- end -}}
+{{- end -}}
+{{- /* ----------------------------------------
+      Build plugins config
+---------------------------------------- */ -}}
+{{- $plugins := list -}}
+{{- if hasKey .opencode "plugins" -}}
+{{- $plugins = .opencode.plugins -}}
 {{- end -}}
 
 {
@@ -134,9 +141,7 @@
     "todoread": "allow",
     "webfetch": "allow"
   },
-  "plugin": [
-    "oh-my-openagent@latest"
-  ]
+  "plugin": {{ $plugins | toPrettyJson | indent 2 | trim }}
 }
 
 {{- /* vim: set ft=go: */}}

@@ -109,6 +109,15 @@
 # OpenCode 配置
 # ========================================
 
+# ----------------------------------------
+# OpenCode Plugin 配置
+# ----------------------------------------
+# 这组插件会渲染到 opencode.jsonc 的 `plugin` 字段, 由 chezmoi 统一覆盖
+[data.opencode]
+  plugins = [
+    "oh-my-openagent@latest",
+  ]
+
 [data.opencode.server]
   workspace_dirs = [ "~" ]
   base_port = 64601
