@@ -59,7 +59,7 @@ play = [
 	{ run = '''mediainfo "$1"; echo "Press enter to exit"; read _''', block = true, desc = "Show media info", for = "unix" },
 ]
 pdf = [
-	{ run = 'zathura "$@"', desc = "zathura", block = false, for = "linux", orphan = true},
+	{ run = 'zathura "$@"', desc = "zathura", block = false, for = "unix", orphan = true },
 	{ run = 'okular "$@"', desc = "okular", block = false, for = "linux", orphan = true},
 	{ run = 'foxitreader "$@"', desc = "foxitreader", block = false, for = "linux", orphan = true},
 ]
