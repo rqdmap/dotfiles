@@ -96,6 +96,11 @@
       "name": "{{ $provider.name }}",
       "options": {
         "baseURL": "{{ $provider.base_url }}",
+        {{- if and (hasKey $provider "auth_type") (eq $provider.auth_type "bearer") }}
+        "headers": {
+          "Authorization": "Bearer {{ $provider.api_key }}"
+        },
+        {{- end }}
         "apiKey": "{{ $provider.api_key }}"
       },
       "models": {
