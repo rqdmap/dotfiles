@@ -30,8 +30,8 @@ function oc-serve {
 }
 
 function oc-stop {
-    pkill -f "opencode serve" 2>/dev/null
-    echo "All opencode servers stopped"
+    pkill -KILL -f "opencode serve" 2>/dev/null
+    echo "All opencode servers killed"
 }
 
 function oc-status {
