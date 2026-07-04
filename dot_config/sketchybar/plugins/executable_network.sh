@@ -1,9 +1,7 @@
 #!/bin/bash
 
-# 获取网络接口（通常是 en0 或 en1）
-INTERFACE=$(route get default | grep interface | awk '{print $2}')
+INTERFACE=$(route get default 2>/dev/null | grep interface | awk '{print $2}')
 
-# 如果没有找到默认接口，尝试常见的接口名
 if [ -z "$INTERFACE" ]; then
     for iface in en0 en1 en2; do
         if ifconfig "$iface" 2>/dev/null | grep -q "inet "; then
@@ -13,20 +11,14 @@ if [ -z "$INTERFACE" ]; then
     done
 fi
 
-# 如果还是没找到，退出
 if [ -z "$INTERFACE" ]; then
-    sketchybar --set network label="No Network"
+    sketchybar --set network_down label="↓ --" label.color="0xfff7768e" background.color="0x33f7768e" \
+               --set network_up label="↑ --" label.color="0xfff7768e" background.color="0x33f7768e"
     exit 1
 fi
 
-# 获取当前网络统计
-get_bytes() {
-    netstat -ibn | grep -E "^$INTERFACE" | head -1 | awk '{print $7 " " $10}'
-}
-
-# 读取之前的数据
 CACHE_FILE="/tmp/sketchybar_network_cache"
-CURRENT_DATA=$(get_bytes)
+CURRENT_DATA=$(netstat -ibn | grep -E "^$INTERFACE" | head -1 | awk '{print $7 " " $10}')
 CURRENT_RX=$(echo $CURRENT_DATA | awk '{print $1}')
 CURRENT_TX=$(echo $CURRENT_DATA | awk '{print $2}')
 CURRENT_TIME=$(date +%s)
@@ -36,16 +28,13 @@ if [ -f "$CACHE_FILE" ]; then
     PREV_RX=$(echo $PREV_DATA | awk '{print $1}')
     PREV_TX=$(echo $PREV_DATA | awk '{print $2}')
     PREV_TIME=$(echo $PREV_DATA | awk '{print $3}')
-    
-    # 计算时间差
+
     TIME_DIFF=$((CURRENT_TIME - PREV_TIME))
-    
+
     if [ $TIME_DIFF -gt 0 ]; then
-        # 计算速度 (bytes per second)
         RX_SPEED=$(( (CURRENT_RX - PREV_RX) / TIME_DIFF ))
         TX_SPEED=$(( (CURRENT_TX - PREV_TX) / TIME_DIFF ))
-        
-        # 转换为人类可读格式
+
         format_speed() {
             local speed=$1
             if [ $speed -lt 1024 ]; then
@@ -58,19 +47,20 @@ if [ -f "$CACHE_FILE" ]; then
                 echo "$(( speed / 1073741824 ))GB/s"
             fi
         }
-        
-        RX_FORMATTED=$(format_speed $RX_SPEED)
-        TX_FORMATTED=$(format_speed $TX_SPEED)
-        
-        # 更新显示
-        sketchybar --set network label="↓${RX_FORMATTED} ↑${TX_FORMATTED}"
-    else
-        sketchybar --set network label="Calculating..."
+
+        RX=$(format_speed $RX_SPEED)
+        TX=$(format_speed $TX_SPEED)
+
+        sketchybar --set network_down label="↓ $RX" \
+                                      label.color="0xff7aa2f7" \
+                                      background.color="0x267aa2f7" \
+                   --set network_up label="↑ $TX" \
+                                    label.color="0xff9ece6a" \
+                                    background.color="0x229ece6a"
     fi
 else
-    sketchybar --set network label="Initializing..."
+    sketchybar --set network_down label="↓ --" label.color="0xff565f89" background.color="0x1824283b" \
+               --set network_up label="↑ --" label.color="0xff565f89" background.color="0x1824283b"
 fi
 
-# 保存当前数据
 echo "$CURRENT_RX $CURRENT_TX $CURRENT_TIME" > "$CACHE_FILE"
-

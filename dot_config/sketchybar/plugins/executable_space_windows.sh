@@ -1,32 +1,51 @@
 #!/bin/bash
 
-if [ "$SENDER" = "space_windows_change" ]; then
-  space="$(echo "$INFO" | jq -r '.space')"
-  apps="$(echo "$INFO" | jq -r '.apps | keys[]')"
+source "$CONFIG_DIR/colors.sh"
 
-  icon_strip=""
-  
-  if [ -n "$apps" ] && [ "$apps" != "null" ]; then
-    app_count=0
-    max_apps=5
-    
-    while read -r app && [ $app_count -lt $max_apps ]; do
-      if [ -n "$app" ] && [ "$app" != "null" ]; then
-        app_icon="$($CONFIG_DIR/plugins/icon_map_fn.sh "$app")"
-        icon_strip="${icon_strip} ${app_icon}"
-        app_count=$((app_count + 1))
-      fi
-    done <<< "$apps"
-    
-    # 如果有应用图标，设置适当的 padding
-    sketchybar --set "space.$space" label="$icon_strip" \
-                                   label.padding_right=8 \
-                                   label.padding_left=4
-  else
-    # 如果没有应用图标，移除 label 的 padding
-    sketchybar --set "space.$space" label="" \
-                                   label.padding_right=2 \
-                                   label.padding_left=4
-  fi
+spaces_info="$(yabai -m query --spaces 2>/dev/null)"
+
+if [ -z "$spaces_info" ]; then
+  exit 0
 fi
 
+while IFS=$'\t' read -r space has_focus has_windows; do
+  if [ -z "$space" ]; then
+    continue
+  fi
+
+  if [ "$has_focus" = "true" ]; then
+    background_drawing=on
+    background_color=0x228ABEB7
+    border_color=0x448ABEB7
+    border_width=1
+    icon_color=0xffffffff
+  elif [ "$has_windows" = "true" ]; then
+    background_drawing=off
+    background_color=0x00000000
+    border_color=0x00000000
+    border_width=0
+    icon_color="$foreground"
+  else
+    background_drawing=off
+    background_color=0x00000000
+    border_color=0x00000000
+    border_width=0
+    icon_color="$disabled"
+  fi
+
+  sketchybar --set "space.$space" label="" label.drawing=off \
+                              background.drawing="$background_drawing" \
+                              background.height=18 \
+                              background.corner_radius=5 \
+                              background.color="$background_color" \
+                              background.border_color="$border_color" \
+                              background.border_width="$border_width" \
+                              icon.color="$icon_color"
+done < <(
+  echo "$spaces_info" | jq -r '
+    .[]
+    | select(.index >= 1 and .index <= 10)
+    | [.index, ."has-focus", ((.windows | length) > 0)]
+    | @tsv
+  '
+)

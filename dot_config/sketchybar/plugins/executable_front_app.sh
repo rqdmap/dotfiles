@@ -9,5 +9,11 @@
 #   sketchybar --set "$NAME" label="$INFO"
 # fi
 if [ "$SENDER" = "front_app_switched" ]; then
-    sketchybar --set $NAME label="$INFO" icon=$($CONFIG_DIR/plugins/icon_map_fn.sh "$INFO")
+    app="$INFO"
+else
+    app=$(lsappinfo info -only name "$(lsappinfo front)" | sed -E 's/.*"([^"]+)".*/\1/')
+fi
+
+if [ -n "$app" ]; then
+    sketchybar --set "$NAME" label="$app" icon=$("$CONFIG_DIR/plugins/icon_map_fn.sh" "$app")
 fi
