@@ -19,6 +19,8 @@ alias clip='xclip -selection clipboard'
 {{- else if .is_macos -}}
 alias clip='pbcopy'
 {{- end }}
+alias claude="claude --dangerously-skip-permissions"
+alias q="qodercli --yolo"
 
 ptree() {
     local pid=$1
