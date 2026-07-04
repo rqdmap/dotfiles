@@ -58,6 +58,15 @@ yabai -m rule --add app="Python" manage=off
 yabai -m rule --add app="IntelliJ IDEA" manage=off
 yabai -m rule --add app="^(Finder|访达)$" manage=off
 
+{{ if eq .machine_profile "work" -}}
+# 副屏(竖屏 space 11)上下留空, 让活跃区域和主屏等高
+yabai -m config --space 11 top_padding 400
+yabai -m config --space 11 bottom_padding 350
+
+{{- end}}
+
+
+
 # 记录每个 space 最近聚焦的 window id
 yabai -m signal --add event=window_focused \
     action='$HOME/.local/bin/yabai-spacectl record-focus "$YABAI_WINDOW_ID"'
