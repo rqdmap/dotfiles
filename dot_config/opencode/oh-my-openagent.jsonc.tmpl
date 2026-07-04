@@ -9,7 +9,7 @@
     "replace_plan": true
   },
   "disabled_mcps": ["context7"],
-  "disabled_hooks": ["claude-code-hooks"],
+  "disabled_hooks": ["claude-code-hooks", "keyword-detector"],
   "agents": {{ (index $profile "agents" | default dict) | toPrettyJson | indent 2 | trim }},
   "categories": {{ (index $profile "categories" | default dict) | toPrettyJson | indent 2 | trim }}
 }
