@@ -13,7 +13,8 @@ model: "{{ $model }}"
 variant: "{{ $variant }}"
 
 permission:
-  skill: "deny"
+  skill:
+    "*": "allow"
   todowrite: "deny"
   todoread: "deny"
   skill_mcp: "deny"
@@ -24,6 +25,7 @@ permission:
   task:
     "*": "deny"
     iris: "allow"
+    reader: "allow"
     explore: "allow"
     librarian: "allow"
 ---
