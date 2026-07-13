@@ -181,6 +181,9 @@
 [data.opencode.model_profiles.github]
   default_model = "openai/gpt-5.4"
 
+  # 默认主 agent (scout) - GPT 系列, 抑制结构性过度装饰
+  scout = { model = "openai/gpt-5.4", variant = "xhigh" }
+
 [data.opencode.model_profiles.github.agents]
   # 默认编排者 - 负责规划、委派和执行复杂任务
   sisyphus = { model = "github-copilot/claude-opus-4.6", variant = "high" }

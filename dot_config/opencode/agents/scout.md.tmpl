@@ -1,6 +1,8 @@
 {{- $active := .opencode.model_profiles.active -}}
 {{- $profile := index .opencode.model_profiles $active | default dict -}}
-{{- $model := index $profile "scout_model" | default "openai/gpt-5.4" -}}
+{{- $scout := index $profile "scout" | default dict -}}
+{{- $model := index $scout "model" | default "openai/gpt-5.4" -}}
+{{- $variant := index $scout "variant" | default "" -}}
 ---
 description: >-
   A senior-engineer-style assistant tuned for GPT series models. Suppresses
@@ -8,6 +10,7 @@ description: >-
   headings, flat lists, tables preferred over bullets for comparisons.
 mode: primary
 model: "{{ $model }}"
+variant: "{{ $variant }}"
 
 permission:
   skill: "deny"
