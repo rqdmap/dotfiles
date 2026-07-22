@@ -29,10 +29,7 @@ if [ -z "$TOTAL_BYTES" ] || [ "$TOTAL_BYTES" -le 0 ]; then
 fi
 
 if [ -z "$USED_BYTES" ] || [ -z "$TOTAL_BYTES" ] || [ "$TOTAL_BYTES" -le 0 ]; then
-    sketchybar --set memory label="--" \
-                         icon.color="0xfff7768e" \
-                         label.color="0xfff7768e" \
-                         background.color="0x33f7768e"
+    sketchybar --set memory label="--" label.color="0xfff7768e"
     exit 1
 fi
 
@@ -40,19 +37,10 @@ MEM_PERCENT=$(awk -v used="$USED_BYTES" -v total="$TOTAL_BYTES" 'BEGIN { printf 
 
 if [ "$MEM_PERCENT" -gt 85 ]; then
     COLOR="0xfff7768e"
-    BG_COLOR="0x33f7768e"
 elif [ "$MEM_PERCENT" -gt 70 ]; then
     COLOR="0xffe0af68"
-    BG_COLOR="0x33e0af68"
-elif [ "$MEM_PERCENT" -gt 50 ]; then
-    COLOR="0xff7aa2f7"
-    BG_COLOR="0x267aa2f7"
 else
-    COLOR="0xff9ece6a"
-    BG_COLOR="0x229ece6a"
+    COLOR="0xffc0caf5"
 fi
 
-sketchybar --set memory label="${MEM_PERCENT}%" \
-                     icon.color="$COLOR" \
-                     label.color="$COLOR" \
-                     background.color="$BG_COLOR"
+sketchybar --set memory label="${MEM_PERCENT}%" label.color="$COLOR"

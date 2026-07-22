@@ -12,8 +12,8 @@ if [ -z "$INTERFACE" ]; then
 fi
 
 if [ -z "$INTERFACE" ]; then
-    sketchybar --set network_down label="↓ --" label.color="0xfff7768e" background.color="0x33f7768e" \
-               --set network_up label="↑ --" label.color="0xfff7768e" background.color="0x33f7768e"
+    sketchybar --set network_down label="--" label.color="0xfff7768e" \
+               --set network_up label="--" label.color="0xfff7768e"
     exit 1
 fi
 
@@ -51,16 +51,14 @@ if [ -f "$CACHE_FILE" ]; then
         RX=$(format_speed $RX_SPEED)
         TX=$(format_speed $TX_SPEED)
 
-        sketchybar --set network_down label="↓ $RX" \
-                                      label.color="0xff7aa2f7" \
-                                      background.color="0x267aa2f7" \
-                   --set network_up label="↑ $TX" \
-                                    label.color="0xff9ece6a" \
-                                    background.color="0x229ece6a"
+        sketchybar --set network_down label="$RX" \
+                                      label.color="0xffc0caf5" \
+                   --set network_up label="$TX" \
+                                    label.color="0xffc0caf5"
     fi
 else
-    sketchybar --set network_down label="↓ --" label.color="0xff565f89" background.color="0x1824283b" \
-               --set network_up label="↑ --" label.color="0xff565f89" background.color="0x1824283b"
+    sketchybar --set network_down label="--" label.color="0xff565f89" \
+               --set network_up label="--" label.color="0xff565f89"
 fi
 
 echo "$CURRENT_RX $CURRENT_TX $CURRENT_TIME" > "$CACHE_FILE"

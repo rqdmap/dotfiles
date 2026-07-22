@@ -112,66 +112,63 @@ sketchybar --add item space_separator left                               \
 
 #!/usr/bin/env bash
 
+stat=(
+  background.drawing=off
+  label.font="Iosevka Nerd Font:Bold:13.0"
+  label.color=0xffc0caf5
+  icon.font="Iosevka Nerd Font:Regular:15.0"
+  icon.padding_left=8
+  icon.padding_right=4
+  label.padding_left=0
+  label.padding_right=8
+  padding_left=0
+  padding_right=0
+)
+
 sketchybar --add item network_down right \
-           --set network_down update_freq=3 \
-                               icon.drawing=off \
-                               label="↓ --" \
-                               label.font="Iosevka Nerd Font:Bold:13.0" \
-                               label.padding_left=8 \
-                               label.padding_right=8 \
-                               padding_left=3 \
-                               padding_right=2 \
-                               background.drawing=on \
-                               background.height=22 \
-                               background.corner_radius=7 \
-                               background.color=0x267aa2f7 \
+           --set network_down "${stat[@]}" \
+                               update_freq=3 \
+                               icon="󰛴" \
+                               icon.color=0xff7aa2f7 \
+                               label="--" \
                                script="$PLUGIN_DIR/network.sh"
 
 sketchybar --add item network_up right \
-           --set network_up icon.drawing=off \
-                             label="↑ --" \
-                             label.font="Iosevka Nerd Font:Bold:13.0" \
-                             label.padding_left=8 \
-                             label.padding_right=8 \
-                             padding_left=2 \
-                             padding_right=3 \
-                             background.drawing=on \
-                             background.height=22 \
-                             background.corner_radius=7 \
-                             background.color=0x229ece6a
+           --set network_up "${stat[@]}" \
+                             icon="󰛶" \
+                             icon.color=0xff9ece6a \
+                             label="--"
+
+sketchybar --add item net_sep right \
+           --set net_sep icon="│" \
+                          icon.font="Iosevka Nerd Font:Regular:12.0" \
+                          icon.color=0xff3b4261 \
+                          icon.padding_left=4 \
+                          icon.padding_right=4 \
+                          label.drawing=off \
+                          background.drawing=off \
+                          padding_left=0 \
+                          padding_right=0
 
 sketchybar --add item memory right \
-           --set memory update_freq=5 \
-                         icon="MEM" \
-                         icon.drawing=on \
-                         icon.font="Iosevka Nerd Font:Bold:11.0" \
-                         icon.color="0xff7aa2f7" \
-                         label.font="Iosevka Nerd Font:Bold:13.0" \
-                         label.padding_left=3 \
-                         label.padding_right=8 \
-                         padding_left=3 \
-                         padding_right=3 \
-                         background.drawing=on \
-                         background.height=22 \
-                         background.corner_radius=7 \
-                         background.color=0x267aa2f7 \
+           --set memory "${stat[@]}" \
+                         update_freq=5 \
+                         icon="󰍛" \
+                         icon.color=0xff7aa2f7 \
                          script="$PLUGIN_DIR/memory.sh"
 
+sketchybar --add item disk right \
+           --set disk "${stat[@]}" \
+                       update_freq=60 \
+                       icon="󰋊" \
+                       icon.color=0xffbb9af7 \
+                       script="$PLUGIN_DIR/disk.sh"
+
 sketchybar --add item cpu right \
-           --set cpu update_freq=5 \
-                      icon="CPU" \
-                      icon.drawing=on \
-                      icon.font="Iosevka Nerd Font:Bold:11.0" \
-                      icon.color="0xff9ece6a" \
-                      label.font="Iosevka Nerd Font:Bold:13.0" \
-                      label.padding_left=3 \
-                      label.padding_right=8 \
-                      padding_left=3 \
-                      padding_right=3 \
-                      background.drawing=on \
-                      background.height=22 \
-                      background.corner_radius=7 \
-                      background.color=0x229ece6a \
+           --set cpu "${stat[@]}" \
+                      update_freq=5 \
+                      icon="󰻠" \
+                      icon.color=0xff9ece6a \
                       script="$PLUGIN_DIR/cpu.sh"
 
 
