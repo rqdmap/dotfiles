@@ -1,3 +1,4 @@
+{{- $macos_tiling_backend := .macos_tiling_backend | default "aerospace" -}}
 #!/bin/bash
 # This is a demo config to showcase some of the most important commands.
 # It is meant to be changed and configured, as it is intentionally kept sparse.
@@ -37,68 +38,79 @@ default=(
 )
 sketchybar --default "${default[@]}"
 
-##### Adding Mission Control Space Indicators #####
-# Let's add some mission control spaces:
-# https://felixkratz.github.io/SketchyBar/config/components#space----associate-mission-control-spaces-with-an-item
-# to indicate active and available mission control spaces.
+{{ if eq $macos_tiling_backend "aerospace" -}}
+##### AeroSpace Workspace Indicators #####
+# 由 AeroSpace 驱动的虚拟工作区指示器
+# 高亮通过 aerospace_workspace_change 事件刷新，点击后执行 aerospace workspace N
 
-# SPACE_ICONS=("I" "II" "III" "IV" "V" "VI" "VII" "VIII" "IX" "X")
-# for i in "${!SPACE_ICONS[@]}"
-# do
-#   sid="$(($i+1))"
-#   space=(
-#     space="$sid"
-#     icon="${SPACE_ICONS[i]}"
-#     icon.font="Iosevka Nerd Font:Bold:14.0"
-#     icon.padding_left=4
-#     icon.padding_right=4
-#     background.color=0x40ffffff
-#     background.corner_radius=0
-#     background.height=25
-#     label.drawing=off
-#     script="$PLUGIN_DIR/space.sh"
-#     click_script="yabai -m space --focus $sid"
-#   )
-#   sketchybar --add space space."$sid" left --set space."$sid" "${space[@]}"
-# done
+sketchybar --add event aerospace_workspace_change
 
-#!/bin/bash
+WORKSPACE_SIDS=(1 2 3 4 5 6 7 8 9 10 11)
+WORKSPACE_ICONS=("" "I" "II" "III" "IV" "V" "VI" "VII" "VIII" "IX" "X" "XI")
+
+for sid in "${WORKSPACE_SIDS[@]}"; do
+  sketchybar --add item space.$sid left \
+             --set space.$sid icon="${WORKSPACE_ICONS[$sid]}" \
+                              icon.font="Iosevka Nerd Font:Bold:12.0" \
+                              icon.width=32 \
+                              icon.align=center \
+                              label.drawing=off \
+                              icon.padding_left=6 \
+                              icon.padding_right=6 \
+                              padding_left=2 \
+                              padding_right=2 \
+                              background.drawing=off \
+                              background.height=18 \
+                              background.corner_radius=5 \
+                              background.color=0x228ABEB7 \
+                              background.border_color=0x448ABEB7 \
+                              background.border_width=1 \
+                              click_script="aerospace workspace $sid"
+done
+
+# 隐藏监听器统一处理工作区切换、前台 App 切换与定时刷新
+sketchybar --add item aerospace_listener left \
+           --set aerospace_listener drawing=off \
+                                    update_freq=5 \
+                                    script="$PLUGIN_DIR/aerospace_spaces.sh" \
+           --subscribe aerospace_listener aerospace_workspace_change front_app_switched
+{{ else if eq $macos_tiling_backend "yabai" -}}
+##### Yabai Space Indicators #####
 
 SPACE_SIDS=(1 2 3 4 5 6 7 8 9 10)
 SPACE_ICONS=("" "I" "II" "III" "IV" "V" "VI" "VII" "VIII" "IX" "X")
 
 for sid in "${SPACE_SIDS[@]}"; do
-  sketchybar --add space space.$sid left                                      \
-             --set space.$sid space=$sid                                      \
-                               icon=${SPACE_ICONS[$sid]}                       \
-                               icon.font="Iosevka Nerd Font:Bold:12.0"         \
-                               icon.width=32                                   \
-                               icon.align=center                               \
-                               label.drawing=off                               \
-                               icon.padding_left=6                             \
-                               icon.padding_right=6                            \
-                               padding_left=2                                  \
-                               padding_right=2                                 \
-                               background.drawing=off                          \
-                               background.height=18                            \
-                               background.corner_radius=5                      \
-                               background.color=0x228ABEB7                     \
-                               background.border_color=0x448ABEB7              \
-                               background.border_width=1                       \
-                               click_script="yabai -m space --focus $sid"      \
-                               script="$PLUGIN_DIR/space.sh"
+  sketchybar --add space space.$sid left \
+             --set space.$sid space=$sid \
+                              icon=${SPACE_ICONS[$sid]} \
+                              icon.font="Iosevka Nerd Font:Bold:12.0" \
+                              icon.width=32 \
+                              icon.align=center \
+                              label.drawing=off \
+                              icon.padding_left=6 \
+                              icon.padding_right=6 \
+                              padding_left=2 \
+                              padding_right=2 \
+                              background.drawing=off \
+                              background.height=18 \
+                              background.corner_radius=5 \
+                              background.color=0x228ABEB7 \
+                              background.border_color=0x448ABEB7 \
+                              background.border_width=1 \
+                              click_script="yabai -m space --focus $sid" \
+                              script="$PLUGIN_DIR/space.sh"
 done
 
-
-sketchybar --add item space_separator left                               \
-           --set space_separator icon=""                                 \
-                                 label.drawing=off                       \
-                                 background.drawing=off                  \
-                                 script="$PLUGIN_DIR/space_windows.sh"   \
+sketchybar --add item space_separator left \
+           --set space_separator icon="" \
+                                 label.drawing=off \
+                                 background.drawing=off \
+                                 script="$PLUGIN_DIR/space_windows.sh" \
            --subscribe space_separator space_windows_change
-#
-
-
+{{ else -}}
+{{ fail "macos_tiling_backend must be aerospace or yabai" }}
+{{ end }}
 ##### Adding Right Items #####
 # In the same way as the left items we can add items to the right side.
 # Additional position (e.g. center) are available, see:
@@ -109,8 +121,6 @@ sketchybar --add item space_separator left                               \
 # volume.sh script is only executed once an actual change in system audio
 # volume is registered. More info about the event system can be found here:
 # https://felixkratz.github.io/SketchyBar/config/events
-
-#!/usr/bin/env bash
 
 stat=(
   background.drawing=off
@@ -191,3 +201,8 @@ sketchybar --add item front_app center \
 
 ##### Force all scripts to run the first time (never do this in a script) #####
 sketchybar --update
+{{ if eq $macos_tiling_backend "aerospace" -}}
+sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE="$(aerospace list-workspaces --focused)"
+{{ end -}}
+
+{{- /* vim: set ft=bash: */ -}}

@@ -6,7 +6,7 @@
 
 - 🖥️ **多平台支持**: ArchLinux / Debian / macOS，桌面与服务器
 - 🎨 **统一主题**: Gruvbox 配色方案，一致的视觉体验
-- 🪟 **平铺窗口管理**: 灵活支持不同平铺 WM（BSPWM、Yabai 等）
+- 🪟 **平铺窗口管理**: Linux 使用 BSPWM，macOS 使用 AeroSpace
 - 🚀 **高性能配置**: 优化的 shell 和工具配置
 - 🔧 **模块化设计**: 多维度条件化配置，按需加载
 - 📦 **外部依赖**: 自动管理 git 仓库和插件
@@ -105,9 +105,11 @@ chezmoi update
 - **xss-lock**: 屏幕锁定
 
 #### macOS 平铺桌面
-- **平铺 WM**: Yabai
+- **平铺 WM**: 由 `macos_tiling_backend` 选择 AeroSpace 或 Yabai
+- **默认后端**: AeroSpace，Yabai 保留为 dormant fallback
 - **SketchyBar**: 状态栏
-- **Skhd**: 快捷键管理
+- **skhd**: 应用启动快捷键
+- **Karabiner-Elements**: 窗口快捷键事件总线
 
 ### 开发工具
 - **Neovim**: 通过外部 git 仓库管理配置
@@ -163,7 +165,7 @@ chezmoi update
    - `headless` - 纯命令行服务器
 
 4. **Window Manager（窗口管理器）**
-   - `tiling` - 平铺窗口管理器（Linux 用 BSPWM，macOS 用 Yabai）
+   - `tiling` - 平铺窗口管理器（Linux 用 BSPWM，macOS 由 backend 选择）
    - `none` - 无窗口管理器
 
 ### 模板变量
@@ -175,6 +177,7 @@ chezmoi update
 - `.os` - 操作系统 (arch/debian/macos)
 - `.interface` - 界面类型 (gui/headless)
 - `.wm` - 窗口管理器 (tiling/none)
+- `.macos_tiling_backend` - macOS tiling 后端 (aerospace/yabai/none)
 
 **便捷标志：**
 - `.is_personal` / `.is_generic` - Profile 判断
@@ -200,16 +203,20 @@ chezmoi data
 
 # macOS 平铺 WM 配置（非 macOS 平铺环境排除）
 {{ if not (and .has_tiling_wm .is_macos) }}
+.config/aerospace
 .config/sketchybar
-.yabairc
+.config/skhd
+.skhdrc
 {{ end }}
 
 # 无头服务器排除所有 GUI 配置
 {{ if .is_headless }}
 .config/bspwm
 .config/polybar
+.config/aerospace
 .config/sketchybar
-.yabairc
+.config/skhd
+.skhdrc
 {{ end }}
 ```
 
@@ -258,7 +265,7 @@ alias blog="/usr/local/bin/blog"
 - **核心配置**（所有机器）：zsh, tmux, git, starship, yazi
 - **平铺 WM 配置**（通过 .chezmoiignore 按系统排除）：
   - Linux: bspwm, polybar, rofi, picom, sxhkd
-  - macOS: yabai, sketchybar, skhd
+  - macOS: AeroSpace 或 Yabai, SketchyBar, Karabiner-Elements, skhd
 - **系统特定**：systemd（Linux），brew 相关（macOS）
 - **个人工具**（generic 机器排除）：个人脚本如 blog
 
