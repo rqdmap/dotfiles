@@ -79,6 +79,17 @@
 {{- $is_gui := eq $interface "gui" -}}
 {{- $is_headless := eq $interface "headless" -}}
 {{- $has_tiling_wm := eq $wm "tiling" -}}
+{{- $macos_tiling_backend := "none" -}}
+{{- if and $is_macos $has_tiling_wm -}}
+{{-   $backend_choice := promptIntOnce . "macos_tiling_backend_choice" "Select macOS tiling backend: 1 AeroSpace or 2 Yabai" -}}
+{{-   if eq $backend_choice 1 -}}
+{{-     $macos_tiling_backend = "aerospace" -}}
+{{-   else if eq $backend_choice 2 -}}
+{{-     $macos_tiling_backend = "yabai" -}}
+{{-   else -}}
+{{-     fail "Invalid macOS tiling backend, select 1 or 2" -}}
+{{-   end -}}
+{{- end -}}
 
 [data]
   # Selected preset
@@ -89,6 +100,7 @@
   os = {{ $os | quote }}                  # arch | debian | macos
   interface = {{ $interface | quote }}    # gui | headless
   wm = {{ $wm | quote }}                  # tiling | none
+  macos_tiling_backend = {{ $macos_tiling_backend | quote }} # aerospace | yabai | none
   
   # Convenience flags for templates
   is_personal = {{ $is_personal }}

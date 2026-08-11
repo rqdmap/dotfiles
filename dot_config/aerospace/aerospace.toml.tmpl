@@ -1,0 +1,131 @@
+# AeroSpace config — chezmoi 托管模板 dot_config/aerospace/aerospace.toml.tmpl
+#
+# WM 键位和事件槽位均由 aerospace-hotkeys.yaml 独立维护
+# 修改后执行 chezmoi apply
+# 命令参考: https://nikitabobko.github.io/AeroSpace/commands
+
+# AeroSpace 配置格式版本
+config-version = 2
+
+# 切工作区时通知 sketchybar 刷新指示器
+exec-on-workspace-change = ['/bin/bash', '-c',
+    'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE',
+]
+
+# 启动 JankyBorders 窗口边框
+after-startup-command = [
+    'exec-and-forget borders style=square width=8.0 hidpi=on active_color=0xff00ff00 inactive_color=0xff444444 background_color=0x00000000',
+]
+
+# 开机自启
+start-at-login = true
+
+# 规范化嵌套容器方向以逼近 BSP 自动交替分割
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = true
+
+accordion-padding = 30
+default-root-container-layout = 'tiles'
+default-root-container-orientation = 'auto'
+
+# 切换显示器时不移动鼠标
+on-focused-monitor-changed = []
+
+automatically-unhide-macos-hidden-apps = false
+
+[key-mapping]
+    preset = 'qwerty'
+
+# 窗口间距
+[gaps]
+    inner.horizontal = 6
+    inner.vertical   = 6
+    outer.left       = 12
+    outer.right      = 12
+    outer.top        = 8
+    outer.bottom     = 40
+
+# 多屏工作区分配，主屏使用 1–10，副屏使用 11
+# secondary 也可替换为显示器名正则，例如 DELL.*
+[workspace-to-monitor-force-assignment]
+    1  = 'main'
+    2  = 'main'
+    3  = 'main'
+    4  = 'main'
+    5  = 'main'
+    6  = 'main'
+    7  = 'main'
+    8  = 'main'
+    9  = 'main'
+    10 = 'main'
+    11 = 'secondary'
+
+# 浮动应用规则
+[[on-window-detected]]
+    if.app-name-regex-substring = "choose"
+    run = 'layout floating'
+
+[[on-window-detected]]
+    if.app-id = "com.apple.systempreferences"
+    run = 'layout floating'
+
+[[on-window-detected]]
+    if.app-name-regex-substring = "rogue"
+    run = 'layout floating'
+
+[[on-window-detected]]
+    if.app-name-regex-substring = "GIMP"
+    run = 'layout floating'
+
+[[on-window-detected]]
+    if.app-name-regex-substring = "阿里钉"
+    run = 'layout floating'
+
+[[on-window-detected]]
+    if.app-name-regex-substring = "阿里郎"
+    run = 'layout floating'
+
+[[on-window-detected]]
+    if.app-name-regex-substring = "Clash Verge"
+    run = 'layout floating'
+
+[[on-window-detected]]
+    if.app-name-regex-substring = "Python"
+    run = 'layout floating'
+
+[[on-window-detected]]
+    if.app-id = "com.jetbrains.intellij"
+    run = 'layout floating'
+
+[[on-window-detected]]
+    if.app-id = "com.apple.finder"
+    run = 'layout floating'
+
+# ============ 主模式键位 ============
+[mode.main.binding]
+
+    # WM 键位由 aerospace-hotkeys.yaml 生成
+{{ output "uv" "run" "--with" "pyyaml" "python3" (joinPath .chezmoi.sourceDir "tools/karabiner-builder/build.py") (joinPath .chezmoi.sourceDir "tools/karabiner-builder/aerospace-hotkeys.yaml") "--aerospace" | trimSuffix "\n" }}
+    # ↑↑↑ 生成区结束 ↑↑↑
+
+    # 翻转当前容器布局
+    alt-shift-f18 = 'layout tiles horizontal vertical'
+    alt-shift-f19 = 'layout accordion horizontal vertical'
+
+    # 手写：进入 service 模式，用于建树、重载与复位
+    alt-shift-semicolon = 'mode service'
+
+# ============ service 模式：join-with 建嵌套 + 重载/复位 ============
+[mode.service.binding]
+    esc       = ['reload-config', 'mode main']
+    r         = ['flatten-workspace-tree', 'mode main']  # 一键拍平布局重来
+    f         = ['layout floating tiling', 'mode main']
+    backspace = ['close-all-windows-but-current', 'mode main']
+
+    # 把焦点窗口和某方向邻居打包进新的嵌套容器，用于构建 BSP 布局
+    alt-shift-h = ['join-with left', 'mode main']
+    alt-shift-j = ['join-with down', 'mode main']
+    alt-shift-k = ['join-with up', 'mode main']
+    alt-shift-l = ['join-with right', 'mode main']
+
+{{- /* vim: set ft=toml: */}}

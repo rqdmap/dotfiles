@@ -1,7 +1,10 @@
 {{- $uses_skhd := and .has_tiling_wm .is_macos -}}
+{{- $macos_tiling_backend := .macos_tiling_backend -}}
 {{ if $uses_skhd -}}
 .load "{{ .chezmoi.homeDir }}/.config/skhd/apps.skhdrc"
+{{ if eq $macos_tiling_backend "yabai" -}}
 .load "{{ .chezmoi.homeDir }}/.config/skhd/generated.skhdrc"
+{{ end -}}
 {{ else if eq .machine_profile "home" -}}
 # Linux sxhkd-based config; skhd not used
 {{ end -}}

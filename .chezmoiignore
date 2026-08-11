@@ -26,15 +26,28 @@ system
 .Xresources
 {{ end }}
 
-# macOS tiling stack (yabai, sketchybar, skhd entrypoint, etc.)
+# macOS tiling stack
 {{- $uses_macos_tiling_stack := and .has_tiling_wm .is_macos -}}
+{{- $macos_tiling_backend := .macos_tiling_backend -}}
+{{- $uses_aerospace := and $uses_macos_tiling_stack (eq $macos_tiling_backend "aerospace") -}}
+{{- $uses_yabai := and $uses_macos_tiling_stack (eq $macos_tiling_backend "yabai") -}}
 {{ if not $uses_macos_tiling_stack }}
 .config/skhd
 .config/sketchybar
-.yabairc
 .skhdrc
 .local/bin/rebuild-hotkeys
+{{ end }}
+
+{{ if not $uses_aerospace }}
+.config/aerospace
+.config/sketchybar/plugins/aerospace_spaces.sh
+{{ end }}
+
+{{ if not $uses_yabai }}
+.yabairc
 .local/bin/yabai-spacectl
+.config/sketchybar/plugins/space.sh
+.config/sketchybar/plugins/space_windows.sh
 {{ end }}
 
 # Exclude GUI configs on headless systems
