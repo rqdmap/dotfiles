@@ -1,0 +1,193 @@
+title: macOS AeroSpace Window Management
+version: 1.0.0
+maintainers:
+  - rqdmap
+author: rqdmap(rqdmap@gmail.com)
+
+outputs:
+  karabiner: aerospace-hotkeys.json
+
+# AeroSpace owns an independent F-key event bus
+# Keep the event order stable because the index defines the Karabiner ABI
+events_start_slot: 0
+
+events:
+  - wm_focus_west
+  - wm_focus_south
+  - wm_focus_north
+  - wm_focus_east
+  - wm_swap_west
+  - wm_swap_south
+  - wm_swap_north
+  - wm_swap_east
+  - wm_space_1
+  - wm_space_2
+  - wm_space_3
+  - wm_space_4
+  - wm_space_5
+  - wm_space_6
+  - wm_space_7
+  - wm_space_8
+  - wm_space_9
+  - wm_space_10
+  - wm_space_11
+  - wm_send_space_1
+  - wm_send_space_2
+  - wm_send_space_3
+  - wm_send_space_4
+  - wm_send_space_5
+  - wm_send_space_6
+  - wm_send_space_7
+  - wm_send_space_8
+  - wm_send_space_9
+  - wm_send_space_10
+  - wm_send_space_11
+  - wm_toggle_float
+  - wm_toggle_fullscreen
+  - wm_resize_left_grow
+  - wm_resize_down_grow
+  - wm_resize_up_grow
+  - wm_resize_right_grow
+  - wm_resize_left_shrink
+  - wm_resize_down_shrink
+  - wm_resize_up_shrink
+  - wm_resize_right_shrink
+
+actions:
+  # Cross monitor boundaries with native AeroSpace commands
+  wm_focus_west: focus left --boundaries all-monitors-outer-frame
+  wm_focus_south: focus down --boundaries all-monitors-outer-frame
+  wm_focus_north: focus up --boundaries all-monitors-outer-frame
+  wm_focus_east: focus right --boundaries all-monitors-outer-frame
+
+  wm_swap_west: move left --boundaries all-monitors-outer-frame
+  wm_swap_south: move down --boundaries all-monitors-outer-frame
+  wm_swap_north: move up --boundaries all-monitors-outer-frame
+  wm_swap_east: move right --boundaries all-monitors-outer-frame
+
+  wm_space_1: workspace 1
+  wm_space_2: workspace 2
+  wm_space_3: workspace 3
+  wm_space_4: workspace 4
+  wm_space_5: workspace 5
+  wm_space_6: workspace 6
+  wm_space_7: workspace 7
+  wm_space_8: workspace 8
+  wm_space_9: workspace 9
+  wm_space_10: workspace 10
+  wm_space_11: workspace 11
+
+  wm_send_space_1: move-node-to-workspace 1
+  wm_send_space_2: move-node-to-workspace 2
+  wm_send_space_3: move-node-to-workspace 3
+  wm_send_space_4: move-node-to-workspace 4
+  wm_send_space_5: move-node-to-workspace 5
+  wm_send_space_6: move-node-to-workspace 6
+  wm_send_space_7: move-node-to-workspace 7
+  wm_send_space_8: move-node-to-workspace 8
+  wm_send_space_9: move-node-to-workspace 9
+  wm_send_space_10: move-node-to-workspace 10
+  wm_send_space_11: move-node-to-workspace 11
+
+  wm_toggle_float: layout floating tiling
+  wm_toggle_fullscreen: fullscreen
+
+  # Native resize avoids the focus probe and helper process
+  # Legacy event names keep the existing F-key slot order stable
+  wm_resize_left_grow: resize smart -20
+  wm_resize_down_grow: resize smart-opposite +20
+  wm_resize_up_grow: resize smart-opposite -20
+  wm_resize_right_grow: resize smart +20
+  wm_resize_left_shrink: resize smart -100
+  wm_resize_down_shrink: resize smart-opposite +100
+  wm_resize_up_shrink: resize smart-opposite -100
+  wm_resize_right_shrink: resize smart +100
+
+rules:
+  - description: AeroSpace window management
+    manipulators:
+      - description: Focus window west
+        map: left_command + h = @wm_focus_west
+      - description: Focus window south
+        map: left_command + j = @wm_focus_south
+      - description: Focus window north
+        map: left_command + k = @wm_focus_north
+      - description: Focus window east
+        map: left_command + l = @wm_focus_east
+
+      - description: Move window west
+        map: left_shift + left_command + h = @wm_swap_west
+      - description: Move window south
+        map: left_shift + left_command + j = @wm_swap_south
+      - description: Move window north
+        map: left_shift + left_command + k = @wm_swap_north
+      - description: Move window east
+        map: left_shift + left_command + l = @wm_swap_east
+
+      - description: Focus workspace 1
+        map: left_command + 1 = @wm_space_1
+      - description: Focus workspace 2
+        map: left_command + 2 = @wm_space_2
+      - description: Focus workspace 3
+        map: left_command + 3 = @wm_space_3
+      - description: Focus workspace 4
+        map: left_command + 4 = @wm_space_4
+      - description: Focus workspace 5
+        map: left_command + 5 = @wm_space_5
+      - description: Focus workspace 6
+        map: left_command + 6 = @wm_space_6
+      - description: Focus workspace 7
+        map: left_command + 7 = @wm_space_7
+      - description: Focus workspace 8
+        map: left_command + 8 = @wm_space_8
+      - description: Focus workspace 9
+        map: left_command + 9 = @wm_space_9
+      - description: Focus workspace 10
+        map: left_command + 0 = @wm_space_10
+      - description: Focus workspace 11
+        map: left_command + hyphen = @wm_space_11
+
+      - description: Send window to workspace 1
+        map: left_shift + left_command + 1 = @wm_send_space_1
+      - description: Send window to workspace 2
+        map: left_shift + left_command + 2 = @wm_send_space_2
+      - description: Send window to workspace 3
+        map: left_shift + left_command + 3 = @wm_send_space_3
+      - description: Send window to workspace 4
+        map: left_shift + left_command + 4 = @wm_send_space_4
+      - description: Send window to workspace 5
+        map: left_shift + left_command + 5 = @wm_send_space_5
+      - description: Send window to workspace 6
+        map: left_shift + left_command + 6 = @wm_send_space_6
+      - description: Send window to workspace 7
+        map: left_shift + left_command + 7 = @wm_send_space_7
+      - description: Send window to workspace 8
+        map: left_shift + left_command + 8 = @wm_send_space_8
+      - description: Send window to workspace 9
+        map: left_shift + left_command + 9 = @wm_send_space_9
+      - description: Send window to workspace 10
+        map: left_shift + left_command + 0 = @wm_send_space_10
+      - description: Send window to workspace 11
+        map: left_shift + left_command + hyphen = @wm_send_space_11
+
+      - description: Toggle floating window
+        map: left_command + s = @wm_toggle_float
+      - description: Toggle fullscreen window
+        map: left_command + f = @wm_toggle_fullscreen
+
+      - description: Resize smart decrease
+        map: left_control + left_command + h = @wm_resize_left_grow
+      - description: Resize opposite increase
+        map: left_control + left_command + j = @wm_resize_down_grow
+      - description: Resize opposite decrease
+        map: left_control + left_command + k = @wm_resize_up_grow
+      - description: Resize smart increase
+        map: left_control + left_command + l = @wm_resize_right_grow
+      - description: Resize smart decrease large
+        map: left_shift + left_control + left_command + h = @wm_resize_left_shrink
+      - description: Resize opposite increase large
+        map: left_shift + left_control + left_command + j = @wm_resize_down_shrink
+      - description: Resize opposite decrease large
+        map: left_shift + left_control + left_command + k = @wm_resize_up_shrink
+      - description: Resize smart increase large
+        map: left_shift + left_control + left_command + l = @wm_resize_right_shrink

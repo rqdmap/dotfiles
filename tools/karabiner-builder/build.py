@@ -17,6 +17,7 @@ except ModuleNotFoundError as exc:
 
 # --- Slot table: 7 F-keys x 8 modifier tiers = 56 slots ---
 
+# F20 在当前 macOS 键盘链路上存在丢事件，事件槽仅使用 F13–F19
 F_KEYS = ["f13", "f14", "f15", "f16", "f17", "f18", "f19"]
 
 EXPECTED_KEYCODES: dict[str, int] = {
@@ -63,6 +64,21 @@ SKHD_MODIFIER_TIERS: list[str] = [
     "ctrl + alt - ",
     "shift + ctrl + alt - ",
 ]
+
+# AeroSpace binding syntax joins modifiers and key with '-'
+AEROSPACE_MODIFIER_MAP: dict[str, str] = {
+    "left_shift": "shift",
+    "right_shift": "shift",
+    "left_control": "ctrl",
+    "right_control": "ctrl",
+    "left_option": "alt",
+    "right_option": "alt",
+    "left_command": "cmd",
+    "right_command": "cmd",
+}
+
+# Canonical modifier order for AeroSpace combos
+AEROSPACE_MODIFIER_ORDER: list[str] = ["cmd", "ctrl", "alt", "shift"]
 
 MAX_SLOTS = len(F_KEYS) * len(KARABINER_MODIFIER_TIERS)
 
@@ -137,6 +153,16 @@ def slot_to_karabiner_combo(index: int) -> str:
     if modifiers:
         return " + ".join(modifiers) + " + " + fkey
     return fkey
+
+
+def slot_to_aerospace_combo(index: int) -> str:
+    if index < 0 or index >= MAX_SLOTS:
+        raise ValueError(f"Slot {index} out of range (0-{MAX_SLOTS - 1})")
+    tier = index // len(F_KEYS)
+    fkey = F_KEYS[index % len(F_KEYS)]
+    mods = {AEROSPACE_MODIFIER_MAP[m] for m in KARABINER_MODIFIER_TIERS[tier]}
+    ordered = [m for m in AEROSPACE_MODIFIER_ORDER if m in mods]
+    return "-".join(ordered + [fkey])
 
 
 def slot_to_skhd_combo(index: int) -> str:
@@ -319,11 +345,36 @@ def build_karabiner_document(config: dict[str, Any]) -> dict[str, Any]:
     return document
 
 
-# --- skhd generation ---
+# --- AeroSpace generation ---
 
 
-def generate_skhd_from_events(config: dict[str, Any]) -> str:
-    """Generate skhd config from event bus (F-key slot → action mapping)."""
+def generate_aerospace(config: dict[str, Any]) -> str:
+    """Generate AeroSpace mode.main.binding lines from the event bus"""
+    raw_events = config.get("events")
+    if not isinstance(raw_events, list):
+        raise ValueError("aerospace output requires events to be a list (auto-assign mode)")
+    start_slot = get_events_start_slot(config)
+
+    actions: dict[str, str] = config.get("actions", {})
+    lines: list[str] = []
+
+    for i, name in enumerate(raw_events):
+        action = actions.get(name)
+        if action is None:
+            continue
+        combo = slot_to_aerospace_combo(i + start_slot)
+        if "'" in action:
+            raise ValueError(f"aerospace action for {name!r} contains a single quote: {action!r}")
+        lines.append(f"    {combo} = '{action}'")
+
+    return "\n".join(lines) + "\n"
+
+
+# --- Yabai skhd binding rendering ---
+
+
+def render_yabai_skhd_bindings_from_events(config: dict[str, Any]) -> str:
+    """Render Yabai event-bus actions as skhd bindings"""
     raw_events = config.get("events")
     if not isinstance(raw_events, list):
         raise ValueError("--skhd requires events to be a list (auto-assign mode)")
@@ -342,8 +393,8 @@ def generate_skhd_from_events(config: dict[str, Any]) -> str:
     return "\n".join(lines) + "\n"
 
 
-def generate_skhd_from_direct(config: dict[str, Any]) -> str:
-    """Generate skhd config from direct hotkey definitions (no event bus)."""
+def render_yabai_skhd_bindings_from_direct(config: dict[str, Any]) -> str:
+    """Render direct Yabai hotkey definitions as skhd bindings"""
     entries = config.get("skhd", [])
     if not entries:
         return ""
@@ -355,13 +406,13 @@ def generate_skhd_from_direct(config: dict[str, Any]) -> str:
     return "\n".join(lines) + "\n"
 
 
-def generate_skhd(config: dict[str, Any]) -> str:
+def render_yabai_skhd_bindings(config: dict[str, Any]) -> str:
     if config.get("skhd"):
-        return generate_skhd_from_direct(config)
+        return render_yabai_skhd_bindings_from_direct(config)
     if config.get("events"):
-        return generate_skhd_from_events(config)
+        return render_yabai_skhd_bindings_from_events(config)
     raise ValueError(
-        "Config has neither 'events' nor 'skhd' section for skhd generation"
+        "Config has neither 'events' nor 'skhd' section for Yabai skhd bindings"
     )
 
 
@@ -377,14 +428,14 @@ def print_slot_table(config: dict[str, Any]) -> None:
 
     reverse = {combo: name for name, combo in events.items()}
 
-    print(f"{'slot':>4}  {'karabiner combo':<36}  {'skhd combo':<24}  event")
+    print(f"{'slot':>4}  {'karabiner combo':<36}  {'aerospace combo':<24}  event")
     print("-" * 100)
 
     for i in range(MAX_SLOTS):
         k = slot_to_karabiner_combo(i)
-        s = slot_to_skhd_combo(i)
+        a = slot_to_aerospace_combo(i)
         name = reverse.get(k, "")
-        print(f"{i:>4}  {k:<36}  {s:<24}  {name}")
+        print(f"{i:>4}  {k:<36}  {a:<24}  {name}")
 
 
 # --- CLI ---
@@ -427,7 +478,10 @@ def load_config(
 
 
 def write_declared_outputs(
-    source_name: str, config: dict[str, Any], karabiner_dir: Path, skhd_dir: Path
+    source_name: str,
+    config: dict[str, Any],
+    karabiner_dir: Path | None,
+    skhd_dir: Path | None,
 ) -> None:
     outputs = config.get("outputs", {})
     if not outputs:
@@ -435,17 +489,20 @@ def write_declared_outputs(
         return
 
     if "karabiner" in outputs:
+        if karabiner_dir is None:
+            raise ValueError(f"{source_name}: karabiner output requires --karabiner-dir")
         payload = render_karabiner(config, source_name=source_name)
         write_output(payload, karabiner_dir / outputs["karabiner"])
 
     if "skhd" in outputs:
-        content = generate_skhd(config)
+        if skhd_dir is None:
+            raise ValueError(f"{source_name}: skhd output requires --skhd-dir")
+        content = render_yabai_skhd_bindings(config)
         write_output(content, skhd_dir / outputs["skhd"])
-
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Build Karabiner / skhd configs from YAML"
+        description="Build Karabiner / AeroSpace configs from YAML"
     )
     parser.add_argument(
         "config",
@@ -459,6 +516,11 @@ def main() -> None:
         "--karabiner",
         action="store_true",
         help="Generate Karabiner complex_modifications JSON",
+    )
+    mode.add_argument(
+        "--aerospace",
+        action="store_true",
+        help="Generate AeroSpace [mode.main.binding] fragment",
     )
     mode.add_argument("--skhd", action="store_true", help="Generate skhd config")
     mode.add_argument("--slots", action="store_true", help="Print slot table and exit")
@@ -484,7 +546,6 @@ def main() -> None:
         "--karabiner-dir", type=Path, help="Output dir for Karabiner JSON"
     )
     parser.add_argument("--skhd-dir", type=Path, help="Output dir for skhd configs")
-
     args = parser.parse_args()
 
     if args.verify:
@@ -507,8 +568,12 @@ def main() -> None:
         print_slot_table(config)
         return
 
+    if args.aerospace:
+        write_output(generate_aerospace(config), args.output)
+        return
+
     if args.skhd:
-        write_output(generate_skhd(config), args.output)
+        write_output(render_yabai_skhd_bindings(config), args.output)
         return
 
     if args.karabiner:
@@ -517,12 +582,14 @@ def main() -> None:
         return
 
     if args.write_outputs:
-        if not args.karabiner_dir or not args.skhd_dir:
-            parser.error("--write-outputs requires --karabiner-dir and --skhd-dir")
-        write_declared_outputs(source_name, config, args.karabiner_dir, args.skhd_dir)
+        write_declared_outputs(
+            source_name, config, args.karabiner_dir, args.skhd_dir
+        )
         return
 
-    parser.error("specify --karabiner, --skhd, --slots, --write-outputs, or --verify")
+    parser.error(
+        "specify --karabiner, --aerospace, --skhd, --slots, --write-outputs, or --verify"
+    )
 
 
 if __name__ == "__main__":
