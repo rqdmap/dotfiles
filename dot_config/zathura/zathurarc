@@ -20,4 +20,3 @@ set selection-notification false
 #(to open an external link in a browser)
 # https://git.pwmt.org/pwmt/zathura/-/issues/151
 # https://unix.stackexchange.com/a/625597
-set sandbox none
