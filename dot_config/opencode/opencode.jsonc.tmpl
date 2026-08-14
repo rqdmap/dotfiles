@@ -79,6 +79,10 @@
 {{- if hasKey .opencode "plugins" -}}
 {{- $plugins = .opencode.plugins -}}
 {{- end -}}
+{{- $providers := list -}}
+{{- if hasKey .opencode "providers" -}}
+{{- $providers = .opencode.providers -}}
+{{- end -}}
 
 {
   "$schema": "https://opencode.ai/config.json",
@@ -89,7 +93,7 @@
   "default_agent": "scout",
   "model": "{{ $profile.default_model }}",
   "provider": {
-{{- range $pIndex, $provider := .opencode.providers }}
+{{- range $pIndex, $provider := $providers }}
   {{- if $pIndex }},{{ end }}
     "{{ $provider.id }}": {
       "npm": "{{ $provider.type }}",
