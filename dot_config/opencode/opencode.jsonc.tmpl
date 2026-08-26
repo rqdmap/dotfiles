@@ -106,7 +106,7 @@
         },
         {{- end }}
         "apiKey": "{{ $provider.api_key }}"
-      },
+      }{{ if hasKey $provider "models" }},
       "models": {
         {{- range $mIndex, $model := $provider.models }}
         {{- if $mIndex }},{{ end }}
@@ -126,7 +126,7 @@
           {{- end }}
         }
         {{- end }}
-      }
+      }{{ end }}
     }
 {{- end }}
   },

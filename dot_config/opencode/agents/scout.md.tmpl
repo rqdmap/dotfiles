@@ -10,7 +10,9 @@ description: >-
   headings, flat lists, tables preferred over bullets for comparisons.
 mode: primary
 model: "{{ $model }}"
+{{- if $variant }}
 variant: "{{ $variant }}"
+{{- end }}
 
 permission:
   skill:
