@@ -13,7 +13,6 @@ alias h='his | rg'
 alias top='htop -u `whoami`'
 alias duu='du -d 1 -h | sort -hr'
 alias dc='docker-compose'
-alias lg='lazygit'
 {{ if and .is_linux .is_gui -}}
 alias clip='xclip -selection clipboard'
 {{- else if .is_macos -}}
@@ -28,6 +27,15 @@ ptree() {
         ps -p "$pid" -o pid=,ppid=,command=
         pid=$(ps -p "$pid" -o ppid= | tr -d ' ')
     done
+}
+
+lg() {
+    export LAZYGIT_NEW_DIR_FILE=~/.lazygit/newdir
+    lazygit "$@"
+    if [ -f $LAZYGIT_NEW_DIR_FILE ]; then
+        cd "$(cat $LAZYGIT_NEW_DIR_FILE)"
+        rm -f $LAZYGIT_NEW_DIR_FILE > /dev/null
+    fi
 }
 
 # function j {
